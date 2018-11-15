@@ -1,4 +1,4 @@
-package main.java.com.dominicswaine.seg_agile_project.Board;
+package com.dominicswaine.seg_agile_project.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class GameWindow {
 
     public static void main(String[] args) {
                 new GameWindow();
-        }
+        }  //todo : remove this
 
         public GameWindow(){
 

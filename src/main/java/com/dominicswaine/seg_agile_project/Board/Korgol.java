@@ -1,4 +1,4 @@
-package main.java.com.dominicswaine.seg_agile_project.Board;
+package com.dominicswaine.seg_agile_project.Board;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package main.java.com.dominicswaine.seg_agile_project.Board;
+package com.dominicswaine.seg_agile_project.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +18,14 @@ public class Hole extends KorgolsContainer {
      * The hole is the main korgol container of the game
      */
     Hole() {
-        setIcon(new ImageIcon(
+        /*setIcon(new ImageIcon(
                     Objects.requireNonNull(
                             getClass().getClassLoader().
                                     getResource(
-                                            "main/resources/frame.png")
+                                            "frame.png")
                     )
                 )
-        );
+        );*/
 
         setLayout(new GridLayout(8,5));
 
@@ -53,7 +53,7 @@ public class Hole extends KorgolsContainer {
     }
 
 
-    /*
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -62,7 +62,7 @@ public class Hole extends KorgolsContainer {
         g2.setColor(Color.getHSBColor(0,0,0));
         g2.setStroke(new BasicStroke(4));
         g2.drawRoundRect(10, 15, 150, 330 ,10,10);
-    }*/
+    }
 
     @Override
     public Dimension getPreferredSize() {
