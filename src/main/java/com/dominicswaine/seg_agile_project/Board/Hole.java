@@ -40,15 +40,6 @@ public class Hole extends KorgolsContainer {
 
         this.tuz = 0;  //tuz is not assigned to any player
 
-        //ADDING EVENT LISTENERS
-        addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent e)
-            {
-                System.out.println("you clicked on hole n:" + n);
-
-            }
-        });
 
     }
 
