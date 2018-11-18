@@ -73,14 +73,14 @@ public class GameWindow {
 
             for (int i = 0; i < HOLES_PER_PLAYER ; ++i){
                 //populate top row with holes
-                Hole h = new Hole();
+                Hole h = new Hole(8-i+1);
                 h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
                 h.adjustLooks(Color.white);
                 holesTopRow.add(h);
                 topRow.add(h);
 
                 //populate bottom row with holes
-                h = new Hole();
+                h = new Hole(i+1);
                 h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
                 h.adjustLooks(Color.white);
                 holesBottomRow.add(h);

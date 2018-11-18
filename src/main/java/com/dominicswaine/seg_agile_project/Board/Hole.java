@@ -1,8 +1,9 @@
 package com.dominicswaine.seg_agile_project.Board;
 
-import javax.swing.*;
+
 import java.awt.*;
-import java.util.Objects;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -12,17 +13,25 @@ import java.util.Objects;
 public class Hole extends KorgolsContainer {
 
 
-    int tuz;   ///tuz value (0 = not assigned to any player, 1 = assigned to 1st player, 2= assigned to 2nd player)
+    private int tuz;
+    private int n;
+    private Color currentColor;///tuz value (0 = not assigned to any player, 1 = assigned to 1st player, 2= assigned to 2nd player)
 
     /**
      * The hole is the main korgol container of the game
+     * @param n the number of the hole
      */
-    Hole() {
-        /*setIcon(new ImageIcon(
+    Hole(int n) {
+        setOpaque(true);
+        currentColor = Color.black;
+
+
+        //todo : make this work with current project structure
+        /* setIcon(new ImageIcon(
                     Objects.requireNonNull(
                             getClass().getClassLoader().
                                     getResource(
-                                            "frame.png")
+                                            "src/main/resources/Test.txt.png")
                     )
                 )
         );*/
@@ -30,7 +39,19 @@ public class Hole extends KorgolsContainer {
         setLayout(new GridLayout(8,5));
 
         this.tuz = 0;  //tuz is not assigned to any player
+
+        //ADDING EVENT LISTENERS
+        addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                System.out.println("you clicked on hole n:" + n);
+
+            }
+        });
+
     }
+
 
 
     /**
@@ -59,7 +80,7 @@ public class Hole extends KorgolsContainer {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.getHSBColor(0,0,0));
+        g2.setColor(currentColor);
         g2.setStroke(new BasicStroke(4));
         g2.drawRoundRect(10, 15, 150, 330 ,10,10);
     }
