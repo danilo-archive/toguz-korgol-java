@@ -2,13 +2,15 @@ package com.dominicswaine.seg_agile_project.Board;
 
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 /**
+ * A hole contains korgols and it's the main interactive
+ * feature of the game. Clicking on a hole is how the player can
+ * make a move.
  *
  * @author Danilo Del Busso
- * @version 14-11-2018
+ * @version 18-11-2018
  */
 public class Hole extends KorgolsContainer {
 

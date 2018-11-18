@@ -9,7 +9,7 @@ import java.awt.*;
  * This class simply creates a panel with a circle of r = 10px.
  *
  * @author Danilo Del Busso
- * @version 14-11-2018
+ * @version 18-11-2018
  */
 public class Korgol extends JPanel {
 

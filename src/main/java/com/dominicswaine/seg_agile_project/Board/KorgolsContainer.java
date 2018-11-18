@@ -5,10 +5,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * This object contains and displays any number of korgols. It contains, removes and shows
- * the korgols to screen.
+ * This object contains and displays any number of korgols.
+ * It contains, removes, and shows the korgols to screen.
  * @author Danilo Del Busso
- * @version 14-11-2018
+ * @version 18-11-2018
  */
 public abstract class KorgolsContainer extends JLabel {
 
