@@ -3,9 +3,11 @@ package com.dominicswaine.seg_agile_project.Board;
 import java.awt.*;
 
 /**
+ * A kazan is the container of korgols that the player owns.
+ * It is a visual representation of the score of a player.
  *
  * @author Danilo Del Busso
- * @version 14-11-2018
+ * @version 18-11-2018
  */
 public class Kazan extends KorgolsContainer {
     /**
@@ -13,13 +15,12 @@ public class Kazan extends KorgolsContainer {
      */
     public Kazan() {
         setLayout(new GridLayout(5,17));
-
     }
 
 
     @Override
     public int getMaxKorgolsPossible() {
-        return 82;
+        return 95;
     }
 
 
