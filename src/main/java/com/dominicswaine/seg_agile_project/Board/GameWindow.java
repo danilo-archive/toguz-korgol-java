@@ -39,7 +39,6 @@ public class GameWindow {
             pane.setLayout(new BorderLayout());
 
             JPanel board = createNewBoard();
-            kazans.get(0).removeKorgols(0);
 
             pane.add(board, BorderLayout.WEST);
 
@@ -89,13 +88,14 @@ public class GameWindow {
 
             Kazan k = new Kazan();
             kazans.add(k);
-            k.addKorgols(52, Color.black);
+            k.addKorgols(108, Color.black);
             k.adjustLooks(Color.white);
             kazanRow.add(k, BorderLayout.EAST);
 
             k = new Kazan();
             kazans.add(k);
             k.addKorgols(0, Color.black);
+            k.adjustLooks(Color.white);
             kazanRow.add(k,BorderLayout.WEST);
 
 

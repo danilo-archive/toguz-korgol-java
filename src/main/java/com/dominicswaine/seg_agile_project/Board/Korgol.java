@@ -51,7 +51,5 @@ public class Korgol extends JPanel {
         g2.setStroke(new BasicStroke(4));
         g2.fillOval(15,22,20,20);
 
-
-
     }
 }

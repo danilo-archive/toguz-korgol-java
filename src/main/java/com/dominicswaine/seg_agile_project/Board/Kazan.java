@@ -13,13 +13,12 @@ public class Kazan extends KorgolsContainer {
      */
     public Kazan() {
         setLayout(new GridLayout(5,17));
-
     }
 
 
     @Override
     public int getMaxKorgolsPossible() {
-        return 82;
+        return 95;
     }
 
 
