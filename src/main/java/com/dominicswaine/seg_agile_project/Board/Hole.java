@@ -24,7 +24,6 @@ public class Hole extends KorgolsContainer {
      * @param n the number of the hole
      */
     Hole(int n) {
-        setOpaque(true);
         currentColor = Color.black;
 
 

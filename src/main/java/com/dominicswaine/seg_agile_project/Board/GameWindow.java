@@ -40,8 +40,11 @@ public class GameWindow {
 
             Container pane = gameWindow.getContentPane();
             pane.setLayout(new BorderLayout());
+            pane.setBackground(Color.white);
+
 
             JPanel board = createNewBoard();
+            board.setOpaque(false);
 
             pane.add(board, BorderLayout.WEST);
 

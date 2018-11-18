@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public abstract class KorgolsContainer extends JLabel {
 
     private ArrayList<Korgol> korgols;
-    private int lastKorgolInd;
+    private int lastKorgolInd; //the index of the last korgol that has been added to the container
     private JTextArea extraKorgolsCounter;
     private JPanel extraKorgols;
 
@@ -22,11 +22,10 @@ public abstract class KorgolsContainer extends JLabel {
      * This container maintains korgols and shows them to screen
      */
     KorgolsContainer(){
-
+        setOpaque(true);
+        setBackground(Color.white);
         korgols = new ArrayList<Korgol>();
         lastKorgolInd = -1;
-
-
     }
 
     /**
