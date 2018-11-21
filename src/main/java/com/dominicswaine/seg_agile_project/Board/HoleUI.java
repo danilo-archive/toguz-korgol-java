@@ -12,7 +12,7 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 18-11-2018
  */
-public class Hole extends KorgolsContainer {
+public class HoleUI extends KorgolsContainerUI {
 
 
     private int tuz;
@@ -23,7 +23,7 @@ public class Hole extends KorgolsContainer {
      * The hole is the main korgol container of the game
      * @param n the number of the hole
      */
-    Hole(int n) {
+    HoleUI(int n) {
         setOpaque(true);
         currentColor = Color.black;
 
