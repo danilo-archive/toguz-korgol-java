@@ -18,9 +18,9 @@ public class GameWindow {
     private static final int STARTING_KORGOLS = 9;
     private static final Color COLOR_KORGOLS = Color.black;
 
-    private ArrayList<HoleUI> holesTopRow;
-    private ArrayList<HoleUI> holesBottomRow;
-    private ArrayList<KazanUI> kazans;
+    private ArrayList<Hole> holesTopRow;
+    private ArrayList<Hole> holesBottomRow;
+    private ArrayList<Kazan> kazans;
 
 
 
@@ -71,14 +71,14 @@ public class GameWindow {
             //create holes
             for (int i = 0; i < HOLES_PER_PLAYER ; ++i){
                 //populate top row with holes
-                HoleUI h = new HoleUI(8-i+1);
+                Hole h = new Hole(8-i+1);
                 h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
                 h.adjustLooks(Color.white);
                 holesTopRow.add(h);
                 topRow.add(h);
 
                 //populate bottom row with holes
-                h = new HoleUI(i+1);
+                h = new Hole(i+1);
                 h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
                 h.adjustLooks(Color.white);
                 holesBottomRow.add(h);
@@ -86,13 +86,13 @@ public class GameWindow {
             }
 
             //create kazans
-            KazanUI k = new KazanUI();
+            Kazan k = new Kazan();
             kazans.add(k);
             k.addKorgols(0, Color.black);
             k.adjustLooks(Color.white);
             kazanRow.add(k, BorderLayout.EAST);
 
-            k = new KazanUI();
+            k = new Kazan();
             kazans.add(k);
             k.addKorgols(0, Color.black);
             k.adjustLooks(Color.white);
@@ -113,7 +113,7 @@ public class GameWindow {
      * Return the holes on the bottom row
      * @return the holes on the bottom row
      */
-    public ArrayList<HoleUI> getHolesBottomRow() {
+    public ArrayList<Hole> getHolesBottomRow() {
         return holesBottomRow;
     }
 
@@ -121,7 +121,7 @@ public class GameWindow {
      * Return the holes on the top row
      * @return the holes on the top row
      */
-    public ArrayList<HoleUI> getHolesTopRow() {
+    public ArrayList<Hole> getHolesTopRow() {
         return holesTopRow;
     }
 }

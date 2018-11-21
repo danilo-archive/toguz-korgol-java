@@ -11,7 +11,7 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 18-11-2018
  */
-public class KorgolUI extends JPanel {
+public class Korgol extends JPanel {
 
     private Color color;
 
@@ -19,7 +19,7 @@ public class KorgolUI extends JPanel {
      * Create a korgol of specified color
      * @param color the color of the korgol
      */
-    public KorgolUI(Color color) {
+    public Korgol(Color color) {
         this.color = color;
     }
 
