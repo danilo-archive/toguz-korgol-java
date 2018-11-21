@@ -9,11 +9,11 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 18-11-2018
  */
-public class KazanUI extends KorgolsContainerUI {
+public class Kazan extends KorgolsContainer {
     /**
      * This container maintains korgols and shows them to screen
      */
-    public KazanUI() {
+    public Kazan() {
         setLayout(new GridLayout(5,17));
     }
 

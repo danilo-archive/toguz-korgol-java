@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author Danilo Del Busso
  * @version 18-11-2018
  */
-public abstract class KorgolsContainerUI extends JLabel {
+public abstract class KorgolsContainer extends JLabel {
 
-    private ArrayList<KorgolUI> korgols;
+    private ArrayList<Korgol> korgols;
     private int lastKorgolInd;
     private JTextArea extraKorgolsCounter;
     private JPanel extraKorgols;
@@ -21,9 +21,9 @@ public abstract class KorgolsContainerUI extends JLabel {
     /**
      * This container maintains korgols and shows them to screen
      */
-    KorgolsContainerUI(){
+    KorgolsContainer(){
 
-        korgols = new ArrayList<KorgolUI>();
+        korgols = new ArrayList<Korgol>();
         lastKorgolInd = -1;
 
 
@@ -33,7 +33,7 @@ public abstract class KorgolsContainerUI extends JLabel {
      * Return the korgols currently present in the container
      * @return the korgols currently present in the container
      */
-    public ArrayList<KorgolUI> getKorgols() {
+    public ArrayList<Korgol> getKorgols() {
         return korgols;
     }
 
@@ -43,7 +43,7 @@ public abstract class KorgolsContainerUI extends JLabel {
      */
     void adjustLooks(Color c){
         for(int i = lastKorgolInd+1; i < getMaxKorgolsPossible(); ++i){
-            KorgolUI k = new KorgolUI(c);
+            Korgol k = new Korgol(c);
             korgols.add(k);
             this.add(k);
             this.repaint();
@@ -101,7 +101,7 @@ public abstract class KorgolsContainerUI extends JLabel {
 
 
         //if there are invisible korgols, we color the first available one black.
-        for(KorgolUI k: korgols){
+        for(Korgol k: korgols){
             if(k.getColor() != c){
                 k.setColor(c);
                 ++lastKorgolInd;
@@ -110,7 +110,7 @@ public abstract class KorgolsContainerUI extends JLabel {
         }
 
 
-        KorgolUI k = new KorgolUI(c);
+        Korgol k = new Korgol(c);
         korgols.add(k);
         ++lastKorgolInd;
         this.add(k);
