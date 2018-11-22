@@ -111,6 +111,7 @@ public class CustomGame {
         dropdown.addItem("Opponent");
         dropdown.setMaximumSize(dropdown.getPreferredSize());
         dropdown.setToolTipText("Select who you want the settings to apply to");
+        dropdown.addActionListener(e -> changePlayer());
         containerOfTextAndDropdown.add(dropdown);
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
 
@@ -149,7 +150,7 @@ public class CustomGame {
 
         }
 
-        JTextField textField = new JTextField();
+        JSpinner textField = new JSpinner();
         panelContainingTextField.add(textField, BorderLayout.CENTER);
         panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
         unit.add(label, BorderLayout.NORTH);
@@ -179,6 +180,12 @@ public class CustomGame {
         containerOfSaveAndStart.add(saveButton);
         containerOfSaveAndStart.add(startButton);
 
+    }
+
+    public void changePlayer() {
+
+        isPlayer =!isPlayer;
+        
     }
 
 
