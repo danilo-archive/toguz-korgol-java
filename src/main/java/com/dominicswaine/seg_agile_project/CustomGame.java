@@ -9,171 +9,178 @@ public class CustomGame {
 
     private JFrame frame;
     private JPanel containerOfEverything;
-    private JPanel top;
-    private JPanel middle;
-    private JPanel bottom;
-    private JPanel containerOfTextBoxes;
     private JPanel containerOfBackButton;
-    private JLabel title;
-    private JLabel text;
-    private JComboBox playerSelector;
-    private JTextField kazanField;
-    private JLabel kazanLabel;
-    private JTextField hole1;
-    private JLabel label1;
-    private JTextField hole2;
-    private JLabel label2;
-    private JTextField hole3;
-    private JLabel label3;
-    private JTextField hole4;
-    private JLabel label4;
-    private JTextField hole5;
-    private JLabel label5;
-    private JTextField hole6;
-    private JLabel label6;
-    private JTextField hole7;
-    private JLabel label7;
-    private JTextField hole8;
-    private JLabel label8;
-    private JTextField hole9;
-    private JLabel label9;
+    private JPanel containerOfTextAndDropdown;
+    private JPanel containerOfTextBoxes;
+    private JPanel containerOfCancelTuz;
+    private JPanel containerOfSaveAndStart;
+    private ButtonGroup buttonGroup1;
+    private ButtonGroup buttonGroup2;
+    private JRadioButton tuzCanceller;
+    private JButton backButton; //fix
     private JButton saveButton;
-    private JButton startGameButton;
-    private JButton backButton;
+    private JButton startButton;
+    private Boolean isPlayer;
+
 
     public CustomGame() {
 
         //Initialising the Frame
 
         frame  = new JFrame();
-        frame.setSize(new Dimension(1920, 1080));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(new Dimension(450, 700));
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //What is this?
 
-        //Making the labels
+        //Initialise Button Groups and Tuz Canceller
 
-        kazanLabel = new JLabel("Kazan:", SwingConstants.RIGHT);
-        kazanLabel.setBorder(new EmptyBorder(0,0,0,15));
-        label1 = new JLabel("Hole 2:", SwingConstants.RIGHT);
-        label1.setBorder(new EmptyBorder(0,0,0,15));
-        label2 = new JLabel("Hole 4:", SwingConstants.RIGHT);
-        label2.setBorder(new EmptyBorder(0,0,0,15));
-        label3 = new JLabel("Hole 6:", SwingConstants.RIGHT);
-        label3.setBorder(new EmptyBorder(0,0,0,15));
-        label4 = new JLabel("Hole 8:", SwingConstants.RIGHT);
-        label4.setBorder(new EmptyBorder(0,0,0,15));
-        label5 = new JLabel("Hole 1:", SwingConstants.RIGHT);
-        label5.setBorder(new EmptyBorder(0,0,0,15));
-        label6 = new JLabel("Hole 3:", SwingConstants.RIGHT);
-        label6.setBorder(new EmptyBorder(0,0,0,15));
-        label7 = new JLabel("Hole 5:", SwingConstants.RIGHT);
-        label7.setBorder(new EmptyBorder(0,0,0,15));
-        label8 = new JLabel("Hole 7:", SwingConstants.RIGHT);
-        label8.setBorder(new EmptyBorder(0,0,0,15));
-        label9 = new JLabel("Hole 9:", SwingConstants.RIGHT);
-        label9.setBorder(new EmptyBorder(0,0,0,15));
+        buttonGroup1 = new ButtonGroup();
+        buttonGroup2 = new ButtonGroup();
+        tuzCanceller = new JRadioButton();
 
-        //Initialising the buttons
+        //Making the Panels
 
-        saveButton = new JButton("Save");
-        saveButton.setFont(new Font("Arial", Font.BOLD, 18));
-        startGameButton = new JButton("Start");
-        startGameButton.setFont(new Font("Arial", Font.BOLD, 18));
-        backButton = new JButton("Back");
-        backButton.setFont(new Font("Arial", Font.BOLD, 18));
+        makePanels();
 
-        //Initialising the text fields
+        //Populate the panels
 
-        kazanField = new JTextField();
-        hole1 = new JTextField();
-        hole2 = new JTextField();
-        hole3 = new JTextField();
-        hole4 = new JTextField();
-        hole5 = new JTextField();
-        hole6 = new JTextField();
-        hole7 = new JTextField();
-        hole8 = new JTextField();
-        hole9 = new JTextField();
+        populateBackButtonContainer();
+        populateTextAndDropdownContainer();
+        populateContainerOfTextBoxes();
+        populateContainerOfCancelTuz();
+        populateContainerOfSaveAndStart();
 
-        //Constructing the panels
+        //Add everything to contianer of everything which you then add to frame.
 
-        top = new JPanel(new BorderLayout());
-        middle = new JPanel();
-        middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
-        bottom = new JPanel(new FlowLayout());
-        bottom.add(saveButton);
-        bottom.add(startGameButton);
-        containerOfBackButton = new JPanel(new BorderLayout());
-        containerOfBackButton.add(backButton, BorderLayout.WEST);
-        containerOfTextBoxes = new JPanel(new GridLayout(2,0));
-        containerOfTextBoxes.setBorder(new EmptyBorder(0,0,0,90));
-        containerOfTextBoxes.add(kazanLabel);
-        containerOfTextBoxes.add(kazanField);
-        containerOfTextBoxes.add(label1);
-        containerOfTextBoxes.add(hole1);
-        containerOfTextBoxes.add(label2);
-        containerOfTextBoxes.add(hole2);
-        containerOfTextBoxes.add(label3);
-        containerOfTextBoxes.add(hole3);
-        containerOfTextBoxes.add(label4);
-        containerOfTextBoxes.add(hole4);
-        containerOfTextBoxes.add(label5);
-        containerOfTextBoxes.add(hole5);
-        containerOfTextBoxes.add(label6);
-        containerOfTextBoxes.add(hole6);
-        containerOfTextBoxes.add(label7);
-        containerOfTextBoxes.add(hole7);
-        containerOfTextBoxes.add(label8);
-        containerOfTextBoxes.add(hole8);
-        containerOfTextBoxes.add(label9);
-        containerOfTextBoxes.add(hole9);
-
-        containerOfEverything = new JPanel();
-        containerOfEverything.setLayout(new BoxLayout(containerOfEverything, BoxLayout.Y_AXIS));
-        containerOfEverything.add(top);
-        containerOfEverything.add(middle);
-
-        //Initialising the text
-
-        title = new JLabel("Custom Game",SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 20));
-        text = new JLabel("Insert some text here explaining this page.",SwingConstants.CENTER);
-        text.setFont(new Font("Arial", Font.BOLD, 20));
-
-        //Initialising the dropdown
-
-        playerSelector = new JComboBox();
-        playerSelector.setFont(new Font("Arial", Font.PLAIN, 18));
-        playerSelector.addItem("Player 1");
-        playerSelector.addItem("Player 2");
-
-        //Setting the locations of the components
-
-        JPanel textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-        textPanel.add(Box.createVerticalGlue());
-
-        textPanel.add(title);
-        textPanel.add(Box.createRigidArea(new Dimension(0, 305)));
-        textPanel.add(text);
-        this.title.setAlignmentX(this.title.CENTER_ALIGNMENT);
-        text.setAlignmentX(text.CENTER_ALIGNMENT);
-        textPanel.add(Box.createVerticalGlue());
-
-        top.add(textPanel);
-        top.add(containerOfBackButton, BorderLayout.NORTH);
-        playerSelector.setMaximumSize(playerSelector.getPreferredSize());
-        containerOfTextBoxes.setMaximumSize(new Dimension(1300, 30));
-        middle.add(Box.createRigidArea(new Dimension(0,45)));
-        middle.add(playerSelector);
-        middle.add(Box.createRigidArea(new Dimension(0,45)));
-        middle.add(containerOfTextBoxes);
-        middle.add(Box.createRigidArea(new Dimension(0,45)));
-        middle.add(bottom);
-
+        containerOfEverything.add(containerOfBackButton);
+        containerOfEverything.add(containerOfTextAndDropdown);
+        containerOfEverything.add(containerOfTextBoxes);
+        containerOfEverything.add(containerOfCancelTuz);
+        containerOfEverything.add(containerOfSaveAndStart);
         frame.add(containerOfEverything);
         frame.setVisible(true);
 
+        //By default, settings first apply to player.
+
+        isPlayer = true;
+
     }
+
+    public void makePanels() {
+
+        containerOfEverything = new JPanel();
+        containerOfEverything.setLayout(new BoxLayout(containerOfEverything, BoxLayout.Y_AXIS));
+        containerOfBackButton = new JPanel(new FlowLayout());
+        containerOfTextAndDropdown = new JPanel();
+        containerOfTextAndDropdown.setLayout(new BoxLayout(containerOfTextAndDropdown, BoxLayout.Y_AXIS));
+        containerOfTextBoxes = new JPanel(new GridLayout(0,2));
+        containerOfCancelTuz = new JPanel(new FlowLayout());
+        containerOfSaveAndStart = new JPanel(new FlowLayout());
+    }
+
+    public void populateBackButtonContainer() {
+
+        backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 14));
+        containerOfBackButton.setBorder(new EmptyBorder(0,0,0,345));
+        containerOfBackButton.add(backButton);
+
+    }
+
+    public void populateTextAndDropdownContainer() {
+
+        JLabel title = new JLabel("Custom Game");
+        title.setAlignmentX(title.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+
+        /*JLabel instructions = new JLabel("To begin a custom game, first use the dropdown \n " +
+                "to select who the parameters will apply to; \n " +
+                "you, or your opponent. You are then able to \n " +
+                "specify the amount of Korgools per Kazan and Hole, \n" +
+                "and also whether a hole is a Tuz.");
+
+        containerOfTextAndDropdown.add(instructions);
+        */
+
+        containerOfTextAndDropdown.add(title);
+        containerOfTextAndDropdown.add(Box.createVerticalStrut(100));
+
+        JComboBox dropdown = new JComboBox();
+        dropdown.setFont(new Font("Arial", Font.PLAIN, 14));
+        dropdown.addItem("You");
+        dropdown.addItem("Opponent");
+        dropdown.setMaximumSize(dropdown.getPreferredSize());
+        dropdown.setToolTipText("Select who you want the settings to apply to");
+        containerOfTextAndDropdown.add(dropdown);
+        containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
+
+    }
+
+
+    public void populateContainerOfTextBoxes() {
+
+        for (int i = 0; i < 10; i++) {
+
+            containerOfTextBoxes.add(makeUnit(i));
+
+        }
+
+    }
+
+    public JPanel makeUnit(int i) {
+
+        JPanel unit = new JPanel(new BorderLayout());
+        JLabel label;
+        JPanel panelContainingTextField = new JPanel(new BorderLayout());
+
+        if (i == 0) { //For Kazan, we want no tuz radio button.
+
+            label = new JLabel("Kazan:");
+            JLabel emptyLabel = new JLabel(""); //fix
+            unit.add(emptyLabel, BorderLayout.EAST);
+
+        }
+
+        else {
+
+            label = new JLabel("Hole " + i + ":");
+            JRadioButton tuzController = new JRadioButton();
+            unit.add(tuzController, BorderLayout.EAST);
+
+        }
+
+        JTextField textField = new JTextField();
+        panelContainingTextField.add(textField, BorderLayout.CENTER);
+        panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
+        unit.add(label, BorderLayout.NORTH);
+        unit.add(panelContainingTextField, BorderLayout.CENTER);
+        unit.setBorder(new EmptyBorder(5,50,5,50));
+
+        return unit;
+
+    }
+
+    public void populateContainerOfCancelTuz() {
+
+        tuzCanceller = new JRadioButton();
+        JLabel cancelTuz = new JLabel("Cancel Tuz:");
+        containerOfCancelTuz.add(cancelTuz);
+        containerOfCancelTuz.add(tuzCanceller);
+
+    }
+
+
+    public void populateContainerOfSaveAndStart() {
+
+        saveButton = new JButton("Save");
+        saveButton.setFont(new Font("Arial", Font.BOLD, 14));
+        startButton = new JButton("Start");
+        startButton.setFont(new Font("Arial", Font.BOLD, 14));
+        containerOfSaveAndStart.add(saveButton);
+        containerOfSaveAndStart.add(startButton);
+
+    }
+
 
     //Run this class
 
