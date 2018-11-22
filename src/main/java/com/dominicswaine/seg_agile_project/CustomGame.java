@@ -1,5 +1,6 @@
 package main.java.com.dominicswaine.seg_agile_project;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -21,6 +22,7 @@ public class CustomGame {
     private JButton saveButton;
     private JButton startButton;
     private Boolean isPlayer;
+    private HashMap<String, JSpinner> map;
 
 
     public CustomGame() {
@@ -63,6 +65,10 @@ public class CustomGame {
         //By default, settings first apply to player.
 
         isPlayer = true;
+
+        //Creating the hashmap
+
+        map = new HashMap<>();
 
     }
 
@@ -151,6 +157,7 @@ public class CustomGame {
         }
 
         JSpinner textField = new JSpinner();
+        map.put(label.getText(), textField);
         panelContainingTextField.add(textField, BorderLayout.CENTER);
         panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
         unit.add(label, BorderLayout.NORTH);
@@ -185,7 +192,7 @@ public class CustomGame {
     public void changePlayer() {
 
         isPlayer =!isPlayer;
-        
+
     }
 
 
