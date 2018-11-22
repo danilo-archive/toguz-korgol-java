@@ -1,10 +1,10 @@
 package main.java.com.dominicswaine.seg_agile_project;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
+//Maybe have a running total of all the korgools
 
 public class CustomGame {
 
@@ -44,6 +44,10 @@ public class CustomGame {
 
         makePanels();
 
+        //Creating the hashmap
+
+        map = new HashMap<>();
+
         //Populate the panels
 
         populateBackButtonContainer();
@@ -66,9 +70,6 @@ public class CustomGame {
 
         isPlayer = true;
 
-        //Creating the hashmap
-
-        map = new HashMap<>();
 
     }
 
@@ -156,7 +157,8 @@ public class CustomGame {
 
         }
 
-        JSpinner textField = new JSpinner();
+        SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 150, 1);
+        JSpinner textField = new JSpinner(spinnerSettings);
         map.put(label.getText(), textField);
         panelContainingTextField.add(textField, BorderLayout.CENTER);
         panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
@@ -192,6 +194,22 @@ public class CustomGame {
     public void changePlayer() {
 
         isPlayer =!isPlayer;
+
+    }
+    
+    public void checkValues() {
+
+        HashMap<String, JSpinner> incorrectFields = new HashMap<>();
+
+        for (String key : map.keySet()) {
+
+            if (!key.equals("Kazan:")) {
+
+                map.get(key).getValue();
+
+            }
+
+        }
 
     }
 
