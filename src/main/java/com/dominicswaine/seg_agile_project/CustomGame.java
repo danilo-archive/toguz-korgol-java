@@ -213,11 +213,26 @@ public class CustomGame {
 
             dropdown.setToolTipText("Settings apply to you");
 
+            //Clear the spinners
+
+            for (int i = 0; i < 10; i ++) {
+
+                JSpinner currentSpinner = map.get("" + i);
+                currentSpinner.setValue(playerValues[i]);
+            }
+
         }
 
         else {
 
             dropdown.setToolTipText("Settings apply to your opponent");
+
+            for (int i = 0; i < 10; i ++) {
+
+                JSpinner currentSpinner = map.get("" + i);
+                currentSpinner.setValue(opponentValues[i]);
+            }
+
 
         }
 
