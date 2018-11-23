@@ -1,10 +1,12 @@
 package main.java.com.dominicswaine.seg_agile_project;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 //Maybe have a running total of all the korgools
+//fix name for spinners
 
 public class CustomGame {
 
@@ -23,6 +25,10 @@ public class CustomGame {
     private JButton startButton;
     private Boolean isPlayer;
     private HashMap<String, JSpinner> map;
+    private JComboBox dropdown;
+    private int[] playerValues;
+    private int[] opponentValues;
+
 
 
     public CustomGame() {
@@ -44,9 +50,14 @@ public class CustomGame {
 
         makePanels();
 
-        //Creating the hashmap
+        //Creating the hashmap which enables us to access the spinners
 
         map = new HashMap<>();
+
+        //Creating the arrays which will contain the inputted values
+
+        playerValues = new int[10];
+        opponentValues = new int[10];
 
         //Populate the panels
 
@@ -83,6 +94,7 @@ public class CustomGame {
         containerOfTextBoxes = new JPanel(new GridLayout(0,2));
         containerOfCancelTuz = new JPanel(new FlowLayout());
         containerOfSaveAndStart = new JPanel(new FlowLayout());
+
     }
 
     public void populateBackButtonContainer() {
@@ -98,7 +110,7 @@ public class CustomGame {
 
         JLabel title = new JLabel("Custom Game");
         title.setAlignmentX(title.CENTER_ALIGNMENT);
-        title.setFont(new Font("Arial", Font.BOLD, 18));
+        title.setFont(new Font("Tahoma", Font.BOLD, 18));
 
         /*JLabel instructions = new JLabel("To begin a custom game, first use the dropdown \n " +
                 "to select who the parameters will apply to; \n " +
@@ -110,10 +122,10 @@ public class CustomGame {
         */
 
         containerOfTextAndDropdown.add(title);
-        containerOfTextAndDropdown.add(Box.createVerticalStrut(100));
+        containerOfTextAndDropdown.add(Box.createVerticalStrut(150));
 
-        JComboBox dropdown = new JComboBox();
-        dropdown.setFont(new Font("Arial", Font.PLAIN, 14));
+        dropdown = new JComboBox();
+        dropdown.setFont(new Font("Tahoma", Font.PLAIN, 14));
         dropdown.addItem("You");
         dropdown.addItem("Opponent");
         dropdown.setMaximumSize(dropdown.getPreferredSize());
@@ -157,9 +169,11 @@ public class CustomGame {
 
         }
 
-        SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 150, 1);
+        SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner textField = new JSpinner(spinnerSettings);
-        map.put(label.getText(), textField);
+        textField.setName("" + i); //Setting an ID for each spinner
+        textField.addChangeListener(e -> obtainValue(textField.getName()));
+        map.put("" + i, textField);
         panelContainingTextField.add(textField, BorderLayout.CENTER);
         panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
         unit.add(label, BorderLayout.NORTH);
@@ -183,9 +197,9 @@ public class CustomGame {
     public void populateContainerOfSaveAndStart() {
 
         saveButton = new JButton("Save");
-        saveButton.setFont(new Font("Arial", Font.BOLD, 14));
+        saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         startButton = new JButton("Start");
-        startButton.setFont(new Font("Arial", Font.BOLD, 14));
+        startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         containerOfSaveAndStart.add(saveButton);
         containerOfSaveAndStart.add(startButton);
 
@@ -195,9 +209,21 @@ public class CustomGame {
 
         isPlayer =!isPlayer;
 
+        if (isPlayer) {
+
+            dropdown.setToolTipText("Settings apply to you");
+
+        }
+
+        else {
+
+            dropdown.setToolTipText("Settings apply to your opponent");
+
+        }
+
     }
     
-    public void checkValues() {
+    /*public void checkValues() {
 
         HashMap<String, JSpinner> incorrectFields = new HashMap<>();
 
@@ -210,6 +236,31 @@ public class CustomGame {
             }
 
         }
+
+    }
+
+    */
+
+    public void obtainValue(String idOfSpinner) {
+
+        JSpinner currentSpinner = map.get(idOfSpinner);
+        int currentValue = (Integer)currentSpinner.getValue();
+
+        if (isPlayer) {
+
+            playerValues[Integer.parseInt(idOfSpinner)] = currentValue;
+            //In this array, index represents the id of the spinner
+
+        }
+
+        else {
+
+            opponentValues[Integer.parseInt(idOfSpinner)] = currentValue;
+
+        }
+
+        System.out.println("Player Values: " + Arrays.toString(playerValues));
+        System.out.println("Opponent Values: " + Arrays.toString(opponentValues));
 
     }
 
