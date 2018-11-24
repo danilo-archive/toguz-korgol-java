@@ -38,11 +38,26 @@ public class Board {
 
             ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
 
-            for(int i = 1 ; i < korgools.size() ; ++i) {
-                holes[(holeIndex+i)%18].addKorgool(korgools.get(i));
+            int indexOfLastHole = (korgools.size()==1)
+                    ? (holeIndex+1)%18 : (holeIndex+korgools.size()-1)%18;
+
+            if(korgools.size()>=2){
+                for(int i = 1 ; i < korgools.size() ; ++i) {
+                    holes[(holeIndex+i)%18].addKorgool(korgools.get(i));
+                }
+
+                holes[holeIndex].emptyBarOne();
+            }else {
+                Korgool first = korgools.get(0);
+                holes[holeIndex].emptyHole();
+                holes[(holeIndex + 1) % 18].addKorgool(first);
             }
 
-            holes[holeIndex].emptyBarOne();
+            if(holes[indexOfLastHole].getNumberOfKoorgools() % 2 == 0) {
+                int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
+                kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
+                holes[indexOfLastHole].emptyHole();
+            }
         }
     }
 }
