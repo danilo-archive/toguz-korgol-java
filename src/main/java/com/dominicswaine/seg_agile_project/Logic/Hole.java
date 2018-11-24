@@ -21,4 +21,10 @@ public class Hole extends KorgoolContainer {
         korgools.clear();
     }
 
+    protected void emptyBarOne(){
+        Korgool first = korgools.get(0);
+        emptyHole();
+        addKorgool(first);
+    }
+
 }

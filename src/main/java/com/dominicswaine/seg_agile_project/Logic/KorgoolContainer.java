@@ -27,8 +27,8 @@ abstract public class KorgoolContainer {
         return korgools.size();
     }
 
-    public int getKoorgools(){
-        return korgools.size();
+    public ArrayList<Korgool> getKoorgools(){
+        return korgools;
     }
 
 }
