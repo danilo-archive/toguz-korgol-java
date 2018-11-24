@@ -6,7 +6,10 @@ abstract public class KorgoolContainer {
     protected ArrayList<Korgool> korgools;
     protected Side original0wner;
 
-    public KorgoolContainer(){}
+    public KorgoolContainer(Side original0wner){
+        korgools = new ArrayList<>();
+        this.original0wner = original0wner;
+    }
 
     public void addKorgool(Korgool korgool){
         korgools.add(korgool);

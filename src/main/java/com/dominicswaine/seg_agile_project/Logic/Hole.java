@@ -5,9 +5,8 @@ public class Hole extends KorgoolContainer {
     private boolean isTuz;
 
     public Hole(int index){
-        super();
+        super(index<9 ? Side.WHITE : Side.BLACK);
         isTuz = false;
-        super.original0wner = index<9 ? Side.WHITE : Side.WHITE;
     }
 
     public void markAsTux(){
