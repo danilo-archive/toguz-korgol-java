@@ -9,12 +9,16 @@ public class Hole extends KorgoolContainer {
         isTuz = false;
     }
 
-    public void markAsTux(){
+    public void markAsTuz(){
         isTuz = true;
     }
 
     public boolean isTuz(){
         return isTuz;
+    }
+
+    public Side getOwner() {
+        return !isTuz() ? super.original0wner : ((super.original0wner == Side.WHITE) ? Side.BLACK : Side.WHITE);
     }
 
     public void emptyHole(){

@@ -33,8 +33,7 @@ public class Board {
     }
 
     public void redistribute(int holeIndex) {
-        if((holeIndex <= 8 && nextToPlay == Side.WHITE) ||
-                (holeIndex >= 9 && holeIndex <= 17 && nextToPlay == Side.BLACK)) {
+        if((holes[holeIndex].getOwner() == nextToPlay)) {
 
             ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
 
@@ -57,7 +56,25 @@ public class Board {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
                 holes[indexOfLastHole].emptyHole();
+            }else if(holes[indexOfLastHole].getNumberOfKoorgools() == 3) { // 'tuz' time
+                if(getPlayerTuz(nextToPlay) == -1 &&
+                        (indexOfLastHole+1)%9 != 0 &&
+                        !holes[(indexOfLastHole + 9)%18].isTuz()) {
+                    holes[indexOfLastHole].markAsTuz();
+                    int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
+                    kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
+                    holes[indexOfLastHole].emptyHole();
+                }
             }
         }
+    }
+
+    public int getPlayerTuz(Side owner) {
+        for(int i = 0 ; i <= 17 ; ++i) {
+            if(holes[i].isTuz() && holes[i].getOwner() == owner) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
