@@ -169,6 +169,13 @@ public class CustomGame {
 
         }
 
+        //This will ensure that the maximum value allowed for each hole, including kazan is 162.
+        //Also, as the step is 1, it will not allow you to enter negative values.
+        //This also ensures that letters cannot be inputted.
+        //This therefore means we do not have to check for these conditions as they will never occur.
+        //If a user inputs something wrong, it is shown, but it is not added to the spinner, so 0 is in
+        //its place.
+
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner textField = new JSpinner(spinnerSettings);
         textField.setName("" + i); //Setting an ID for each spinner
@@ -200,6 +207,7 @@ public class CustomGame {
         saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         startButton = new JButton("Start");
         startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+        startButton.addActionListener(e -> checkValues());
         containerOfSaveAndStart.add(saveButton);
         containerOfSaveAndStart.add(startButton);
 
@@ -238,23 +246,30 @@ public class CustomGame {
 
     }
     
-    /*public void checkValues() {
+    public void checkValues() {
 
-        HashMap<String, JSpinner> incorrectFields = new HashMap<>();
+        int sumOfPlayerValues = 0;
+        int sumOfOpponentValues = 0;
 
-        for (String key : map.keySet()) {
+        for (int i = 0; i < 10; i++) {
 
-            if (!key.equals("Kazan:")) {
+            sumOfPlayerValues = sumOfPlayerValues + playerValues[i];
+            sumOfOpponentValues = sumOfOpponentValues + opponentValues[i];
 
-                map.get(key).getValue();
+        }
 
-            }
+        if (sumOfPlayerValues + sumOfOpponentValues > 162) {
+
+            JOptionPane.showMessageDialog(frame,
+                    "Total number of Korgools cannot exceed 162, please change your values.",
+                    "Warning",
+                    JOptionPane.ERROR_MESSAGE);
 
         }
 
     }
 
-    */
+
 
     public void obtainValue(String idOfSpinner) {
 
