@@ -26,7 +26,7 @@ public class Hole extends KorgolsContainer {
     Hole(int n) {
         setOpaque(true);
         currentColor = Color.black;
-
+        this.n = n;
 
         //todo : make this work with current project structure
         /* setIcon(new ImageIcon(
@@ -82,5 +82,7 @@ public class Hole extends KorgolsContainer {
     public Dimension getPreferredSize() {
         return new Dimension(180,360);
     }
+
+    public int getN(){return n;}
 
 }

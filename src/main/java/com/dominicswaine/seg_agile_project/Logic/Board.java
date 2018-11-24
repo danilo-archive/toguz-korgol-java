@@ -1,6 +1,7 @@
 package com.dominicswaine.seg_agile_project.Logic;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Board {
@@ -33,13 +34,27 @@ public class Board {
     }
 
     public void redistribute(int holeIndex) {
+
+        System.out.println(holeIndex);
+
         if((holes[holeIndex].getOwner() == nextToPlay)) {
 
             ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
+            /*
+            System.out.println(nextToPlay);
+            for(int i=0; i<18; i++){
+                System.out.print(" "+i+":"+holes[i].getNumberOfKoorgools());
+            }
+            System.out.println();
+            */
 
             int indexOfLastHole = (korgools.size()==1)
                     ? (holeIndex+1)%18 : (holeIndex+korgools.size()-1)%18;
 
+            if(korgools.size()==0){
+                // System.out.println("EMTPY WHOLE");
+                return;
+            }
             if(korgools.size()>=2){
                 for(int i = 1 ; i < korgools.size() ; ++i) {
                     holes[(holeIndex+i)%18].addKorgool(korgools.get(i));
@@ -52,21 +67,32 @@ public class Board {
                 holes[(holeIndex + 1) % 18].addKorgool(first);
             }
 
-            if(holes[indexOfLastHole].getNumberOfKoorgools() % 2 == 0) {
+            if(holes[indexOfLastHole].getNumberOfKoorgools() % 2 == 0 && holes[indexOfLastHole].getOwner() != nextToPlay) {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
                 holes[indexOfLastHole].emptyHole();
-            }else if(holes[indexOfLastHole].getNumberOfKoorgools() == 3) { // 'tuz' time
+            }else if(holes[indexOfLastHole].getNumberOfKoorgools() == 3 && holes[indexOfLastHole].getOwner() != nextToPlay) { // 'tuz' time
                 if(getPlayerTuz(nextToPlay) == -1 &&
                         (indexOfLastHole+1)%9 != 0 &&
                         !holes[(indexOfLastHole + 9)%18].isTuz()) {
                     holes[indexOfLastHole].markAsTuz();
+                    // System.out.println("TUZ!");
                     int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                     kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
                     holes[indexOfLastHole].emptyHole();
                 }
             }
+
+            /*
+            for(int i=0; i<18; i++){
+                System.out.print(" "+i+":"+holes[i].getNumberOfKoorgools());
+            }
+            System.out.println();System.out.println();
+            */
+            nextToPlay = nextToPlay==Side.WHITE ? Side.BLACK : Side.WHITE;
         }
+
+
     }
 
     public int getPlayerTuz(Side owner) {
