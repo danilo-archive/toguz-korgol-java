@@ -8,7 +8,7 @@ import java.awt.*;
  * It is a visual representation of the score of a player.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class Kazan extends KorgolsContainer {
     /**

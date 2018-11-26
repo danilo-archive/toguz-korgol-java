@@ -3,10 +3,6 @@ package com.dominicswaine.seg_agile_project.Board;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.Objects;
 
 
 /**
@@ -15,7 +11,7 @@ import java.util.Objects;
  * make a move.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class Hole extends KorgolsContainer {
 

@@ -9,7 +9,7 @@ import java.awt.*;
  * This class simply creates a panel with a circle of r = 10px.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class Korgol extends JLabel {
 
@@ -22,10 +22,8 @@ public class Korgol extends JLabel {
     public Korgol(boolean isWhite) {
         setOpaque(false);
         this.isWhite = isWhite;
-
         this.setLayout(new BorderLayout());
         render();
-
 
     }
 

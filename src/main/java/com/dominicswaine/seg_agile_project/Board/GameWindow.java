@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *  It is the window in which players can interact and play the game
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class GameWindow {
 
