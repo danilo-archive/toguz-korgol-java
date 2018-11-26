@@ -16,7 +16,7 @@ public class Kazan extends KorgolsContainer {
      */
     public Kazan() {
         setOpaque(false);
-        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/kazan.png";
+        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/kazan.png";
         setIcon(new ImageIcon(backgroundPath));
         setLayout(new GridLayout(5,16));
     }

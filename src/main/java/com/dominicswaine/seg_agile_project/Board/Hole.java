@@ -26,7 +26,7 @@ public class Hole extends KorgolsContainer {
     Hole(int n) {
         setOpaque(true);
 
-        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frame" + (n)+ ".png";
+        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n)+ ".png";
         setIcon(new ImageIcon(backgroundPath));
         setLayout(new GridLayout(8,5));
         this.tuz = 0;
