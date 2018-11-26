@@ -1,7 +1,12 @@
 package com.dominicswaine.seg_agile_project.Board;
 
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Objects;
 
 
 /**
@@ -17,31 +22,18 @@ public class Hole extends KorgolsContainer {
 
     private int tuz;
     private int n;
-    private Color currentColor;///tuz value (0 = not assigned to any player, 1 = assigned to 1st player, 2= assigned to 2nd player)
 
     /**
      * The hole is the main korgol container of the game
      * @param n the number of the hole
      */
     Hole(int n) {
-        currentColor = Color.black;
+        setOpaque(true);
 
-
-        //todo : make this work with current project structure
-        /* setIcon(new ImageIcon(
-                    Objects.requireNonNull(
-                            getClass().getClassLoader().
-                                    getResource(
-                                            "src/main/resources/Test.txt.png")
-                    )
-                )
-        );*/
-
+        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frame" + (n)+ ".png";
+        setIcon(new ImageIcon(backgroundPath));
         setLayout(new GridLayout(8,5));
-
-        this.tuz = 0;  //tuz is not assigned to any player
-
-
+        this.tuz = 0;
     }
 
 
@@ -66,20 +58,9 @@ public class Hole extends KorgolsContainer {
     }
 
 
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(currentColor);
-        g2.setStroke(new BasicStroke(4));
-        g2.drawRoundRect(10, 15, 150, 330 ,10,10);
-    }
-
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(180,360);
+        return new Dimension(120,240);
     }
 
 }
