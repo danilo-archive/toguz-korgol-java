@@ -22,7 +22,7 @@ public abstract class KorgolsContainer extends JLabel {
      * This container maintains korgols and shows them to screen
      */
     KorgolsContainer(){
-        setOpaque(true);
+        setOpaque(false);
         float[] arr = new float[3];
         float[] vals = Color.RGBtoHSB(166,128,100, arr);
 
@@ -104,6 +104,7 @@ public abstract class KorgolsContainer extends JLabel {
             if(k.isWhite()){
                 k.render();
                 ++lastKorgolInd;
+                revalidate();
                 return;
             }
         }
