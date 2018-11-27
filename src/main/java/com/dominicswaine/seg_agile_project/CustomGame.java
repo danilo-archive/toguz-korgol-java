@@ -5,9 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-//Maybe have a running total of all the korgools
-//fix name for spinners
-
 public class CustomGame {
 
     private JFrame frame;
@@ -17,58 +14,36 @@ public class CustomGame {
     private JPanel containerOfTextBoxes;
     private JPanel containerOfCancelTuz;
     private JPanel containerOfSaveAndStart;
-    private ButtonGroup buttonGroup1;
-    private ButtonGroup buttonGroup2;
+    private ButtonGroup buttonGroup;
     private JRadioButton tuzCanceller;
-    private JButton backButton; //fix
+    private JButton backButton; 
     private JButton saveButton;
     private JButton startButton;
     private Boolean isPlayer;
-    private HashMap<String, JSpinner> map;
+    private HashMap<String, JSpinner> map; 
     private JComboBox dropdown;
     private int[] playerValues;
     private int[] opponentValues;
-
+    private String playerTuz;
+    private String opponentTuz;
 
 
     public CustomGame() {
 
-        //Initialising the Frame
-
         frame  = new JFrame();
         frame.setSize(new Dimension(450, 700));
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //What is this?
-
-        //Initialise Button Groups and Tuz Canceller
-
-        buttonGroup1 = new ButtonGroup();
-        buttonGroup2 = new ButtonGroup();
-        tuzCanceller = new JRadioButton();
-
-        //Making the Panels
-
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); 
+        buttonGroup = new ButtonGroup();
         makePanels();
-
-        //Creating the hashmap which enables us to access the spinners
-
         map = new HashMap<>();
-
-        //Creating the arrays which will contain the inputted values
-
         playerValues = new int[10];
         opponentValues = new int[10];
-
-        //Populate the panels
-
         populateBackButtonContainer();
         populateTextAndDropdownContainer();
         populateContainerOfTextBoxes();
         populateContainerOfCancelTuz();
         populateContainerOfSaveAndStart();
-
-        //Add everything to contianer of everything which you then add to frame.
-
         containerOfEverything.add(containerOfBackButton);
         containerOfEverything.add(containerOfTextAndDropdown);
         containerOfEverything.add(containerOfTextBoxes);
@@ -76,12 +51,8 @@ public class CustomGame {
         containerOfEverything.add(containerOfSaveAndStart);
         frame.add(containerOfEverything);
         frame.setVisible(true);
-
-        //By default, settings first apply to player.
-
         isPlayer = true;
-
-
+        
     }
 
     public void makePanels() {
@@ -123,7 +94,6 @@ public class CustomGame {
 
         containerOfTextAndDropdown.add(title);
         containerOfTextAndDropdown.add(Box.createVerticalStrut(150));
-
         dropdown = new JComboBox();
         dropdown.setFont(new Font("Tahoma", Font.PLAIN, 14));
         dropdown.addItem("You");
@@ -135,7 +105,6 @@ public class CustomGame {
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
 
     }
-
 
     public void populateContainerOfTextBoxes() {
 
@@ -153,10 +122,10 @@ public class CustomGame {
         JLabel label;
         JPanel panelContainingTextField = new JPanel(new BorderLayout());
 
-        if (i == 0) { //For Kazan, we want no tuz radio button.
+        if (i == 0) { 
 
             label = new JLabel("Kazan:");
-            JLabel emptyLabel = new JLabel(""); //fix
+            JLabel emptyLabel = new JLabel(""); 
             unit.add(emptyLabel, BorderLayout.EAST);
 
         }
@@ -165,16 +134,12 @@ public class CustomGame {
 
             label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
+            tuzController.setName("" + i); 
+            tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
+            buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
 
         }
-
-        //This will ensure that the maximum value allowed for each hole, including kazan is 162.
-        //Also, as the step is 1, it will not allow you to enter negative values.
-        //This also ensures that letters cannot be inputted.
-        //This therefore means we do not have to check for these conditions as they will never occur.
-        //If a user inputs something wrong, it is shown, but it is not added to the spinner, so 0 is in
-        //its place.
 
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner textField = new JSpinner(spinnerSettings);
@@ -194,6 +159,9 @@ public class CustomGame {
     public void populateContainerOfCancelTuz() {
 
         tuzCanceller = new JRadioButton();
+        buttonGroup.add(tuzCanceller);
+        tuzCanceller.setName("0");
+        tuzCanceller.addActionListener((e -> checkRadioButtons(tuzCanceller.getName())));
         JLabel cancelTuz = new JLabel("Cancel Tuz:");
         containerOfCancelTuz.add(cancelTuz);
         containerOfCancelTuz.add(tuzCanceller);
@@ -221,8 +189,6 @@ public class CustomGame {
 
             dropdown.setToolTipText("Settings apply to you");
 
-            //Clear the spinners
-
             for (int i = 0; i < 10; i ++) {
 
                 JSpinner currentSpinner = map.get("" + i);
@@ -245,7 +211,7 @@ public class CustomGame {
         }
 
     }
-    
+
     public void checkValues() {
 
         int sumOfPlayerValues = 0;
@@ -270,8 +236,7 @@ public class CustomGame {
     }
 
 
-
-    public void obtainValue(String idOfSpinner) {
+    public void obtainValue(String idOfSpinner) { 
 
         JSpinner currentSpinner = map.get(idOfSpinner);
         int currentValue = (Integer)currentSpinner.getValue();
@@ -279,7 +244,6 @@ public class CustomGame {
         if (isPlayer) {
 
             playerValues[Integer.parseInt(idOfSpinner)] = currentValue;
-            //In this array, index represents the id of the spinner
 
         }
 
@@ -294,8 +258,64 @@ public class CustomGame {
 
     }
 
+    public void checkRadioButtons(String radioID) {
 
-    //Run this class
+        if (radioID.equals("0")) { 
+
+            if (isPlayer) {
+
+                playerTuz = "0";
+                System.out.println("PlayerTuz: " + playerTuz);
+
+            }
+
+            else {
+
+                opponentTuz = "0";
+                System.out.println("OpponentTuz: " + opponentTuz);
+
+            }
+
+        }
+
+        else if (isPlayer && !radioID.equals(opponentTuz)  && !radioID.equals("9")) {
+
+            playerTuz = radioID;
+            System.out.println("PlayerTuz: " + playerTuz);
+
+        }
+
+        else if (!isPlayer && !radioID.equals(playerTuz) && !radioID.equals("9")) {
+
+            opponentTuz = radioID;
+            System.out.println("OpponentTuz: " + opponentTuz);
+
+        }
+
+        else {
+
+            if (radioID.equals("9")) {
+
+                JOptionPane.showMessageDialog(frame,
+                        "The tuz cannot be 9.",
+                        "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
+
+            else {
+
+                JOptionPane.showMessageDialog(frame,
+                        "The player and opponent tuz's cannot match.",
+                        "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        }
+
+    }
+
 
     public static void main(String[] args) {
 
