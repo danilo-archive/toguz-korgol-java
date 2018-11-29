@@ -42,12 +42,7 @@ public class CustomGame {
         //Make and populate the panels
 
         makePanels();
-        populateBackButtonContainer();
-        populateTextAndDropdownContainer();
-        populateContainerOfSelections();
-        populateContainerOfSpinners();
-        populateContainerOfCancelTuz();
-        populateContainerOfSaveAndStart();
+        populatePanels();
         containerOfEverything.add(containerOfBackButton);
         containerOfEverything.add(containerOfTextAndDropdown);
         containerOfEverything.add(containerOfSelections);
@@ -76,7 +71,7 @@ public class CustomGame {
     public void populateBackButtonContainer() {
 
         backButton = new JButton("Back");
-        backButton.setFont(new Font("Arial", Font.BOLD, 14));
+        backButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         containerOfBackButton.add(backButton);
 
     }
@@ -84,17 +79,18 @@ public class CustomGame {
     public void populateTextAndDropdownContainer() {
 
         JLabel title = new JLabel("Custom Game");
-        title.setAlignmentX(title.CENTER_ALIGNMENT);
         title.setFont(new Font("Tahoma", Font.BOLD, 18));
+        title.setAlignmentX(title.CENTER_ALIGNMENT);
 
         JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
                 "you, or your opponent. You are then able to  " +
                 "specify the amount of Korgools per Kazan and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
-                "number of Korgools cannot exceed 162, the two Tuz's " +
+                "number of Korgools must be exactly 162, the two Tuz's " +
                 "cannot be the same, and no Tuz can be 9.</p></html>");
 
+        instructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
         instructions.setAlignmentX(instructions.CENTER_ALIGNMENT);
         containerOfTextAndDropdown.add(title);
         containerOfTextAndDropdown.setBorder(new EmptyBorder(0,20, 0, 20 ));
@@ -103,8 +99,8 @@ public class CustomGame {
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
         dropdown = new JComboBox();
         dropdown.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        dropdown.addItem("You");
-        dropdown.addItem("Opponent");
+        dropdown.addItem("You (White Side)");
+        dropdown.addItem("Opponent (Black Side)");
         dropdown.setMaximumSize(dropdown.getPreferredSize());
         dropdown.setToolTipText("Select who you want the settings to apply to");
         dropdown.addActionListener(e -> changePlayer());
@@ -113,6 +109,22 @@ public class CustomGame {
 
     }
 
+    public void populateContainerOfSelections() {
+
+        totalKorgools = new JLabel("Total Korgools: 0");
+        totalKorgools.setFont(new Font("Tahoma", Font.BOLD, 13));
+        playerTuzLabel = new JLabel("Your Tuz: None");
+        playerTuzLabel.setForeground(Color.BLUE);
+        playerTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+        opponentTuzLabel = new JLabel("Opponent Tuz: None");
+        opponentTuzLabel.setForeground(Color.RED);
+        opponentTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+        containerOfSelections.add(playerTuzLabel);
+        containerOfSelections.add(totalKorgools);
+        containerOfSelections.add(opponentTuzLabel);
+        containerOfSelections.setBorder(new EmptyBorder(10,0, 10, 0 ));
+
+    }
 
     public void populateContainerOfSpinners() {
 
@@ -128,12 +140,11 @@ public class CustomGame {
 
         JPanel unit = new JPanel(new BorderLayout());
         JLabel label;
-        JPanel panelContainingTextField = new JPanel(new BorderLayout());
+        JPanel panelContainingSpinner = new JPanel(new BorderLayout());
 
-        if (i == 0) { 
+        if (i == 0) { //For Kazan, we want no tuz radio button
 
             label = new JLabel("Kazan:");
-            label.setBorder(new EmptyBorder(0, 0 ,0 , 10));
             unit.add(Box.createHorizontalStrut(21), BorderLayout.EAST);
 
         }
@@ -141,24 +152,25 @@ public class CustomGame {
         else {
 
             label = new JLabel("Hole " + i + ":");
-            label.setBorder(new EmptyBorder(0, 0 ,0 , 10));
             JRadioButton tuzController = new JRadioButton();
-            tuzController.setName("" + i);
+            tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 8 has ID 8, hole 9 and cancel have ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
 
         }
 
+        label.setBorder(new EmptyBorder(0, 0 ,0 , 10));
+        label.setFont(new Font("Tahoma", Font.PLAIN, 14));
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
-        JSpinner textField = new JSpinner(spinnerSettings);
-        textField.setName("" + i); //Setting an ID for each spinner
-        textField.addChangeListener(e -> obtainValue(textField.getName()));
-        mapOfSpinners.put("" + i, textField);
-        panelContainingTextField.add(textField, BorderLayout.CENTER);
-        panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
-        unit.add(label, BorderLayout.WEST); //test
-        unit.add(panelContainingTextField, BorderLayout.CENTER);
+        JSpinner spinner = new JSpinner(spinnerSettings);
+        spinner.setName("" + i); //Setting an ID for each spinner, Kazan has ID 0, Hole x has ID x
+        spinner.addChangeListener(e -> obtainValue(spinner.getName()));
+        mapOfSpinners.put("" + i, spinner);
+        panelContainingSpinner.add(spinner, BorderLayout.CENTER);
+        panelContainingSpinner.setBorder(new EmptyBorder(5,0, 5, 0 ));
+        unit.add(label, BorderLayout.WEST);
+        unit.add(panelContainingSpinner, BorderLayout.CENTER);
         unit.setBorder(new EmptyBorder(5,50,5,50));
 
         return unit;
@@ -172,11 +184,11 @@ public class CustomGame {
         tuzCanceller.setName("0");
         tuzCanceller.addActionListener((e -> checkRadioButtons(tuzCanceller.getName())));
         JLabel cancelTuz = new JLabel("Cancel Tuz:");
+        cancelTuz.setFont(new Font("Tahoma", Font.PLAIN, 14));
         containerOfCancelTuz.add(cancelTuz);
         containerOfCancelTuz.add(tuzCanceller);
 
     }
-
 
     public void populateContainerOfSaveAndStart() {
 
@@ -190,41 +202,18 @@ public class CustomGame {
 
     }
 
-    public void populateContainerOfSelections() {
+    public void populatePanels() {
 
-        totalKorgools = new JLabel("Total Korgools: 0");
-        totalKorgools.setFont(new Font("Tahoma", Font.BOLD, 14));
-        playerTuzLabel = new JLabel("Your Tuz: " + playerTuz);
-        playerTuzLabel.setForeground(Color.BLUE);
-        playerTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-        opponentTuzLabel = new JLabel("Opponent Tuz: " + opponentTuz);
-        opponentTuzLabel.setForeground(Color.RED);
-        opponentTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-        containerOfSelections.add(playerTuzLabel);
-        containerOfSelections.add(totalKorgools);
-        containerOfSelections.add(opponentTuzLabel);
-        containerOfSelections.setBorder(new EmptyBorder(10,0, 10, 0 ));
-
+        populateBackButtonContainer();
+        populateTextAndDropdownContainer();
+        populateContainerOfSelections();
+        populateContainerOfSpinners();
+        populateContainerOfCancelTuz();
+        populateContainerOfSaveAndStart();
 
     }
 
-    public void updateContainerOfSelections() {
-
-        int sumOfPlayerValues = 0;
-        int sumOfOpponentValues = 0;
-
-        for (int i = 0; i < 10; i++) {
-
-            sumOfPlayerValues = sumOfPlayerValues + playerValues[i];
-            sumOfOpponentValues = sumOfOpponentValues + opponentValues[i];
-
-        }
-
-        totalKorgools.setText("Total Korgools: " + (sumOfPlayerValues + sumOfOpponentValues));
-        playerTuzLabel.setText("Your Tuz: " + playerTuz);
-        opponentTuzLabel.setText("Opponent Tuz: " + opponentTuz);
-
-    }
+    //Listeners
 
     public void changePlayer() {
 
@@ -233,6 +222,8 @@ public class CustomGame {
         if (isPlayer) {
 
             dropdown.setToolTipText("Settings apply to you");
+
+            //Populate spinners with old values
 
             for (int i = 0; i < 10; i ++) {
 
@@ -255,36 +246,11 @@ public class CustomGame {
 
         }
 
-        buttonGroup.clearSelection(); 
+        buttonGroup.clearSelection(); //Deselects the radio button
 
     }
 
-    public void checkValues() { 
-
-        int sumOfPlayerValues = 0;
-        int sumOfOpponentValues = 0;
-
-        for (int i = 0; i < 10; i++) {
-
-            sumOfPlayerValues = sumOfPlayerValues + playerValues[i];
-            sumOfOpponentValues = sumOfOpponentValues + opponentValues[i];
-
-        }
-
-        if (sumOfPlayerValues + sumOfOpponentValues > 162) {
-
-            JOptionPane.showMessageDialog(frame,
-                    "Total number of Korgools cannot exceed 162, please change your values.",
-                    "Warning",
-                    JOptionPane.ERROR_MESSAGE);
-
-        }
-
-    }
-
-
-
-    public void obtainValue(String idOfSpinner) { 
+    public void obtainValue(String idOfSpinner) {
 
         JSpinner currentSpinner = mapOfSpinners.get(idOfSpinner);
         int currentValue = (Integer)currentSpinner.getValue();
@@ -292,6 +258,7 @@ public class CustomGame {
         if (isPlayer) {
 
             playerValues[Integer.parseInt(idOfSpinner)] = currentValue;
+            //In this array, index represents the ID of the spinner. Kazan has ID/indx 0, Hole x has ID/indx x
 
         }
 
@@ -308,9 +275,25 @@ public class CustomGame {
 
     }
 
+
+    public void checkValues() {
+
+        int sumOfPlayerAndOpponentValues = sumOfPlayerAndOpponentValues();
+
+        if (sumOfPlayerAndOpponentValues != 162) {
+
+            JOptionPane.showMessageDialog(frame,
+                    "Total number of Korgools must be exactly 162, please change your values.",
+                    "Warning",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }
+
     public void checkRadioButtons(String radioID) {
 
-        if (radioID.equals("0")) { //If the tuz remains 0, it means that no tuz was selected.
+        if (radioID.equals("0")) { //If the tuz remains 0, it means that no tuz was selected
 
             if (isPlayer) {
 
@@ -372,6 +355,60 @@ public class CustomGame {
         }
 
         updateContainerOfSelections();
+
+    }
+
+    //Helper functions
+
+    public void updateContainerOfSelections() {
+
+        int sumOfPlayerAndOpponentValues = sumOfPlayerAndOpponentValues();
+        totalKorgools.setText("Total Korgools: " + (sumOfPlayerAndOpponentValues));
+
+        if (playerTuz.equals("0") && opponentTuz.equals("0")) {
+
+            playerTuzLabel.setText("Your Tuz: None");
+            opponentTuzLabel.setText("Opponent Tuz: None");
+
+        }
+
+        else if (playerTuz.equals("0") && !opponentTuz.equals("0") ) {
+
+            playerTuzLabel.setText("Your Tuz: None");
+            opponentTuzLabel.setText("Opponent Tuz: " + opponentTuz);
+
+        }
+
+        else if (opponentTuz.equals("0") && !playerTuz.equals("0")) {
+
+            opponentTuzLabel.setText("Opponent Tuz: None");
+            playerTuzLabel.setText("Your Tuz: " + playerTuz);
+
+        }
+
+        else {
+
+            playerTuzLabel.setText("Your Tuz: " + playerTuz);
+            opponentTuzLabel.setText("Opponent Tuz: " + opponentTuz);
+
+        }
+
+    }
+
+    public int sumOfPlayerAndOpponentValues() {
+
+        int sumOfPlayerValues = 0;
+        int sumOfOpponentValues = 0;
+
+        for (int i = 0; i < 10; i++) {
+
+            sumOfPlayerValues = sumOfPlayerValues + playerValues[i];
+            sumOfOpponentValues = sumOfOpponentValues + opponentValues[i];
+
+        }
+
+        int total = sumOfPlayerValues + sumOfOpponentValues;
+        return total;
 
     }
 
