@@ -1,4 +1,4 @@
-package main.java.com.dominicswaine.seg_agile_project;
+package com.dominicswaine.seg_agile_project.Board;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.awt.*;
@@ -22,10 +22,14 @@ public class CustomGame {
 
     public CustomGame() {
 
+        //Initialise the frame
+
         frame  = new JFrame();
         frame.setSize(new Dimension(475, 700));
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //What is this?
+
+        //Initialise necessary variables
 
         buttonGroup = new ButtonGroup();
         isPlayer = true;
@@ -34,6 +38,8 @@ public class CustomGame {
         opponentValues = new int[10];
         playerTuz = "0";
         opponentTuz = "0";
+
+        //Make and populate the panels
 
         makePanels();
         populateBackButtonContainer();
@@ -81,16 +87,17 @@ public class CustomGame {
         title.setAlignmentX(title.CENTER_ALIGNMENT);
         title.setFont(new Font("Tahoma", Font.BOLD, 18));
 
-        JLabel instructions = new JLabel("<html>To begin a custom game, first use the dropdown" +
+        JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
                 "you, or your opponent. You are then able to  " +
                 "specify the amount of Korgools per Kazan and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
                 "number of Korgools cannot exceed 162, the two Tuz's " +
-                "cannot be the same, and no Tuz can be 9.</html>");
+                "cannot be the same, and no Tuz can be 9.</p></html>");
 
         instructions.setAlignmentX(instructions.CENTER_ALIGNMENT);
         containerOfTextAndDropdown.add(title);
+        containerOfTextAndDropdown.setBorder(new EmptyBorder(0,20, 0, 20 ));
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
         containerOfTextAndDropdown.add(instructions);
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
@@ -126,16 +133,17 @@ public class CustomGame {
         if (i == 0) { 
 
             label = new JLabel("Kazan:");
-            JLabel emptyLabel = new JLabel(""); //fix
-            unit.add(emptyLabel, BorderLayout.EAST);
+            label.setBorder(new EmptyBorder(0, 0 ,0 , 10));
+            unit.add(Box.createHorizontalStrut(21), BorderLayout.EAST);
 
         }
 
         else {
 
             label = new JLabel("Hole " + i + ":");
+            label.setBorder(new EmptyBorder(0, 0 ,0 , 10));
             JRadioButton tuzController = new JRadioButton();
-            tuzController.setName("" + i); 
+            tuzController.setName("" + i);
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
@@ -149,7 +157,7 @@ public class CustomGame {
         mapOfSpinners.put("" + i, textField);
         panelContainingTextField.add(textField, BorderLayout.CENTER);
         panelContainingTextField.setBorder(new EmptyBorder(5,0, 5, 0 ));
-        unit.add(label, BorderLayout.NORTH);
+        unit.add(label, BorderLayout.WEST); //test
         unit.add(panelContainingTextField, BorderLayout.CENTER);
         unit.setBorder(new EmptyBorder(5,50,5,50));
 
@@ -276,7 +284,7 @@ public class CustomGame {
 
 
 
-    public void obtainValue(String idOfSpinner) {
+    public void obtainValue(String idOfSpinner) { 
 
         JSpinner currentSpinner = mapOfSpinners.get(idOfSpinner);
         int currentValue = (Integer)currentSpinner.getValue();
@@ -302,7 +310,7 @@ public class CustomGame {
 
     public void checkRadioButtons(String radioID) {
 
-        if (radioID.equals("0")) { 
+        if (radioID.equals("0")) { //If the tuz remains 0, it means that no tuz was selected.
 
             if (isPlayer) {
 
@@ -346,6 +354,7 @@ public class CustomGame {
                         "Warning",
                         JOptionPane.ERROR_MESSAGE);
 
+                buttonGroup.clearSelection();
 
             }
 
@@ -355,6 +364,8 @@ public class CustomGame {
                         "The player and opponent tuz's cannot match.",
                         "Warning",
                         JOptionPane.ERROR_MESSAGE);
+
+                buttonGroup.clearSelection();
 
             }
 
