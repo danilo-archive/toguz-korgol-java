@@ -1,16 +1,21 @@
 package com.dominicswaine.seg_agile_project.Board;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class enables players to set up a custom game and to save this as a configuration
+ * to play at a later date.
+ *
+ * @author David Mahgerefteh
+ * @version 29/11/2018
+ */
 public class CustomGame {
 
     private JFrame frame;
     private JPanel  containerOfEverything, containerOfBackButton, containerOfTextAndDropdown,
             containerOfSelections, containerOfSpinners, containerOfCancelTuz, containerOfSaveAndStart;
-    private JButton backButton, saveButton, startButton;
     private JComboBox dropdown;
     private ButtonGroup buttonGroup;
     private JRadioButton tuzCanceller;
@@ -27,7 +32,7 @@ public class CustomGame {
         frame  = new JFrame();
         frame.setSize(new Dimension(475, 700));
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //What is this?
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Initialise necessary variables
 
@@ -54,7 +59,10 @@ public class CustomGame {
 
     }
 
-    public void makePanels() {
+    /**
+     * Generate all the panels required by the class.
+     */
+    private void makePanels() {
 
         containerOfEverything = new JPanel();
         containerOfEverything.setLayout(new BoxLayout(containerOfEverything, BoxLayout.Y_AXIS));
@@ -68,19 +76,25 @@ public class CustomGame {
 
     }
 
-    public void populateBackButtonContainer() {
+    /**
+     * Create the back button and add it to its container.
+     */
+    private void populateBackButtonContainer() {
 
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         containerOfBackButton.add(backButton);
 
     }
 
-    public void populateTextAndDropdownContainer() {
+    /**
+     * Create the title, instructions, dropdown, and add them to their respective container.
+     */
+    private void populateTextAndDropdownContainer() {
 
         JLabel title = new JLabel("Custom Game");
         title.setFont(new Font("Tahoma", Font.BOLD, 18));
-        title.setAlignmentX(title.CENTER_ALIGNMENT);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
@@ -91,7 +105,7 @@ public class CustomGame {
                 "cannot be the same, and no Tuz can be 9.</p></html>");
 
         instructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        instructions.setAlignmentX(instructions.CENTER_ALIGNMENT);
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         containerOfTextAndDropdown.add(title);
         containerOfTextAndDropdown.setBorder(new EmptyBorder(0,20, 0, 20 ));
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
@@ -109,7 +123,10 @@ public class CustomGame {
 
     }
 
-    public void populateContainerOfSelections() {
+    /**
+     * Create the labels for the total number of korgools and the player and opponent tuz selections.
+     */
+    private void populateContainerOfSelections() {
 
         totalKorgools = new JLabel("Total Korgools: 0");
         totalKorgools.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -126,7 +143,12 @@ public class CustomGame {
 
     }
 
-    public void populateContainerOfSpinners() {
+    /**
+     * Create units to be added to the container of spinners. Note, a unit is comprised of
+     * a label, representing what entity the JSpinner value applies to, a JSpinner for taking
+     * in user values, and finally, a radio button, to allow for tuz selection.
+     */
+    private void populateContainerOfSpinners() {
 
         for (int i = 0; i < 10; i++) {
 
@@ -136,7 +158,13 @@ public class CustomGame {
 
     }
 
-    public JPanel makeUnit(int i) {
+    /**
+     * Generate a unit to be added to the container of spinners.
+     *
+     * @param i counter used to influence label for JSpinner
+     * @return a JPanel that is a unit to be added to the container of spinners
+     */
+    private JPanel makeUnit(int i) {
 
         JPanel unit = new JPanel(new BorderLayout());
         JLabel label;
@@ -177,7 +205,11 @@ public class CustomGame {
 
     }
 
-    public void populateContainerOfCancelTuz() {
+    /**
+     * Create the radio button necessary for cancelling a tuz selection, along with
+     * its respective panel.
+     */
+    private void populateContainerOfCancelTuz() {
 
         tuzCanceller = new JRadioButton();
         buttonGroup.add(tuzCanceller);
@@ -190,11 +222,15 @@ public class CustomGame {
 
     }
 
-    public void populateContainerOfSaveAndStart() {
+    /**
+     * Create the save and start buttons, along with their respective
+     * panel.
+     */
+    private void populateContainerOfSaveAndStart() {
 
-        saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Save");
         saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-        startButton = new JButton("Start");
+        JButton startButton = new JButton("Start");
         startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         startButton.addActionListener(e -> checkValues());
         containerOfSaveAndStart.add(saveButton);
@@ -202,7 +238,10 @@ public class CustomGame {
 
     }
 
-    public void populatePanels() {
+    /**
+     * Populate all the panels.
+     */
+    private void populatePanels() {
 
         populateBackButtonContainer();
         populateTextAndDropdownContainer();
@@ -215,7 +254,11 @@ public class CustomGame {
 
     //Listeners
 
-    public void changePlayer() {
+    /**
+     * Called when the dropdown is used, changes the player selected
+     * and populates the spinners with their old values.
+     */
+    private void changePlayer() {
 
         isPlayer =!isPlayer;
 
@@ -250,7 +293,13 @@ public class CustomGame {
 
     }
 
-    public void obtainValue(String idOfSpinner) {
+    /**
+     * Obtain the value from the spinner and add it to the appropriate array;
+     * either the player or opponent.
+     *
+     * @param idOfSpinner the ID of the spinner whose value we wish to obtain
+     */
+    private void obtainValue(String idOfSpinner) {
 
         JSpinner currentSpinner = mapOfSpinners.get(idOfSpinner);
         int currentValue = (Integer)currentSpinner.getValue();
@@ -270,13 +319,14 @@ public class CustomGame {
 
         updateContainerOfSelections();
 
-        System.out.println("Player Values: " + Arrays.toString(playerValues));
-        System.out.println("Opponent Values: " + Arrays.toString(opponentValues));
-
     }
 
 
-    public void checkValues() {
+    /**
+     * Check that the total number of korgools is exactly
+     * 162, as a game cannot start until this criterion is met.
+     */
+    private void checkValues() {
 
         int sumOfPlayerAndOpponentValues = sumOfPlayerAndOpponentValues();
 
@@ -291,23 +341,24 @@ public class CustomGame {
 
     }
 
-    public void checkRadioButtons(String radioID) {
+    /**
+     * Ensure that the tuz selections are not the same and are not 9.
+     *
+     * @param radioID the ID of the radio button we wish to check
+     */
+    private void checkRadioButtons(String radioID) {
 
         if (radioID.equals("0")) { //If the tuz remains 0, it means that no tuz was selected
 
             if (isPlayer) {
 
                 playerTuz = "0";
-                System.out.println("PlayerTuz: " + playerTuz);
-
 
             }
 
             else {
 
                 opponentTuz = "0";
-                System.out.println("OpponentTuz: " + opponentTuz);
-
 
             }
 
@@ -316,15 +367,12 @@ public class CustomGame {
         else if (isPlayer && !radioID.equals(opponentTuz)  && !radioID.equals("9")) {
 
             playerTuz = radioID;
-            System.out.println("PlayerTuz: " + playerTuz);
-
 
         }
 
         else if (!isPlayer && !radioID.equals(playerTuz) && !radioID.equals("9")) {
 
             opponentTuz = radioID;
-            System.out.println("OpponentTuz: " + opponentTuz);
 
         }
 
@@ -360,7 +408,10 @@ public class CustomGame {
 
     //Helper functions
 
-    public void updateContainerOfSelections() {
+    /**
+     * Update the tuz selections and total number of korgools.
+     */
+    private void updateContainerOfSelections() {
 
         int sumOfPlayerAndOpponentValues = sumOfPlayerAndOpponentValues();
         totalKorgools.setText("Total Korgools: " + (sumOfPlayerAndOpponentValues));
@@ -395,7 +446,12 @@ public class CustomGame {
 
     }
 
-    public int sumOfPlayerAndOpponentValues() {
+    /**
+     * Calculate the sum of the player and opponent values.
+     *
+     * @return the sum of the player and opponent values
+     */
+    private int sumOfPlayerAndOpponentValues() {
 
         int sumOfPlayerValues = 0;
         int sumOfOpponentValues = 0;
@@ -407,10 +463,11 @@ public class CustomGame {
 
         }
 
-        int total = sumOfPlayerValues + sumOfOpponentValues;
-        return total;
+        return sumOfPlayerValues + sumOfOpponentValues;
 
     }
+
+    //Create an instance of this class
 
     public static void main(String[] args) {
 
