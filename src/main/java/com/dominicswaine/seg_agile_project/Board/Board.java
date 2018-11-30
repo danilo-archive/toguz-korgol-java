@@ -11,7 +11,7 @@ import java.io.IOException;
  * A board is the panel that contains the game board and draws
  * the background image.
  * @author Danilo Del Busso
- * @version 30.11.2018
+ * @version 30-11-2018
  */
 public class Board extends JPanel {
 
