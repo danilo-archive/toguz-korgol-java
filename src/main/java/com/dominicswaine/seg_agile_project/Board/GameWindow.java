@@ -40,9 +40,7 @@ public class GameWindow {
             Container pane = gameWindow.getContentPane();
             pane.setLayout(new BorderLayout());
 
-
-            JPanel board = createNewBoard();
-            board.setOpaque(false);
+            Board board = createNewBoard();
 
             pane.add(board, BorderLayout.WEST);
 
@@ -51,8 +49,6 @@ public class GameWindow {
             gameWindow.pack();
             gameWindow.setSize(new Dimension(1280, 720));
             gameWindow.setVisible(true);
-
-
         }
 
 
@@ -60,9 +56,11 @@ public class GameWindow {
      * Create and draw starting board with 9 korgols per hole and empty kazans
      * @return the board panel
      */
-    private JPanel createNewBoard() {
+    private Board createNewBoard() {
 
-            JPanel board = new JPanel(new BorderLayout());
+            String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/woodbg.jpg";
+
+            Board board = new Board(backgroundPath);
             JPanel topRow = new JPanel(new GridLayout(0,HOLES_PER_PLAYER));
             JPanel bottomRow = new JPanel(new GridLayout(0,HOLES_PER_PLAYER));
             JPanel kazanRow = new JPanel(new BorderLayout());
@@ -98,6 +96,13 @@ public class GameWindow {
             k.addKorgols(0);
             k.adjustLooks();
             kazanRow.add(k,BorderLayout.WEST);
+
+
+            topRow.setOpaque(false);
+            kazanRow.setOpaque(false);
+            bottomRow.setOpaque(false);
+
+
 
             //add elements to board
             board.add(topRow, BorderLayout.NORTH);
