@@ -4,7 +4,6 @@ package com.dominicswaine.seg_agile_project.Board;
 import javax.swing.*;
 import java.awt.*;
 
-
 /**
  * A hole contains korgols and it's the main interactive
  * feature of the game. Clicking on a hole is how the player can
@@ -15,7 +14,7 @@ import java.awt.*;
  */
 public class Hole extends KorgolsContainer {
 
-
+    private Color tuzBorderColor;
     private int tuz;
     private int n;
 
@@ -25,14 +24,32 @@ public class Hole extends KorgolsContainer {
      */
     Hole(int n) {
         setOpaque(true);
-
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n)+ ".png";
         setIcon(new ImageIcon(backgroundPath));
         setLayout(new GridLayout(8,5));
         this.tuz = 0;
+        tuzBorderColor = new Color(0f,0f,0f,.0f );  //white but completely transparent color
+
     }
 
+    /**
+     * Displays a color rectangle around the hole showing that it has been assigned to a specific player
+     * @param c the color of the rectangle to display
+     */
+    public void displayTuz(Color c){
+        this.tuzBorderColor = c;
+        revalidate();
+        repaint();
+    }
 
+    /**
+     * Sets the color of the tuz rectangle to transparent
+     */
+    public void dontDisplayTuz(){
+        this.tuzBorderColor = (new Color(0f,0f,0f,.0f ));
+        revalidate();
+        repaint();
+    }
 
     /**
      * Assigns this hole as tuz to the designed player
@@ -47,6 +64,17 @@ public class Hole extends KorgolsContainer {
 
         return false;
     }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        Graphics2D tuzBorder = (Graphics2D) g;
+        tuzBorder.setColor(tuzBorderColor);  //set color to red with 100% transparency (last parameter)
+        tuzBorder.setStroke(new BasicStroke(4));
+        tuzBorder.drawRect(0,0,getWidth(), getHeight());
+    }
+
 
     @Override
     public int getMaxKorgolsPossible() {
