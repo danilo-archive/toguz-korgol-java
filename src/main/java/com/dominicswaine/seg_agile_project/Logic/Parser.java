@@ -53,6 +53,10 @@ public class Parser {
         }
 
         obj2.put("config",p1);
+
+        // Put everything in the object to be returned `obj`
+        obj.put("player1",obj1);
+        obj.put("player2",obj2);
     }
 
     public void writeToFile(String filePath) {
