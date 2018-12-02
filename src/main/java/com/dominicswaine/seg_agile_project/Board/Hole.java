@@ -25,6 +25,18 @@ public class Hole extends KorgolsContainer {
      */
     Hole(int n) {
         setOpaque(true);
+        currentColor = Color.black;
+        this.n = n;
+
+        //todo : make this work with current project structure
+        /* setIcon(new ImageIcon(
+                    Objects.requireNonNull(
+                            getClass().getClassLoader().
+                                    getResource(
+                                            "src/main/resources/Test.txt.png")
+                    )
+                )
+        );*/
 
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n)+ ".png";
         setIcon(new ImageIcon(backgroundPath));
@@ -58,5 +70,7 @@ public class Hole extends KorgolsContainer {
     public Dimension getPreferredSize() {
         return new Dimension(120,240);
     }
+
+    public int getN(){return n;}
 
 }
