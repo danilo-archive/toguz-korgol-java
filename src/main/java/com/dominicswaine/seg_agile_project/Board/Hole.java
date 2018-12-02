@@ -25,6 +25,7 @@ public class Hole extends KorgolsContainer {
     Hole(int n) {
         setOpaque(false);
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n) + ".png";
+
         setIcon(new ImageIcon(backgroundPath));
         setLayout(new GridLayout(8, 5));
         this.tuz = 0;
@@ -85,5 +86,7 @@ public class Hole extends KorgolsContainer {
     public Dimension getPreferredSize() {
         return new Dimension(120, 240);
     }
+
+    public int getN(){return n;}
 
 }

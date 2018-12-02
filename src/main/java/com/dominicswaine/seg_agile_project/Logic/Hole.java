@@ -5,12 +5,11 @@ public class Hole extends KorgoolContainer {
     private boolean isTuz;
 
     public Hole(int index){
-        super();
+        super(index<9 ? Side.WHITE : Side.BLACK);
         isTuz = false;
-        super.original0wner = index<9 ? Side.WHITE : Side.WHITE;
     }
 
-    public void markAsTux(){
+    public void markAsTuz(){
         isTuz = true;
     }
 
@@ -18,8 +17,18 @@ public class Hole extends KorgoolContainer {
         return isTuz;
     }
 
+    public Side getOwner() {
+        return !isTuz() ? super.original0wner : ((super.original0wner == Side.WHITE) ? Side.BLACK : Side.WHITE);
+    }
+
     public void emptyHole(){
         korgools.clear();
+    }
+
+    protected void emptyBarOne(){
+        Korgool first = korgools.get(0);
+        emptyHole();
+        addKorgool(first);
     }
 
 }
