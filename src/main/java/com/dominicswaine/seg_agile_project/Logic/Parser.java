@@ -16,6 +16,7 @@ public class Parser {
         this.board = board;
     }
 
+    @SuppressWarnings("unchecked")
     public void addContent() {
         Hole[] holes = board.getHoles();
         Kazan[] kazans = board.getKazans();
@@ -60,7 +61,12 @@ public class Parser {
     }
 
     public void writeToFile(String filePath) {
-
+        try(FileWriter file = new FileWriter(filePath)) {
+            file.write(obj.toJSONString());
+            file.flush();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void readFromFile(String filePath) {
