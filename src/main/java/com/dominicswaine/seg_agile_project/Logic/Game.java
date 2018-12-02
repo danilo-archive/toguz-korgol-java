@@ -1,7 +1,7 @@
 package com.dominicswaine.seg_agile_project.Logic;
+
 import com.dominicswaine.seg_agile_project.Board.GameWindow;
 import java.awt.event.*;
-import javax.swing.*;
 
 public class Game {
     private Side player_side;
