@@ -3,6 +3,7 @@ import java.lang.*;
 
 public class Hole extends KorgoolContainer {
     private boolean isTuz;
+    private int index;
 
     public Hole(int index){
         super(index<9 ? Side.WHITE : Side.BLACK);
@@ -29,6 +30,10 @@ public class Hole extends KorgoolContainer {
         Korgool first = korgools.get(0);
         emptyHole();
         addKorgool(first);
+    }
+
+    protected int getHoleIndex(){
+        return index;
     }
 
 }
