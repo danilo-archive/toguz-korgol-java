@@ -7,6 +7,7 @@ public class Hole extends KorgoolContainer {
 
     public Hole(int index){
         super(index<9 ? Side.WHITE : Side.BLACK);
+        this.index = index;
         isTuz = false;
     }
 
