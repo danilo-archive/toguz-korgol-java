@@ -131,8 +131,9 @@ public class Game {
     }
 
     public static void main(String[] args){
-        int playerdata[] = {35,6,6,7,8,3,15,8,9,1};
-        int opponentdata[] = {25,8,4,1,0,0,2,12,5,4};
-        new Game("2","5",playerdata,opponentdata);
+        new Game();
+//         int playerdata[] = {35,6,6,7,8,3,15,8,9,1};
+//         int opponentdata[] = {25,8,4,1,0,0,2,12,5,4};
+//         new Game("2","5",playerdata,opponentdata);
     }
 }
