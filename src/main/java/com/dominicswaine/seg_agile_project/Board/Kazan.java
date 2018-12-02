@@ -8,7 +8,7 @@ import java.awt.*;
  * It is a visual representation of the score of a player.
  *
  * @author Danilo Del Busso
- * @version 26-11-2018
+ * @version 30-11-2018
  */
 public class Kazan extends KorgolsContainer {
     /**
@@ -18,7 +18,7 @@ public class Kazan extends KorgolsContainer {
         setOpaque(false);
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/kazan.png";
         setIcon(new ImageIcon(backgroundPath));
-        setLayout(new GridLayout(5,16));
+        setLayout(new GridLayout(5, 16));
     }
 
 
@@ -29,6 +29,6 @@ public class Kazan extends KorgolsContainer {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(540,240);
+        return new Dimension(540, 240);
     }
 }

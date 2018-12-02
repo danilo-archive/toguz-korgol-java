@@ -9,7 +9,7 @@ import java.awt.*;
  * This class simply creates a panel with a circle of r = 10px.
  *
  * @author Danilo Del Busso
- * @version 26-11-2018
+ * @version 30-11-2018
  */
 public class Korgol extends JLabel {
 
@@ -29,7 +29,7 @@ public class Korgol extends JLabel {
 
     /**
      * Return true if korgool is not diplayed to screen
-     * @return
+     * @return true if korgool is not displayed to screen
      */
     public boolean isWhite() {
         return isWhite;
@@ -38,12 +38,12 @@ public class Korgol extends JLabel {
     /**
      * Render korgool on screen
      */
-    public void render(){
-        if(!isWhite){
+    public void render() {
+        if (!isWhite) {
             jl = new JLabel();
             String korgolpath = System.getProperty("user.dir") + "/src/main/resources/korgool.png";
             jl.setIcon(new ImageIcon(korgolpath));
-            this.add(jl,BorderLayout.SOUTH);
+            this.add(jl, BorderLayout.SOUTH);
             isWhite = false;
         }
     }
@@ -51,10 +51,10 @@ public class Korgol extends JLabel {
     /**
      * Remove korgool from screen
      */
-    public void dontRender(){
-        if(jl != null){
-         this.remove(jl);
-         isWhite = true;
+    public void dontRender() {
+        if (jl != null) {
+            this.remove(jl);
+            isWhite = true;
         }
     }
 
