@@ -25,12 +25,12 @@ public class Parser {
 
 
         // Configuration for player '1'
-        obj1.put("name","player1");
+
 
         JSONArray p1 = new JSONArray();
-        JSONObject playersKazan = new JSONObject();
-        playersKazan.put("kazan",kazans[0].getNumberOfKoorgools());
-        p1.add(playersKazan);
+        JSONObject player1Kazan = new JSONObject();
+        player1Kazan.put("kazan",kazans[0].getNumberOfKoorgools());
+        p1.add(player1Kazan);
         for(int i = 0 ; i < 9 ; ++i) {
             JSONObject player1Hole = new JSONObject();
             player1Hole.put("hole:" + i, holes[i].getNumberOfKoorgools() );
@@ -38,6 +38,21 @@ public class Parser {
         }
 
         obj1.put("config",p1);
+
+        // Configuration for player '2'
+
+
+        JSONArray p2 = new JSONArray();
+        JSONObject player2Kazan = new JSONObject();
+        player2Kazan.put("kazan",kazans[0].getNumberOfKoorgools());
+        p1.add(player2Kazan);
+        for(int i = 9 ; i < 18 ; ++i) {
+            JSONObject player2Hole = new JSONObject();
+            player2Hole.put("hole:" + i, holes[i].getNumberOfKoorgools() );
+            p1.add(player2Hole);
+        }
+
+        obj2.put("config",p1);
     }
 
     public void writeToFile(String filePath) {
