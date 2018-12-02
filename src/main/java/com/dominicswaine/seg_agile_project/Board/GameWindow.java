@@ -10,13 +10,12 @@ import java.util.ArrayList;
  *  It is the window in which players can interact and play the game
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class GameWindow {
 
     private static final int HOLES_PER_PLAYER = 9;
     private static final int STARTING_KORGOLS = 9;
-    private static final Color COLOR_KORGOLS = Color.black;
 
     private ArrayList<Hole> holesTopRow;
     private ArrayList<Hole> holesBottomRow;
@@ -41,14 +40,16 @@ public class GameWindow {
             Container pane = gameWindow.getContentPane();
             pane.setLayout(new BorderLayout());
 
+
             JPanel board = createNewBoard();
+            board.setOpaque(false);
 
             pane.add(board, BorderLayout.WEST);
 
             //todo: Scoreboard goes here
 
             gameWindow.pack();
-            gameWindow.setSize(new Dimension(1920, 1080));
+            gameWindow.setSize(new Dimension(1280, 720));
             gameWindow.setVisible(true);
 
 
@@ -72,15 +73,15 @@ public class GameWindow {
             for (int i = 0; i < HOLES_PER_PLAYER ; ++i){
                 //populate top row with holes
                 Hole h = new Hole(8-i+1);
-                h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
-                h.adjustLooks(Color.white);
+                h.addKorgols(STARTING_KORGOLS);
+                h.adjustLooks();
                 holesTopRow.add(h);
                 topRow.add(h);
 
                 //populate bottom row with holes
                 h = new Hole(i+1);
-                h.addKorgols(STARTING_KORGOLS, COLOR_KORGOLS);
-                h.adjustLooks(Color.white);
+                h.addKorgols(STARTING_KORGOLS);
+                h.adjustLooks();
                 holesBottomRow.add(h);
                 bottomRow.add(h);
             }
@@ -88,14 +89,14 @@ public class GameWindow {
             //create kazans
             Kazan k = new Kazan();
             kazans.add(k);
-            k.addKorgols(0, Color.black);
-            k.adjustLooks(Color.white);
+            k.addKorgols(70);
+            k.adjustLooks();
             kazanRow.add(k, BorderLayout.EAST);
 
             k = new Kazan();
             kazans.add(k);
-            k.addKorgols(0, Color.black);
-            k.adjustLooks(Color.white);
+            k.addKorgols(0);
+            k.adjustLooks();
             kazanRow.add(k,BorderLayout.WEST);
 
             //add elements to board

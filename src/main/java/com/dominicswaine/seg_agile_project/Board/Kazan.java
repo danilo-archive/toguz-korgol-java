@@ -1,5 +1,6 @@
 package com.dominicswaine.seg_agile_project.Board;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -7,14 +8,17 @@ import java.awt.*;
  * It is a visual representation of the score of a player.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 26-11-2018
  */
 public class Kazan extends KorgolsContainer {
     /**
      * This container maintains korgols and shows them to screen
      */
     public Kazan() {
-        setLayout(new GridLayout(5,17));
+        setOpaque(false);
+        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/kazan.png";
+        setIcon(new ImageIcon(backgroundPath));
+        setLayout(new GridLayout(5,16));
     }
 
 
@@ -23,19 +27,8 @@ public class Kazan extends KorgolsContainer {
         return 95;
     }
 
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(Color.black);
-        g2.setStroke(new BasicStroke(4));
-        g2.drawRect(15, 10, 790, 270);
-    }
-
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(810,360);
+        return new Dimension(540,240);
     }
 }
