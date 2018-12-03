@@ -11,14 +11,13 @@ public class Game {
     public Game() {
         player_side = Side.WHITE;
         game_board = new Board();
+        gui = new GameWindow();
 
         for(com.dominicswaine.seg_agile_project.Logic.Hole h : game_board.getHoles()) {
             for(int korgoolNo = 0; korgoolNo <= 8; korgoolNo++){
                 h.addKorgool(new Korgool());
             }
         }
-
-        gui = new GameWindow();
 
         for(int i = 0; i<=8;i++){
             com.dominicswaine.seg_agile_project.Board.Hole hole = gui.getHolesTopRow().get(i);
@@ -49,9 +48,7 @@ public class Game {
      * @param opponentHoles An array storing number of korgools in opponents kazan and holes 1-9.
      */
     public Game(String playerTuz, String opponentTuz, int[] playerHoles, int[] opponentHoles){
-        //System.out.println("Creating a custom game...");
-        player_side = Side.WHITE;
-        game_board = new Board();
+        this();
 
         //System.out.println("Creating holes...");
         // Initializes to korgools per each hole. +1 for index because index 0 of playerHoles is for kazan.
@@ -104,30 +101,6 @@ public class Game {
             game_board.getHoleByIndex(opponentTuzNo).markAsTuz();
         }
         //System.out.println(game_board.getHoleByIndex(opponentTuzNo).getHoleIndex() + " Numbered Hole is marked az tuz for" + game_board.getHoleByIndex(opponentTuzNo + 9).getOwner());
-
-        gui = new GameWindow();
-
-        //Sets Mouse listener for top row.
-        for(int i = 0; i<=8;i++){
-            com.dominicswaine.seg_agile_project.Board.Hole hole = gui.getHolesTopRow().get(i);
-            hole.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    game_board.redistribute(hole.getN()+8);
-                }
-            });
-        }
-
-        //Sets Mouse Listener for bottom row.
-        for(int i = 0; i<=8;i++){
-            com.dominicswaine.seg_agile_project.Board.Hole hole = gui.getHolesBottomRow().get(i);
-            hole.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    game_board.redistribute(hole.getN()-1);
-                }
-            });
-        }
     }
 
     public static void main(String[] args){
