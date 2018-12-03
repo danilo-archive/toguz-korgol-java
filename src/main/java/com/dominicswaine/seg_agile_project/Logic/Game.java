@@ -8,35 +8,27 @@ public class Game {
     private Board game_board;
     private GameWindow gui;
 
-    public Game() {
+    private Game() {
         player_side = Side.WHITE;
         game_board = new Board();
         gui = new GameWindow();
 
-        for(com.dominicswaine.seg_agile_project.Logic.Hole h : game_board.getHoles()) {
-            for(int korgoolNo = 0; korgoolNo <= 8; korgoolNo++){
-                h.addKorgool(new Korgool());
-            }
-        }
+        for (int i = 0; i < game_board.getHoles().length; i++) {
+            Hole logicHole = game_board.getHoleByIndex(i);
+            com.dominicswaine.seg_agile_project.Board.Hole guiHole = i < 9 ? gui.getHolesTopRow().get(8-i) : gui.getHolesBottomRow().get(i - 9);
 
-        for(int i = 0; i<=8;i++){
-            com.dominicswaine.seg_agile_project.Board.Hole hole = gui.getHolesTopRow().get(i);
-            hole.addMouseListener(new MouseAdapter() {
+            for (int korgoolNo = 0; korgoolNo <= 8; korgoolNo++)
+                logicHole.addKorgool(new Korgool());
+
+            final int holeIndex = i;
+            guiHole.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
-                    game_board.redistribute(hole.getN()+8);
+                public void mouseClicked(MouseEvent e){
+                    game_board.redistribute(holeIndex);
                 }
             });
-        }
 
-        for(int i = 0; i<=8;i++){
-            com.dominicswaine.seg_agile_project.Board.Hole hole = gui.getHolesBottomRow().get(i);
-            hole.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    game_board.redistribute(hole.getN()-1);
-                }
-            });
+
         }
     }
 
@@ -47,7 +39,7 @@ public class Game {
      * @param playerHoles An array storing number of korgools in players kazan and holes 1-9.
      * @param opponentHoles An array storing number of korgools in opponents kazan and holes 1-9.
      */
-    public Game(String playerTuz, String opponentTuz, int[] playerHoles, int[] opponentHoles){
+    private Game(String playerTuz, String opponentTuz, int[] playerHoles, int[] opponentHoles){
         this();
 
         //System.out.println("Creating holes...");
