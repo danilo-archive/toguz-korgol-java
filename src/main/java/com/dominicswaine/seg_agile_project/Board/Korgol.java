@@ -49,6 +49,14 @@ public class Korgol extends JLabel {
     }
 
     /**
+     * Set white value to given one
+     * @param white the value to update
+     */
+    public void setWhite(boolean white) {
+        isWhite = white;
+    }
+
+    /**
      * Remove korgool from screen
      */
     public void dontRender() {

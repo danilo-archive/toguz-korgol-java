@@ -87,7 +87,7 @@ public class GameWindow {
         //create kazans
         Kazan k = new Kazan();
         kazans.add(k);
-        k.addKorgols(70);
+        k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.EAST);
 

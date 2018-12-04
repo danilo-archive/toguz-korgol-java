@@ -30,7 +30,6 @@ public class Hole extends KorgolsContainer {
         setLayout(new GridLayout(8, 5));
         this.tuz = 0;
         tuzBorderColor = new Color(0f, 0f, 0f, .0f); //white but completely transparent color
-
     }
 
     /**
