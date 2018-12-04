@@ -100,6 +100,7 @@ public abstract class KorgolsContainer extends JLabel {
         //if there are invisible korgols, we color the first available one black.
         for (Korgol k: korgols) {
             if (k.isWhite()) {
+                k.setWhite(false);
                 k.render();
                 ++lastKorgolInd;
                 revalidate();
