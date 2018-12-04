@@ -71,14 +71,14 @@ public class GameWindow {
         for (int i = 0; i < HOLES_PER_PLAYER; ++i) {
             //populate top row with holes
             Hole h = new Hole(8 - i + 1);
-            h.addKorgols(STARTING_KORGOLS);
+            //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesTopRow.add(h);
             topRow.add(h);
 
             //populate bottom row with holes
             h = new Hole(i + 1);
-            h.addKorgols(STARTING_KORGOLS);
+            //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesBottomRow.add(h);
             bottomRow.add(h);
@@ -87,13 +87,13 @@ public class GameWindow {
         //create kazans
         Kazan k = new Kazan();
         kazans.add(k);
-        k.addKorgols(0);
+        //k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.EAST);
 
         k = new Kazan();
         kazans.add(k);
-        k.addKorgols(0);
+        //k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.WEST);
 
