@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class CustomGame {
 
     private JFrame frame;
-    private JPanel  containerOfEverything, containerOfBackButton, containerOfTextAndDropdown,
+    private JPanel containerOfEverything, containerOfBackButton, containerOfTextAndDropdown,
             containerOfSelections, containerOfSpinners, containerOfCancelTuz, containerOfSaveAndStart;
     private JComboBox dropdown;
     private ButtonGroup buttonGroup;
@@ -102,7 +102,7 @@ public class CustomGame {
         JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
                 "you, or your opponent. You are then able to  " +
-                "specify the amount of Korgools per Kazan and Hole, " +
+                "specify the amount of Korgools per KazanUI and HoleUI, " +
                 "and also whether a hole is a Tuz. Note that the total " +
                 "number of Korgools must be exactly 162, the two Tuzzes " +
                 "cannot be the same, and no Tuz can be 9.</p></html>");
@@ -177,18 +177,18 @@ public class CustomGame {
         JLabel label;
         JPanel panelContainingSpinner = new JPanel(new BorderLayout());
 
-        if (i == 0) { //For Kazan, we want no tuz radio button
+        if (i == 0) { //For KazanUI, we want no tuz radio button
 
-            label = new JLabel("Kazan:");
+            label = new JLabel("KazanUI:");
             unit.add(Box.createHorizontalStrut(21), BorderLayout.EAST);
 
         }
 
         else {
 
-            label = new JLabel("Hole " + i + ":");
+            label = new JLabel("HoleUI " + i + ":");
             JRadioButton tuzController = new JRadioButton();
-            tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 9 has ID 9, cancel has ID 0
+            tuzController.setName("" + i); //Setting an ID for each radio button - HoleUI 1 has ID 1, HoleUI 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
@@ -200,7 +200,7 @@ public class CustomGame {
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner spinner = new JSpinner(spinnerSettings);
         spinner.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spinner.setName("" + i); //Setting an ID for each spinner, Kazan has ID 0, Hole x has ID x
+        spinner.setName("" + i); //Setting an ID for each spinner, KazanUI has ID 0, HoleUI x has ID x
         spinner.addChangeListener(e -> obtainValue(spinner.getName()));
         mapOfSpinners.put("" + i, spinner);
         panelContainingSpinner.add(spinner, BorderLayout.CENTER);
@@ -317,7 +317,7 @@ public class CustomGame {
         if (isPlayer) {
 
             playerValues[Integer.parseInt(idOfSpinner)] = currentValue;
-            //In this array, index represents the ID of the spinner. Kazan has ID/indx 0, Hole x has ID/indx x
+            //In this array, index represents the ID of the spinner. KazanUI has ID/indx 0, HoleUI x has ID/indx x
 
         }
 

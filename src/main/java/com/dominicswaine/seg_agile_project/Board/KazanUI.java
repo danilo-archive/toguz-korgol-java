@@ -10,11 +10,11 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 30-11-2018
  */
-public class Kazan extends KorgolsContainer {
+public class KazanUI extends KorgoolsContainerUI {
     /**
      * This container maintains korgols and shows them to screen
      */
-    public Kazan() {
+    public KazanUI() {
         setOpaque(false);
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/kazan.png";
         setIcon(new ImageIcon(backgroundPath));

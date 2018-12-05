@@ -1,10 +1,12 @@
 package com.dominicswaine.seg_agile_project.Logic;
+import com.dominicswaine.seg_agile_project.Board.HoleUI;
+
 import java.lang.*;
 
 public class Hole extends KorgoolContainer {
     private boolean isTuz;
     private int index;
-    private com.dominicswaine.seg_agile_project.Board.Hole gui;
+    private HoleUI gui;
 
     public Hole(int index){
         super(index<9 ? Side.WHITE : Side.BLACK);
@@ -12,7 +14,7 @@ public class Hole extends KorgoolContainer {
         isTuz = false;
     }
 
-    public void setGui(com.dominicswaine.seg_agile_project.Board.Hole gui){
+    public void setGui(HoleUI gui){
         this.gui = gui;
     }
 
@@ -50,6 +52,6 @@ public class Hole extends KorgoolContainer {
         return index;
     }
 
-    public com.dominicswaine.seg_agile_project.Board.Hole getGui(){return gui;}
+    public HoleUI getGui(){return gui;}
 
 }

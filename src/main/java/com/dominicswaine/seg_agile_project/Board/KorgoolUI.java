@@ -11,7 +11,7 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 30-11-2018
  */
-public class Korgol extends JLabel {
+public class KorgoolUI extends JLabel {
 
     private boolean isWhite;
     private JLabel jl;
@@ -19,7 +19,7 @@ public class Korgol extends JLabel {
     /**
      * Create a korgol of specified color
      */
-    public Korgol(boolean isWhite) {
+    public KorgoolUI(boolean isWhite) {
         setOpaque(false);
         this.isWhite = isWhite;
         this.setLayout(new BorderLayout());

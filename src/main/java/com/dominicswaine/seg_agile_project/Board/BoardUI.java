@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author Danilo Del Busso
  * @version 30-11-2018
  */
-public class Board extends JPanel {
+public class BoardUI extends JPanel {
 
     private BufferedImage image; //the background image being displayeds
     private int w, h;
@@ -22,7 +22,7 @@ public class Board extends JPanel {
      * Create the board by giving it the path of the background image
      * @param p the path of the background image
      */
-    public Board(String p) {
+    public BoardUI(String p) {
         setLayout(new BorderLayout());
 
         try {

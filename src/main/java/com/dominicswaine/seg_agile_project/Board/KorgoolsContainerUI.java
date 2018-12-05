@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author Danilo Del Busso
  * @version 30-11-2018
  */
-public abstract class KorgolsContainer extends JLabel {
+public abstract class KorgoolsContainerUI extends JLabel {
 
-    private ArrayList < Korgol > korgols;
+    private ArrayList <KorgoolUI> korgols;
     private int lastKorgolInd; //the index of the last korgol that has been added to the container
     private JTextArea extraKorgolsCounter;
     private JPanel extraKorgols;
@@ -21,12 +21,12 @@ public abstract class KorgolsContainer extends JLabel {
     /**
      * This container maintains korgols and shows them to screen
      */
-    KorgolsContainer() {
+    KorgoolsContainerUI() {
         setOpaque(false);
         float[] arr = new float[3];
         float[] vals = Color.RGBtoHSB(166, 128, 100, arr);
 
-        korgols = new ArrayList < Korgol > ();
+        korgols = new ArrayList <KorgoolUI> ();
         lastKorgolInd = -1;
 
     }
@@ -35,7 +35,7 @@ public abstract class KorgolsContainer extends JLabel {
      * Return the korgols currently present in the container
      * @return the korgols currently present in the container
      */
-    public ArrayList < Korgol > getKorgols() {
+    public ArrayList <KorgoolUI> getKorgols() {
         return korgols;
     }
 
@@ -44,7 +44,7 @@ public abstract class KorgolsContainer extends JLabel {
      */
     void adjustLooks() {
         for (int i = lastKorgolInd + 1; i < getMaxKorgolsPossible(); ++i) {
-            Korgol k = new Korgol(true);
+            KorgoolUI k = new KorgoolUI(true);
             korgols.add(k);
             this.add(k);
             this.repaint();
@@ -98,7 +98,7 @@ public abstract class KorgolsContainer extends JLabel {
 
 
         //if there are invisible korgols, we color the first available one black.
-        for (Korgol k: korgols) {
+        for (KorgoolUI k: korgols) {
             if (k.isWhite()) {
                 k.setWhite(false);
                 k.render();
@@ -109,7 +109,7 @@ public abstract class KorgolsContainer extends JLabel {
         }
 
 
-        Korgol k = new Korgol(false);
+        KorgoolUI k = new KorgoolUI(false);
         korgols.add(k);
         ++lastKorgolInd;
         this.add(k);

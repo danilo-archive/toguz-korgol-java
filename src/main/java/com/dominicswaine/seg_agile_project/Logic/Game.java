@@ -1,6 +1,8 @@
 package com.dominicswaine.seg_agile_project.Logic;
 
 import com.dominicswaine.seg_agile_project.Board.GameWindow;
+import com.dominicswaine.seg_agile_project.Board.HoleUI;
+
 import java.awt.event.*;
 
 public class Game {
@@ -15,7 +17,7 @@ public class Game {
 
         for (int i = 0; i < game_board.getHoles().length; i++) {
             Hole logicHole = game_board.getHoleByIndex(i);
-            com.dominicswaine.seg_agile_project.Board.Hole guiHole = i < 9 ? gui.getHolesTopRow().get(8 - i) : gui.getHolesBottomRow().get(i - 9);
+            HoleUI guiHole = i < 9 ? gui.getHolesTopRow().get(8 - i) : gui.getHolesBottomRow().get(i - 9);
             logicHole.setGui(guiHole);
 
             final int holeIndex = i;
@@ -52,14 +54,14 @@ public class Game {
         for(com.dominicswaine.seg_agile_project.Logic.Hole h : game_board.getHoles()) {
 
             if(h.getOwner() == player_side) {
-                //System.out.println("Add " + (playerHoles[h.getHoleIndex() + 1]) + "korgools to " + player_side + " Hole Number: " + h.getHoleIndex());
+                //System.out.println("Add " + (playerHoles[h.getHoleIndex() + 1]) + "korgools to " + player_side + " HoleUI Number: " + h.getHoleIndex());
                 for (int korgoolNo = 0; korgoolNo < playerHoles[h.getHoleIndex() + 1]; korgoolNo++) {
                     h.addKorgool(new Korgool());
                 }
             }
 
             else{
-                //System.out.println("Add " + (opponentHoles[h.getHoleIndex() - 9]) + "korgools to " + Side.BLACK + " Hole Number: " + h.getHoleIndex());
+                //System.out.println("Add " + (opponentHoles[h.getHoleIndex() - 9]) + "korgools to " + Side.BLACK + " HoleUI Number: " + h.getHoleIndex());
                 for (int korgoolNo = 0; korgoolNo < opponentHoles[h.getHoleIndex() - 9]; korgoolNo++) {
                     h.addKorgool(new Korgool());
                 }
@@ -70,14 +72,14 @@ public class Game {
         for(com.dominicswaine.seg_agile_project.Logic.Kazan k : game_board.getKazans()){
             //System.out.println("Initialising kazans...");
             if(k.getOwner() == player_side) {
-                //System.out.println("Add " + playerHoles[0] + "korgools to " + k.getOwner() + " Kazan");
+                //System.out.println("Add " + playerHoles[0] + "korgools to " + k.getOwner() + " KazanUI");
                 for (int korgoolNo = 0; korgoolNo < playerHoles[0]; korgoolNo++) {
                     k.addKorgool(new Korgool());
                 }
             }
 
             else{
-                //System.out.println("Add " + opponentHoles[0] + "korgools to " + Side.BLACK + " Kazan");
+                //System.out.println("Add " + opponentHoles[0] + "korgools to " + Side.BLACK + " KazanUI");
                 for (int korgoolNo = 0; korgoolNo < opponentHoles[0]; korgoolNo++) {
                     k.addKorgool(new Korgool());
                 }
@@ -93,11 +95,11 @@ public class Game {
         if(playerTuzNo != 0) {
             game_board.getHoleByIndex(playerTuzNo + 9).markAsTuz();
         }
-        //System.out.println(game_board.getHoleByIndex(playerTuzNo + 9).getHoleIndex() + " Numbered Hole is marked az tuz for " + game_board.getHoleByIndex(playerTuzNo).getOwner());
+        //System.out.println(game_board.getHoleByIndex(playerTuzNo + 9).getHoleIndex() + " Numbered HoleUI is marked az tuz for " + game_board.getHoleByIndex(playerTuzNo).getOwner());
         if(opponentTuzNo != 0) {
             game_board.getHoleByIndex(opponentTuzNo).markAsTuz();
         }
-        //System.out.println(game_board.getHoleByIndex(opponentTuzNo).getHoleIndex() + " Numbered Hole is marked az tuz for" + game_board.getHoleByIndex(opponentTuzNo + 9).getOwner());
+        //System.out.println(game_board.getHoleByIndex(opponentTuzNo).getHoleIndex() + " Numbered HoleUI is marked az tuz for" + game_board.getHoleByIndex(opponentTuzNo + 9).getOwner());
     }
 
     public static void main(String[] args){
