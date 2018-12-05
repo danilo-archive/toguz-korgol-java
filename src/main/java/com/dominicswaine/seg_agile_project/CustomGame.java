@@ -24,6 +24,8 @@ public class CustomGame {
     private int[] playerValues, opponentValues;
     private String playerTuz, opponentTuz;
     private JLabel totalKorgools, playerTuzLabel, opponentTuzLabel;
+    private JOptionPane pane;
+    private com.dominicswaine.seg_agile_project.Logic.Game game;
 
     public CustomGame() {
 
@@ -43,6 +45,7 @@ public class CustomGame {
         opponentValues = new int[10];
         playerTuz = "0";
         opponentTuz = "0";
+        pane = new JOptionPane();
 
         //Make and populate the panels
 
@@ -101,7 +104,7 @@ public class CustomGame {
                 "you, or your opponent. You are then able to  " +
                 "specify the amount of Korgools per Kazan and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
-                "number of Korgools must be exactly 162, the two Tuz's " +
+                "number of Korgools must be exactly 162, the two Tuzzes " +
                 "cannot be the same, and no Tuz can be 9.</p></html>");
 
         instructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -112,6 +115,7 @@ public class CustomGame {
         containerOfTextAndDropdown.add(instructions);
         containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
         dropdown = new JComboBox();
+        dropdown.setName("dropdown");
         dropdown.setFont(new Font("Tahoma", Font.PLAIN, 14));
         dropdown.addItem("You (White Side)");
         dropdown.addItem("Opponent (Black Side)");
@@ -129,11 +133,14 @@ public class CustomGame {
     private void populateContainerOfSelections() {
 
         totalKorgools = new JLabel("Total Korgools: 0");
+        totalKorgools.setName("totalKorgools");
         totalKorgools.setFont(new Font("Tahoma", Font.BOLD, 13));
         playerTuzLabel = new JLabel("Your Tuz: None");
+        playerTuzLabel.setName("playerTuzLabel");
         playerTuzLabel.setForeground(Color.BLUE);
         playerTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
         opponentTuzLabel = new JLabel("Opponent Tuz: None");
+        opponentTuzLabel.setName("opponentTuzLabel");
         opponentTuzLabel.setForeground(Color.RED);
         opponentTuzLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
         containerOfSelections.add(playerTuzLabel);
@@ -181,7 +188,7 @@ public class CustomGame {
 
             label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
-            tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 8 has ID 8, hole 9 and cancel have ID 0
+            tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
@@ -192,6 +199,7 @@ public class CustomGame {
         label.setFont(new Font("Tahoma", Font.PLAIN, 14));
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner spinner = new JSpinner(spinnerSettings);
+        spinner.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spinner.setName("" + i); //Setting an ID for each spinner, Kazan has ID 0, Hole x has ID x
         spinner.addChangeListener(e -> obtainValue(spinner.getName()));
         mapOfSpinners.put("" + i, spinner);
@@ -229,8 +237,10 @@ public class CustomGame {
     private void populateContainerOfSaveAndStart() {
 
         JButton saveButton = new JButton("Save");
+        saveButton.setName("Save");
         saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         JButton startButton = new JButton("Start");
+        startButton.setName("Start");
         startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
         startButton.addActionListener(e -> checkValues());
         containerOfSaveAndStart.add(saveButton);
@@ -332,10 +342,16 @@ public class CustomGame {
 
         if (sumOfPlayerAndOpponentValues != 162) {
 
-            JOptionPane.showMessageDialog(frame,
+            pane.showMessageDialog(frame,
                     "Total number of Korgools must be exactly 162, please change your values.",
                     "Warning",
                     JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        else { //All values are correct, a custom game can now be constructed
+
+            game = new com.dominicswaine.seg_agile_project.Logic.Game(playerTuz, opponentTuz, playerValues, opponentValues);
 
         }
 
@@ -380,7 +396,7 @@ public class CustomGame {
 
             if (radioID.equals("9")) {
 
-                JOptionPane.showMessageDialog(frame,
+                pane.showMessageDialog(frame,
                         "The tuz cannot be 9.",
                         "Warning",
                         JOptionPane.ERROR_MESSAGE);
@@ -391,8 +407,8 @@ public class CustomGame {
 
             else {
 
-                JOptionPane.showMessageDialog(frame,
-                        "The player and opponent tuz's cannot match.",
+                pane.showMessageDialog(frame,
+                        "The tuzzes cannot match.",
                         "Warning",
                         JOptionPane.ERROR_MESSAGE);
 
@@ -451,7 +467,7 @@ public class CustomGame {
      *
      * @return the sum of the player and opponent values
      */
-    private int sumOfPlayerAndOpponentValues() {
+    public int sumOfPlayerAndOpponentValues() {
 
         int sumOfPlayerValues = 0;
         int sumOfOpponentValues = 0;
@@ -472,6 +488,61 @@ public class CustomGame {
     public static void main(String[] args) {
 
         new CustomGame();
+
+    }
+
+    //Methods required in integration testing
+
+    public int[] getValues(Boolean isPlayer) {
+
+        if (isPlayer) {
+
+            return playerValues;
+        }
+
+        return opponentValues;
+
+    }
+
+    public String getTuz(Boolean isPlayer) {
+
+        if (isPlayer) {
+
+            return playerTuz;
+        }
+
+        return opponentTuz;
+
+    }
+
+    public Boolean changeUser() {
+
+        isPlayer = !isPlayer;
+        return isPlayer;
+
+    }
+
+    public JFrame getFrame() {
+
+        return frame;
+
+    }
+
+    public Boolean getIsPlayer() {
+
+        return isPlayer;
+
+    }
+
+    public HashMap<String, JSpinner> getMapOfSpinners() {
+
+        return mapOfSpinners;
+
+    }
+
+    public com.dominicswaine.seg_agile_project.Logic.Game getGame() {
+
+        return game;
 
     }
 
