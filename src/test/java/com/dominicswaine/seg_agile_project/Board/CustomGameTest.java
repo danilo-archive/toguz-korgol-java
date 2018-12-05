@@ -1,4 +1,4 @@
-package com.dominicswaine.seg_agile_project.Board
+package com.dominicswaine.seg_agile_project.Board;
 import org.junit.Test;
 import javax.swing.*;
 import com.athaydes.automaton.Swinger;
