@@ -1,9 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'application'
+
 mainClassName = 'com.dominicswaine.seg_agile_project.Logic.Game'
-dependencies {
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-}
+
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    testCompile 'junit:junit:4.12'
 }
