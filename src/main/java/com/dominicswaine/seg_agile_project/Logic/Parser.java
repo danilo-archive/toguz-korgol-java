@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
+import java.util.*;
 
 public class Parser {
 
@@ -91,7 +91,62 @@ public class Parser {
         }
     }
 
-    public void readFromFile(String filePath) {
+    public Map readFromFile(String filePath) {
+        JSONParser parser = new JSONParser();
+        Map<String,Integer> whiteSideMap = new HashMap<>();
+        Map<String,Integer> blackSideMap = new HashMap<>();
+        Map<String,Map<String,Integer>> doubleMap = new HashMap<>();
+        try {
+            // Disentangle the parent JSON object
+            Object obj = parser.parse(new FileReader(filePath));
+            JSONObject jsonObj = (JSONObject) obj;
+            JSONArray listOfPlayers = (JSONArray) jsonObj.get("players");
+
+            // Getting the data from the 'players' JSONArray
+            JSONObject whiteSideData = (JSONObject) listOfPlayers.get(0);
+            JSONObject blackSideData = (JSONObject) listOfPlayers.get(1);
+
+            // Parsing white side data:
+            JSONArray whiteSideHoles = (JSONArray) whiteSideData.get("config");
+
+            JSONObject kazanObj = (JSONObject) whiteSideHoles.get(0);
+            whiteSideMap.put("kazan", Math.toIntExact((Long) kazanObj.get("kazan")));
+
+            JSONObject tuzObj = (JSONObject) whiteSideHoles.get(1);
+            whiteSideMap.put("tuz", Math.toIntExact((Long) tuzObj.get("tuz")));
+
+            for(int i = 2 ; i < whiteSideHoles.size() ; ++i) {
+                JSONObject holeI = (JSONObject) whiteSideHoles.get(i);
+                whiteSideMap.put("hole:" + (i-2), Math.toIntExact((Long) holeI.get("hole:"+(i-2))));
+            }
+
+            // Parsing black side data:
+            JSONArray blackSideHoles = (JSONArray) blackSideData.get("config");
+
+            kazanObj = (JSONObject) blackSideHoles.get(0);
+            tuzObj = (JSONObject) blackSideHoles.get(1);
+
+            blackSideMap.put("kazan",Math.toIntExact((Long) kazanObj.get("kazan")));
+            blackSideMap.put("tuz",Math.toIntExact((Long) tuzObj.get("tuz")));
+
+            for(int i = 2 ; i < blackSideHoles.size() ; ++i) {
+                JSONObject holeI = (JSONObject) whiteSideHoles.get(i);
+                blackSideMap.put("hole:" + (i-2), Math.toIntExact((Long) holeI.get("hole:"+(i-2))));
+            }
+
+            // Put everything in the double map
+            doubleMap.put("white",whiteSideMap);
+            doubleMap.put("black",blackSideMap);
+
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return doubleMap;
 
     }
 
