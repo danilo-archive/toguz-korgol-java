@@ -1,8 +1,8 @@
 package com.dominicswaine.seg_agile_project.Board;
 
 
+import javax.swing.*;
 import java.awt.*;
-
 
 /**
  * A hole contains korgols and it's the main interactive
@@ -10,50 +10,54 @@ import java.awt.*;
  * make a move.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 30-11-2018
  */
 public class Hole extends KorgolsContainer {
 
-
+    private Color tuzBorderColor;
     private int tuz;
     private int n;
-    private Color currentColor;///tuz value (0 = not assigned to any player, 1 = assigned to 1st player, 2= assigned to 2nd player)
 
     /**
      * The hole is the main korgol container of the game
      * @param n the number of the hole
      */
     Hole(int n) {
-        setOpaque(true);
-        currentColor = Color.black;
-        this.n = n;
+        setOpaque(false);
+        String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n) + ".png";
 
-        //todo : make this work with current project structure
-        /* setIcon(new ImageIcon(
-                    Objects.requireNonNull(
-                            getClass().getClassLoader().
-                                    getResource(
-                                            "src/main/resources/Test.txt.png")
-                    )
-                )
-        );*/
-
-        setLayout(new GridLayout(8,5));
-
-        this.tuz = 0;  //tuz is not assigned to any player
-
-
+        setIcon(new ImageIcon(backgroundPath));
+        setLayout(new GridLayout(8, 5));
+        this.tuz = 0;
+        tuzBorderColor = new Color(0f, 0f, 0f, .0f); //white but completely transparent color
     }
 
+    /**
+     * Displays a color rectangle around the hole showing that it has been assigned to a specific player
+     * @param c the color of the rectangle to display
+     */
+    public void displayTuz(Color c) {
+        this.tuzBorderColor = c;
+        revalidate();
+        repaint();
+    }
 
+    /**
+     * Sets the color of the tuz rectangle to transparent
+     */
+    public void dontDisplayTuz() {
+        this.tuzBorderColor = (new Color(0f, 0f, 0f, .0f));
+        revalidate();
+        repaint();
+    }
 
     /**
      * Assigns this hole as tuz to the designed player
      * @param player which player the tuz has to b eassigned to (0 = not assigned to any player, 1 = assigned to 1st player, 2= assigned to 2nd player)
-      * @return true if the tuz has been assigned successfully
+     * @return true if the tuz has been assigned successfully
      */
-    public boolean assignTuz(int player){
-        if(player > -1 && player < 3){
+    public boolean assignTuz(int player) {
+        if (player > -1 && player < 3) {
             tuz = player;
             return true;
         }
@@ -62,25 +66,24 @@ public class Hole extends KorgolsContainer {
     }
 
     @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D tuzBorder = (Graphics2D) g;
+        tuzBorder.setColor(tuzBorderColor); //set color to red with 100% transparency (last parameter)
+        tuzBorder.setStroke(new BasicStroke(4));
+        tuzBorder.drawRect(0, 0, getWidth(), getHeight());
+    }
+
+
+    @Override
     public int getMaxKorgolsPossible() {
         return 21;
     }
 
 
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(currentColor);
-        g2.setStroke(new BasicStroke(4));
-        g2.drawRoundRect(10, 15, 150, 330 ,10,10);
-    }
-
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(180,360);
+        return new Dimension(120, 240);
     }
 
     public int getN(){return n;}

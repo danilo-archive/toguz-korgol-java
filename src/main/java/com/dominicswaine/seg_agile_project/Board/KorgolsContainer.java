@@ -8,12 +8,12 @@ import java.util.ArrayList;
  * This object contains and displays any number of korgols.
  * It contains, removes, and shows the korgols to screen.
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 30-11-2018
  */
 public abstract class KorgolsContainer extends JLabel {
 
-    private ArrayList<Korgol> korgols;
-    private int lastKorgolInd;
+    private ArrayList < Korgol > korgols;
+    private int lastKorgolInd; //the index of the last korgol that has been added to the container
     private JTextArea extraKorgolsCounter;
     private JPanel extraKorgols;
 
@@ -21,11 +21,13 @@ public abstract class KorgolsContainer extends JLabel {
     /**
      * This container maintains korgols and shows them to screen
      */
-    KorgolsContainer(){
+    KorgolsContainer() {
+        setOpaque(false);
+        float[] arr = new float[3];
+        float[] vals = Color.RGBtoHSB(166, 128, 100, arr);
 
-        korgols = new ArrayList<Korgol>();
+        korgols = new ArrayList < Korgol > ();
         lastKorgolInd = -1;
-
 
     }
 
@@ -33,17 +35,16 @@ public abstract class KorgolsContainer extends JLabel {
      * Return the korgols currently present in the container
      * @return the korgols currently present in the container
      */
-    public ArrayList<Korgol> getKorgols() {
+    public ArrayList < Korgol > getKorgols() {
         return korgols;
     }
 
     /**
      * Adds korgols to the container so that they are aligned
-     * @param c color of the korgols to add
      */
-    void adjustLooks(Color c){
-        for(int i = lastKorgolInd+1; i < getMaxKorgolsPossible(); ++i){
-            Korgol k = new Korgol(c);
+    void adjustLooks() {
+        for (int i = lastKorgolInd + 1; i < getMaxKorgolsPossible(); ++i) {
+            Korgol k = new Korgol(true);
             korgols.add(k);
             this.add(k);
             this.repaint();
@@ -55,28 +56,26 @@ public abstract class KorgolsContainer extends JLabel {
     /**
      * Add n korgols of the specified color to the hole
      * @param n the numberof korgols to add to the hole
-     * @param c the color of the korgols to add
      */
-    void addKorgols(int n, Color c) {
-            for(int i = 0; i< n; ++i){
-                addKorgol(c);
-            }
+    void addKorgols(int n) {
+        for (int i = 0; i < n; ++i) {
+            addKorgol();
+        }
     }
 
 
     /**
      * Add a single korgol of the specified color to the hole
      * if the hole is full, we instead display a counter
-     * @param c the color of the korgol
      */
-    public void addKorgol(Color c){
+    public void addKorgol() {
 
 
-        if(lastKorgolInd + 1 == getMaxKorgolsPossible()){ //if the next korgol would "overflow" the container
-            this.remove(korgols.get(korgols.size()-1));   //we display a counter instead.
-            korgols.remove(korgols.size()-1);
+        if (lastKorgolInd + 1 == getMaxKorgolsPossible()) { //if the next korgol would "overflow" the container
+            this.remove(korgols.get(korgols.size() - 1)); //we display a counter instead.
+            korgols.remove(korgols.size() - 1);
 
-            extraKorgols = new JPanel(new BorderLayout());   //creating panel for counter
+            extraKorgols = new JPanel(new BorderLayout()); //creating panel for counter
             extraKorgols.setPreferredSize(korgols.get(0).getPreferredSize());
             extraKorgols.setOpaque(false);
             updateCounter();
@@ -88,10 +87,8 @@ public abstract class KorgolsContainer extends JLabel {
             this.revalidate();
             this.repaint();
             return;
-        }
-
-        else if(lastKorgolInd +1 > getMaxKorgolsPossible()){  //if the counter already exists, we increment it
-            if(extraKorgolsCounter != null){
+        } else if (lastKorgolInd + 1 > getMaxKorgolsPossible()) { //if the counter already exists, we increment it
+            if (extraKorgolsCounter != null) {
                 ++lastKorgolInd;
                 updateCounter();
                 return;
@@ -101,16 +98,18 @@ public abstract class KorgolsContainer extends JLabel {
 
 
         //if there are invisible korgols, we color the first available one black.
-        for(Korgol k: korgols){
-            if(k.getColor() != c){
-                k.setColor(c);
+        for (Korgol k: korgols) {
+            if (k.isWhite()) {
+                k.setWhite(false);
+                k.render();
                 ++lastKorgolInd;
+                revalidate();
                 return;
             }
         }
 
 
-        Korgol k = new Korgol(c);
+        Korgol k = new Korgol(false);
         korgols.add(k);
         ++lastKorgolInd;
         this.add(k);
@@ -123,31 +122,30 @@ public abstract class KorgolsContainer extends JLabel {
      * @param n the number of korgols to remove
      */
 
-    public void removeKorgols(int n){
+    public void removeKorgols(int n) {
         //if there is a counter, we update that one
-        if(lastKorgolInd  >= getMaxKorgolsPossible()){
+        if (lastKorgolInd >= getMaxKorgolsPossible()) {
             lastKorgolInd--;
             updateCounter();
             return;
         }
         //if the counter reaches "0" we remove it from the hole entirely
-        if(extraKorgols != null && lastKorgolInd +1 == getMaxKorgolsPossible()){
-                lastKorgolInd--;
-                this.remove(extraKorgols);
-                this.revalidate();
-                this.repaint();
+        if (extraKorgols != null && lastKorgolInd + 1 == getMaxKorgolsPossible()) {
+            lastKorgolInd--;
+            this.remove(extraKorgols);
+            this.revalidate();
+            this.repaint();
         }
 
 
         int size = korgols.size();
 
-        if(n<=size){
-            for(int i = size-1; i > size-n-1 ; --i){
-                if(lastKorgolInd >= 0){
-                    korgols.get(lastKorgolInd).setColor(Color.white);
+        if (n <= size) {
+            for (int i = size - 1; i > size - n - 1; --i) {
+                if (lastKorgolInd >= 0) {
+                    korgols.get(lastKorgolInd).dontRender();
                     --lastKorgolInd;
-                }
-                else System.out.println("Can't remove any more korgols!");
+                } else System.out.println("Can't remove any more korgols!");
             }
         }
         this.repaint();
@@ -157,16 +155,15 @@ public abstract class KorgolsContainer extends JLabel {
      * Updates counter shown at the bottom of the hole
      * if there is one
      */
-    private void updateCounter(){
-        if(extraKorgolsCounter != null){  //if the counter exists we update it
+    private void updateCounter() {
+        if (extraKorgolsCounter != null) { //if the counter exists we update it
             extraKorgolsCounter.setText("+" + (lastKorgolInd + 1 - getMaxKorgolsPossible()));
-           if( ("+" + (lastKorgolInd + 1 - getMaxKorgolsPossible())).equals("+0")){
-               this.remove(extraKorgols);
-               this.revalidate();
-               this.repaint();
-           }
-        }
-        else{ //else we have to create one
+            if (("+" + (lastKorgolInd + 1 - getMaxKorgolsPossible())).equals("+0")) {
+                this.remove(extraKorgols);
+                this.revalidate();
+                this.repaint();
+            }
+        } else { //else we have to create one
             extraKorgolsCounter = new JTextArea("+" + (lastKorgolInd + 2 - getMaxKorgolsPossible()));
             extraKorgolsCounter.setOpaque(false);
             extraKorgolsCounter.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));

@@ -9,47 +9,62 @@ import java.awt.*;
  * This class simply creates a panel with a circle of r = 10px.
  *
  * @author Danilo Del Busso
- * @version 18-11-2018
+ * @version 30-11-2018
  */
-public class Korgol extends JPanel {
+public class Korgol extends JLabel {
 
-    private Color color;
+    private boolean isWhite;
+    private JLabel jl;
 
     /**
      * Create a korgol of specified color
-     * @param color the color of the korgol
      */
-    public Korgol(Color color) {
-        this.color = color;
-    }
-
-    /**
-     * Return the color of the korgol
-     * @return color of the korgol
-     */
-    public Color getColor() {
-        return color;
-    }
-
-
-    /**
-     * Set the color to a value
-     * @param color the color to change it to
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-
-    @Override
-    public void paintComponent(Graphics g) {
+    public Korgol(boolean isWhite) {
         setOpaque(false);
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(color);
-        g2.setStroke(new BasicStroke(4));
-        g2.fillOval(15,22,20,20);
+        this.isWhite = isWhite;
+        this.setLayout(new BorderLayout());
+        render();
 
     }
+
+    /**
+     * Return true if korgool is not diplayed to screen
+     * @return true if korgool is not displayed to screen
+     */
+    public boolean isWhite() {
+        return isWhite;
+    }
+
+    /**
+     * Render korgool on screen
+     */
+    public void render() {
+        if (!isWhite) {
+            jl = new JLabel();
+            String korgolpath = System.getProperty("user.dir") + "/src/main/resources/korgool.png";
+            jl.setIcon(new ImageIcon(korgolpath));
+            this.add(jl, BorderLayout.SOUTH);
+            isWhite = false;
+        }
+    }
+
+    /**
+     * Set white value to given one
+     * @param white the value to update
+     */
+    public void setWhite(boolean white) {
+        isWhite = white;
+    }
+
+    /**
+     * Remove korgool from screen
+     */
+    public void dontRender() {
+        if (jl != null) {
+            this.remove(jl);
+            isWhite = true;
+        }
+    }
+
+
 }

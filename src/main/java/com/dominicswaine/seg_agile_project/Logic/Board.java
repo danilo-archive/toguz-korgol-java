@@ -1,7 +1,5 @@
 package com.dominicswaine.seg_agile_project.Logic;
 
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Board {
@@ -31,6 +29,10 @@ public class Board {
 
     public Hole getHoleByIndex(int index){
         return getHoles()[index];
+    }
+
+    public Side getNextToPlay(){
+        return nextToPlay;
     }
 
     public void redistribute(int holeIndex) {
