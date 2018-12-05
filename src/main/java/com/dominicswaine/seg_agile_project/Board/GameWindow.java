@@ -17,9 +17,9 @@ public class GameWindow {
     private static final int HOLES_PER_PLAYER = 9;
     private static final int STARTING_KORGOLS = 9;
 
-    private ArrayList < Hole > holesTopRow;
-    private ArrayList < Hole > holesBottomRow;
-    private ArrayList < Kazan > kazans;
+    private ArrayList <HoleUI> holesTopRow;
+    private ArrayList <HoleUI> holesBottomRow;
+    private ArrayList <KazanUI> kazans;
 
 
 
@@ -40,7 +40,7 @@ public class GameWindow {
         Container pane = gameWindow.getContentPane();
         pane.setLayout(new BorderLayout());
 
-        Board board = createNewBoard();
+        BoardUI board = createNewBoard();
 
         pane.add(board, BorderLayout.WEST);
 
@@ -56,11 +56,11 @@ public class GameWindow {
      * Create and draw starting board with 9 korgols per hole and empty kazans
      * @return the board panel
      */
-    private Board createNewBoard() {
+    private BoardUI createNewBoard() {
 
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/woodbg.jpg";
 
-        Board board = new Board(backgroundPath);
+        BoardUI board = new BoardUI(backgroundPath);
         JPanel topRow = new JPanel(new GridLayout(0, HOLES_PER_PLAYER));
         JPanel bottomRow = new JPanel(new GridLayout(0, HOLES_PER_PLAYER));
         JPanel kazanRow = new JPanel(new BorderLayout());
@@ -70,14 +70,14 @@ public class GameWindow {
         //create holes
         for (int i = 0; i < HOLES_PER_PLAYER; ++i) {
             //populate top row with holes
-            Hole h = new Hole(8 - i + 1);
+            HoleUI h = new HoleUI(8 - i + 1);
             //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesTopRow.add(h);
             topRow.add(h);
 
             //populate bottom row with holes
-            h = new Hole(i + 1);
+            h = new HoleUI(i + 1);
             //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesBottomRow.add(h);
@@ -85,13 +85,13 @@ public class GameWindow {
         }
 
         //create kazans
-        Kazan k = new Kazan();
+        KazanUI k = new KazanUI();
         kazans.add(k);
         //k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.EAST);
 
-        k = new Kazan();
+        k = new KazanUI();
         kazans.add(k);
         //k.addKorgols(0);
         k.adjustLooks();
@@ -119,7 +119,7 @@ public class GameWindow {
      * Return the holes on the bottom row
      * @return the holes on the bottom row
      */
-    public ArrayList < Hole > getHolesBottomRow() {
+    public ArrayList <HoleUI> getHolesBottomRow() {
         return holesBottomRow;
     }
 
@@ -127,7 +127,7 @@ public class GameWindow {
      * Return the holes on the top row
      * @return the holes on the top row
      */
-    public ArrayList < Hole > getHolesTopRow() {
+    public ArrayList <HoleUI> getHolesTopRow() {
         return holesTopRow;
     }
 }

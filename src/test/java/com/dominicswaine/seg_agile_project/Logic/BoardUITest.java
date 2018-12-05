@@ -3,9 +3,9 @@ package com.dominicswaine.seg_agile_project.Logic;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-public class BoardTest {
+public class BoardUITest {
 
-    public BoardTest(){}
+    public BoardUITest(){}
 
     @Test
     public void checkWhiteFirstToPlay(){

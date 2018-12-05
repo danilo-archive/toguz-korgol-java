@@ -12,7 +12,7 @@ import java.awt.*;
  * @author Danilo Del Busso
  * @version 30-11-2018
  */
-public class Hole extends KorgolsContainer {
+public class HoleUI extends KorgoolsContainerUI {
 
     private Color tuzBorderColor;
     private int tuz;
@@ -22,7 +22,7 @@ public class Hole extends KorgolsContainer {
      * The hole is the main korgol container of the game
      * @param n the number of the hole
      */
-    Hole(int n) {
+    HoleUI(int n) {
         setOpaque(false);
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n) + ".png";
 
