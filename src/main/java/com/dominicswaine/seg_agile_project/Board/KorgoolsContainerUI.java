@@ -57,7 +57,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
      * Add n korgols of the specified color to the hole
      * @param n the numberof korgols to add to the hole
      */
-    void addKorgols(int n) {
+    public void addKorgols(int n) {
         for (int i = 0; i < n; ++i) {
             addKorgol();
         }
