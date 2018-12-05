@@ -28,7 +28,7 @@ public class Game {
         }
     }
 
-    private Game() {
+    public Game() {
         initialiseGame();
         for(Hole hole : game_board.getHoles()){
             for(int i = 0; i<9; i++){
@@ -44,7 +44,7 @@ public class Game {
      * @param playerHoles An array storing number of korgools in players kazan and holes 1-9.
      * @param opponentHoles An array storing number of korgools in opponents kazan and holes 1-9.
      */
-    private Game(String playerTuz, String opponentTuz, int[] playerHoles, int[] opponentHoles){
+    public Game(String playerTuz, String opponentTuz, int[] playerHoles, int[] opponentHoles){
         initialiseGame();
 
         //System.out.println("Creating holes...");
