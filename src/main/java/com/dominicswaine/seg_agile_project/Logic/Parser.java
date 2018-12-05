@@ -1,26 +1,47 @@
 package com.dominicswaine.seg_agile_project.Logic;
 
+/* Used for JSON processing */
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/* Functionality and exception-handling*/
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Parser class mediates between files and backend functionality.
+ * The custom games and even
+ * @author Danilo Del Busso
+ * @version 18-11-2018
+ */
 public class Parser {
 
+    /* Parent JSON object for writing data to .json files */
     private JSONObject obj;
+    /* Current state of the board is needed to update any needed changes */
     private Board board;
 
+    /**
+     * Constructor for the Parser class.
+     * @param board -- the current state of the board
+     */
     public Parser(Board board) {
         obj = new JSONObject();
         this.board = board;
     }
 
+    /**
+     * addContent method updates the state of the parent object
+     * according to the new state of the board.
+     *
+     * If the state of the board has changed -- then the new .json file to be
+     * written would be instantiated from the new, updated parent object.
+     */
     @SuppressWarnings("unchecked")
     public void addContent() {
         Hole[] holes = board.getHoles();
@@ -82,6 +103,15 @@ public class Parser {
         obj.put("players",players);
     }
 
+    /**
+     * This method takes a file path as argument and writes the content of the
+     * parent json object to the a new file.
+     *
+     * If the name of the file already exists, its contents will be updated by calling
+     * this method.
+     *
+     * @param filePath -- the file path | usually resides in the resources/game_files folder
+     */
     public void writeToFile(String filePath) {
         try(FileWriter file = new FileWriter(filePath)) {
             file.write(obj.toJSONString());
@@ -91,6 +121,16 @@ public class Parser {
         }
     }
 
+    /**
+     * This method takes a file path as a argument and reads 'json' data from it.
+     * The read data is then organised in a map with two entries: one for the board configuration
+     * of each player.
+     *
+     * With the Map returned, the game board can be updated according to the data retrieved.
+     *
+     * @param filePath -- the file path | where the data is read from
+     * @return Map -- a map with content of a board to be created
+     */
     public Map readFromFile(String filePath) {
         JSONParser parser = new JSONParser();
         Map<String,Integer> whiteSideMap = new HashMap<>();
