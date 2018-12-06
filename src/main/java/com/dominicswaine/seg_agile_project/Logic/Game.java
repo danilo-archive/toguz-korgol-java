@@ -110,7 +110,21 @@ public class Game {
     }
 
     public static void main(String[] args){
-        new Game();
+        Game game1 = new Game();
+        while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
+            Side nextToPlay = game1.game_board.getNextToPlay();
+            System.out.print("");
+            if(nextToPlay == Side.BLACK){
+                try {
+                    Thread.sleep(2000);
+                }
+                catch(InterruptedException ie){
+                    System.out.println("Thinking...");
+                }
+                game1.game_board.randomMove();
+                System.out.println("Random move has been made");
+            }
+        }
 //        int playerdata[] = {35,6,6,7,8,3,15,8,9,1};
 //        int opponentdata[] = {25,8,4,1,0,0,2,12,5,4};
 //        new Game("2","5",playerdata,opponentdata);
