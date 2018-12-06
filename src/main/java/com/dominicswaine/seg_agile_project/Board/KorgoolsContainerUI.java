@@ -42,7 +42,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
     /**
      * Adds korgols to the container so that they are aligned
      */
-    void adjustLooks() {
+    public void adjustLooks() {
         for (int i = lastKorgolInd + 1; i < getMaxKorgolsPossible(); ++i) {
             KorgoolUI k = new KorgoolUI(true);
             korgols.add(k);
@@ -125,7 +125,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
     public void removeKorgols(int n) {
         //if there is a counter, we update that one
         if (lastKorgolInd >= getMaxKorgolsPossible()) {
-            lastKorgolInd--;
+            lastKorgolInd-=n;
             updateCounter();
             return;
         }
@@ -179,6 +179,11 @@ public abstract class KorgoolsContainerUI extends JLabel {
      */
     public abstract int getMaxKorgolsPossible();
 
-
-
+    /**
+     * Rerturn the index of the last korgol shown to screen
+     * @return
+     */
+    public int getLastKorgolInd() {
+        return lastKorgolInd;
+    }
 }
