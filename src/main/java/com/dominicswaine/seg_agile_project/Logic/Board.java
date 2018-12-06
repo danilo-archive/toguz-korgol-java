@@ -39,6 +39,7 @@ public class Board {
         System.out.println("Chosen hole is: " + holeIndex);
 
         if(holes[holeIndex].getOwner() == nextToPlay) {
+            //TODO: Add a check to see if move being made is a tuz.
             ArrayList<Korgool> korgoolsToMove = holes[holeIndex].getKoorgools();
             Hole holeChosen = holes[holeIndex];
             Hole lastHole;
@@ -71,9 +72,10 @@ public class Board {
             if(lastHole.getOwner() != nextToPlay) {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 ArrayList<Korgool> lastHoleKorgools = lastHole.getKoorgools();
-                if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz()){
+                if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
                     System.out.println(lastHole.getHoleIndex() + " is marked as tuz and" + lastHole.getKoorgools().size() + " korgools are won by " + nextToPlay);
                     lastHole.markAsTuz();
+                    nextToPlay.makeTuz();
                     for(int i = 0; i < lastHoleKorgools.size(); i++){
                         kazans[playersKazanIndex].addKorgool(new Korgool());
                     }
@@ -119,7 +121,7 @@ public class Board {
                     //TODO: Give priority to tuz making. Create an extra case for tuz.
                     //TODO: Make sure cases for holes containing 1 or 0 korgool.
                     int numOfKorgools = outcomeHole.getKoorgools().size() + 1;
-                    if(numOfKorgools == 3){
+                    if(numOfKorgools == 3 && !nextToPlay.hasTuz()){
                         System.out.println("Next viable move is: make Tuz: " + (holeIndex) + " of opponent");
                         redistribute(holeIndex);
                     }
@@ -130,11 +132,12 @@ public class Board {
                 }
             }
         }
-        if(returnIndex == -1){
+        if(returnIndex <= -1){
             System.out.println("No Available Moves Left. Random move will be made.");
             randomMove();
+            return;
         }
-        System.out.println("Next viable move is: Hole " + (returnIndex-9) + " of opponent");
+        System.out.println("Next viable move is: Hole " + (returnIndex) + " of opponent");
         redistribute(returnIndex);
     }
 
