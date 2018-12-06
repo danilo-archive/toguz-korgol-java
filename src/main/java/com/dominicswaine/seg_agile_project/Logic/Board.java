@@ -108,6 +108,35 @@ public class Board {
         return holeIndex;
     }
 
+    public int challengeMove(){
+        int maxOutcome = -1;
+        int returnIndex = -1;
+        for(int holeIndex = 0; holeIndex < 17; holeIndex++){
+            if(holes[holeIndex].getOwner() == Side.BLACK) {
+                Hole outcomeHole = holes[(holeIndex+ holes[holeIndex].getKoorgools().size() - 1) % 18];
+                if (outcomeHole.getOwner() == Side.WHITE) {
+                    //TODO: Give priority to tuz making. Create an extra case for tuz.
+                    //TODO: Make sure cases for holes containing 1 or 0 korgool.
+                    int numOfKorgools = outcomeHole.getKoorgools().size() + 1;
+                    if(numOfKorgools == 3){
+                        System.out.println("Next viable move is: make Tuz: " + (holeIndex) + " of opponent");
+                        return holeIndex;
+                    }
+                    if (numOfKorgools % 2 == 0 && numOfKorgools > maxOutcome) {
+                        maxOutcome = numOfKorgools;
+                        returnIndex = holeIndex;
+                    }
+                }
+            }
+        }
+        if(returnIndex == -1){
+            System.out.println("No Available Moves Left. Random move will be made.");
+            return randomMove();
+        }
+        System.out.println("Next viable move is: Hole " + (returnIndex-9) + " of opponent");
+        return returnIndex;
+    }
+
     public int getPlayerTuz(Side owner) {
         for(int i = 0 ; i <= 17 ; ++i) {
             if(holes[i].isTuz() && holes[i].getOwner() == owner) {
