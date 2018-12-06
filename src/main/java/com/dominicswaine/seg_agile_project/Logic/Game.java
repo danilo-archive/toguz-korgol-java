@@ -2,6 +2,7 @@ package com.dominicswaine.seg_agile_project.Logic;
 
 import com.dominicswaine.seg_agile_project.Board.GameWindow;
 import com.dominicswaine.seg_agile_project.Board.HoleUI;
+import com.dominicswaine.seg_agile_project.Board.KazanUI;
 
 import java.awt.event.*;
 
@@ -27,6 +28,12 @@ public class Game {
                     game_board.redistribute(holeIndex);
                 }
             });
+        }
+
+        for(int i = 0; i < game_board.getKazans().length; i++){
+            Kazan logicKazan = game_board.getKazanByIndex(i);
+            KazanUI guiKazan = gui.getKazans().get(i);
+            logicKazan.setGui(guiKazan);
         }
     }
 

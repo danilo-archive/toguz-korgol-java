@@ -15,7 +15,7 @@ public class Board {
         nextToPlay = Side.WHITE;
     }
 
-    protected Hole[] getHoles(){
+    public Hole[] getHoles(){
         return holes;
     }
 
@@ -35,66 +35,63 @@ public class Board {
         return nextToPlay;
     }
 
-    public void redistribute(int holeIndex) {
+    public void redistribute(int holeIndex){
+        System.out.println("Chosen hole is: " + holeIndex);
 
-        System.out.println(holeIndex);
-
-        if((holes[holeIndex].getOwner() == nextToPlay)) {
-
-            ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
-            /*
-            System.out.println(nextToPlay);
-            for(int i=0; i<18; i++){
-                System.out.print(" "+i+":"+holes[i].getNumberOfKoorgools());
-            }
-            System.out.println();
-            */
-
-            int indexOfLastHole = (korgools.size()==1)
-                    ? (holeIndex+1)%18 : (holeIndex+korgools.size()-1)%18;
-
-            if(korgools.size()==0){
-                // System.out.println("EMTPY WHOLE");
+        if(holes[holeIndex].getOwner() == nextToPlay) {
+            ArrayList<Korgool> korgoolsToMove = holes[holeIndex].getKoorgools();
+            Hole holeChosen = holes[holeIndex];
+            Hole lastHole;
+            //@Check if there are no korgools in the hole.
+            if(korgoolsToMove.size() == 0){
+                System.out.println("You cannot make this move! Chosen hole has only 0 korgools!");
                 return;
             }
-            if(korgools.size()>=2){
-                for(int i = 1 ; i < korgools.size() ; ++i) {
-                    holes[(holeIndex+i)%18].addKorgool(korgools.get(i));
-                }
-
-                holes[holeIndex].emptyBarOne();
-            }else {
-                Korgool first = korgools.get(0);
-                holes[holeIndex].emptyHole();
-                holes[(holeIndex + 1) % 18].addKorgool(first);
+            //@Check if there are 1 korgool in the hole.
+            else if(korgoolsToMove.size() == 1){
+                //System.out.println(holeIndex + " numbered hole has only 1 korgools.");
+                lastHole = holes[holeIndex + 1];
+                //System.out.println("Transferring 1 korgools to hole number" + lastHole.getHoleIndex());
+                lastHole.addKorgool(holeChosen.getKoorgools().get(0));
+                holeChosen.emptyHole();
             }
-
-            if(holes[indexOfLastHole].getNumberOfKoorgools() % 2 == 0 && holes[indexOfLastHole].getOwner() != nextToPlay) {
+            else{
+                lastHole = holes[(holeIndex + korgoolsToMove.size() - 1) % 18];
+                //Distributes each korgools
+                for(int distributeIndex = 1; distributeIndex < korgoolsToMove.size(); distributeIndex++){
+                    //System.out.println("1 korgool from hole: " + holeChosen.getHoleIndex() + " is moved to" + holes[(holeIndex + distributeIndex) % 18].getHoleIndex());
+                    holes[(holeIndex + distributeIndex) % 18].addKorgool(korgoolsToMove.get(distributeIndex));
+                }
+                //System.out.println("We try deleting after the loop");
+                Korgool first = korgoolsToMove.get(0);
+                holeChosen.emptyHole();
+                holeChosen.addKorgool(first);
+            }
+            //@Check if we add to kazan or make tuz.
+            if(lastHole.getOwner() != nextToPlay) {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
-                kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
-                holes[indexOfLastHole].emptyHole();
-            }else if(holes[indexOfLastHole].getNumberOfKoorgools() == 3 && holes[indexOfLastHole].getOwner() != nextToPlay) { // 'tuz' time
-                if(getPlayerTuz(nextToPlay) == -1 &&
-                        (indexOfLastHole+1)%9 != 0 &&
-                        !holes[(indexOfLastHole + 9)%18].isTuz()) {
-                    holes[indexOfLastHole].markAsTuz();
-                    // System.out.println("TUZ!");
-                    int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
-                    kazans[playersKazanIndex].addKorgools(holes[indexOfLastHole].getKoorgools());
-                    holes[indexOfLastHole].emptyHole();
+                ArrayList<Korgool> lastHoleKorgools = lastHole.getKoorgools();
+                if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz()){
+                    System.out.println(lastHole.getHoleIndex() + " is marked as tuz and" + lastHole.getKoorgools() + " korgools are won by " + nextToPlay);
+                    lastHole.markAsTuz();
+                    kazans[playersKazanIndex].addKorgools(lastHole.getKoorgools());
+                }
+                else if(lastHoleKorgools.size() % 2 == 0){
+                    System.out.println(lastHole.getKoorgools().size() + " korgools are won by " + nextToPlay);
+                    for(int i = 0; i < lastHoleKorgools.size(); i++) {
+                        kazans[playersKazanIndex].addKorgool(new Korgool());
+                    }
+                    System.out.println("Last Hole size is : " + lastHole.getKoorgools().size());
+                    lastHole.emptyHole();
                 }
             }
-
-            /*
-            for(int i=0; i<18; i++){
-                System.out.print(" "+i+":"+holes[i].getNumberOfKoorgools());
-            }
-            System.out.println();System.out.println();
-            */
             nextToPlay = nextToPlay==Side.WHITE ? Side.BLACK : Side.WHITE;
+            System.out.println("Side White has" + kazans[0].getKoorgools().size() + " korgools");
+            System.out.println("Side Black has" + kazans[1].getKoorgools().size() + " korgools");
         }
-
-
+        else{
+            System.out.println("This hole does not belong to the player!" + " Pick another hole!");
+        }
     }
 
     public int randomMove(){
