@@ -15,23 +15,23 @@ public class Board {
         nextToPlay = Side.WHITE;
     }
 
-    public Hole[] getHoles(){
+    protected Hole[] getHoles(){
         return holes;
     }
 
-    public Kazan[] getKazans(){
+    protected Kazan[] getKazans(){
         return kazans;
     }
 
-    public Kazan getKazanByIndex(int index){
+    protected Kazan getKazanByIndex(int index){
         return getKazans()[index];
     }
 
-    public Hole getHoleByIndex(int index){
+    protected Hole getHoleByIndex(int index){
         return getHoles()[index];
     }
 
-    public Side getNextToPlay(){
+    protected Side getNextToPlay(){
         return nextToPlay;
     }
 
@@ -95,6 +95,17 @@ public class Board {
         }
 
 
+    }
+
+    public int randomMove(){
+        int holeIndex = (int)Math.random() * 9 + 17;
+        ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
+        while(korgools.size() == 0){
+            holeIndex = (int)Math.random() * 9 + 17;
+            korgools = holes[holeIndex].getKoorgools();
+        }
+        System.out.println("Next Random move is Hole:" + (holeIndex -9) + " of opponent");
+        return holeIndex;
     }
 
     public int getPlayerTuz(Side owner) {
