@@ -121,33 +121,45 @@ public abstract class KorgoolsContainerUI extends JLabel {
      * Remove n number of korgols
      * @param n the number of korgols to remove
      */
+    public void removeKorgols(int n){
+        if(n > lastKorgolInd+1){
+            n =lastKorgolInd+1;
+            System.out.println("You want to remove "+n+"korgools but there are only "+(lastKorgolInd+1)+" korgools in the hole");
+            System.out.println("Removing "+n+" korgools instead...");
+        }
 
-    public void removeKorgols(int n) {
+        for(int i = 0; i<n;++i){
+            removeKorgol();
+        }
+    }
+
+    /**
+     * Remove a korgool from the hole
+     */
+
+    public void removeKorgol() {
         //if there is a counter, we update that one
         if (lastKorgolInd >= getMaxKorgolsPossible()) {
-            lastKorgolInd-=n;
+            lastKorgolInd--;
             updateCounter();
             return;
         }
         //if the counter reaches "0" we remove it from the hole entirely
-        if (extraKorgols != null && lastKorgolInd + 1 == getMaxKorgolsPossible()) {
+        if (extraKorgols != null && lastKorgolInd + 1 <= getMaxKorgolsPossible()) {
             lastKorgolInd--;
             this.remove(extraKorgols);
+            extraKorgols = null;
+            extraKorgolsCounter = null;
+            addKorgol();
             this.revalidate();
             this.repaint();
         }
 
-
-        int size = korgols.size();
-
-        if (n <= size) {
-            for (int i = size - 1; i > size - n - 1; --i) {
-                if (lastKorgolInd >= 0) {
+        if (lastKorgolInd >= 0) {
                     korgols.get(lastKorgolInd).dontRender();
                     --lastKorgolInd;
-                } else System.out.println("Can't remove any more korgols!");
-            }
-        }
+        } else System.out.println("Can't remove any more korgols!");
+
         this.repaint();
     }
 
@@ -157,14 +169,10 @@ public abstract class KorgoolsContainerUI extends JLabel {
      */
     private void updateCounter() {
         if (extraKorgolsCounter != null) { //if the counter exists we update it
-            extraKorgolsCounter.setText("+" + (lastKorgolInd + 1 - getMaxKorgolsPossible()));
-            if (("+" + (lastKorgolInd + 1 - getMaxKorgolsPossible())).equals("+0")) {
-                this.remove(extraKorgols);
-                this.revalidate();
-                this.repaint();
-            }
+            extraKorgolsCounter.setText("+" + (lastKorgolInd + 2 - getMaxKorgolsPossible()));
         } else { //else we have to create one
-            extraKorgolsCounter = new JTextArea("+" + (lastKorgolInd + 2 - getMaxKorgolsPossible()));
+            extraKorgolsCounter = new JTextArea("+" + (lastKorgolInd + 3 - getMaxKorgolsPossible()));
+            extraKorgolsCounter.setEditable(false);
             extraKorgolsCounter.setOpaque(false);
             extraKorgolsCounter.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
         }
@@ -181,7 +189,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
 
     /**
      * Rerturn the index of the last korgol shown to screen
-     * @return
+     * @return the index of the last korgol shown to screen
      */
     public int getLastKorgolInd() {
         return lastKorgolInd;
