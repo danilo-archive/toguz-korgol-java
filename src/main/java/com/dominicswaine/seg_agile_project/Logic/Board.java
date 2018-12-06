@@ -101,7 +101,7 @@ public class Board {
     public void randomMove(){
         int holeIndex = (int)(Math.random() * ((17 - 9) + 1)) + 9;
         ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
-        while(korgools.size() == 0 || holes[holeIndex].getOwner() == Side.WHITE){
+        while(korgools.size() == 0 || holes[holeIndex].getOwner() == Side.WHITE || holes[holeIndex].isTuz()){
             holeIndex = (int)(Math.random() * ((17 - 9) + 1)) + 9;
             korgools = holes[holeIndex].getKoorgools();
         }
@@ -113,7 +113,7 @@ public class Board {
         int maxOutcome = -1;
         int returnIndex = -1;
         for(int holeIndex = 0; holeIndex < 17; holeIndex++){
-            if(holes[holeIndex].getOwner() == Side.BLACK) {
+            if(holes[holeIndex].getOwner() == Side.BLACK && !holes[holeIndex].isTuz()) {
                 Hole outcomeHole = holes[(holeIndex+ holes[holeIndex].getKoorgools().size() - 1) % 18];
                 if (outcomeHole.getOwner() == Side.WHITE) {
                     //TODO: Give priority to tuz making. Create an extra case for tuz.

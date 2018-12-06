@@ -111,17 +111,19 @@ public class Game {
 
     public static void main(String[] args){
         Game game1 = new Game();
+        //TODO: Make player chose between AI opponent or Easy opponent.
         while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
-            System.out.print("");
+            try {
+                Thread.sleep(2000);
+                System.out.print("I slept");
+            }
+            catch(InterruptedException ie){
+                System.out.println("Thinking...");
+            }
+            //System.out.print("");
             if(nextToPlay == Side.BLACK){
-                try {
-                    Thread.sleep(2000);
-                }
-                catch(InterruptedException ie){
-                    System.out.println("Thinking...");
-                }
-                game1.game_board.randomMove();
+                game1.game_board.challengeMove();
                 System.out.println("Random move has been made");
             }
         }
