@@ -16,8 +16,8 @@ import java.util.*;
 /**
  * Parser class mediates between files and backend functionality.
  * The custom games and even
- * @author Danilo Del Busso
- * @version 18-11-2018
+ * @author Horia Pavel
+ * @version 05-12-2018
  */
 public class Parser {
 
