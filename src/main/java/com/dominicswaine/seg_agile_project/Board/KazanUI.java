@@ -1,5 +1,7 @@
 package com.dominicswaine.seg_agile_project.Board;
 
+import com.dominicswaine.seg_agile_project.Logic.Korgool;
+
 import javax.swing.*;
 import java.awt.*;
 

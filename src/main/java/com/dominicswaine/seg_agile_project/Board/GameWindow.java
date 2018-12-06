@@ -130,4 +130,10 @@ public class GameWindow {
     public ArrayList <HoleUI> getHolesTopRow() {
         return holesTopRow;
     }
+
+    /**
+     * Return the kazans
+     * @return the kazans
+     */
+    public ArrayList<KazanUI> getKazans(){ return kazans;}
 }
