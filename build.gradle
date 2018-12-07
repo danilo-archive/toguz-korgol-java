@@ -16,4 +16,5 @@ dependencies {
 
 test{
     exclude 'ParserTest.class'
+    exclude 'CustomGameTest.class'
 }

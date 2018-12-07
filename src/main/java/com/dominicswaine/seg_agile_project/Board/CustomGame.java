@@ -102,7 +102,7 @@ public class CustomGame {
         JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
                 "you, or your opponent. You are then able to  " +
-                "specify the amount of Korgools per KazanUI and HoleUI, " +
+                "specify the amount of Korgools per KazanUI and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
                 "number of Korgools must be exactly 162, the two Tuzzes " +
                 "cannot be the same, and no Tuz can be 9.</p></html>");
@@ -179,14 +179,14 @@ public class CustomGame {
 
         if (i == 0) { //For KazanUI, we want no tuz radio button
 
-            label = new JLabel("KazanUI:");
+            label = new JLabel("Kazan:");
             unit.add(Box.createHorizontalStrut(21), BorderLayout.EAST);
 
         }
 
         else {
 
-            label = new JLabel("HoleUI " + i + ":");
+            label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
             tuzController.setName("" + i); //Setting an ID for each radio button - HoleUI 1 has ID 1, HoleUI 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
