@@ -108,9 +108,11 @@ public class Game {
 
         if(playerTuzNo != 0) {
             game_board.getHoleByIndex(playerTuzNo + 8).markAsTuz();
+            player_side.makeTuz();
         }
         if(opponentTuzNo != 0) {
             game_board.getHoleByIndex(opponentTuzNo-1).markAsTuz();
+            Side.BLACK.makeTuz();
         }
     }
 
