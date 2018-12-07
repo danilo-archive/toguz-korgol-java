@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Arrays;
 
@@ -210,6 +212,39 @@ public class Parser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void loadCustomGame(String filePath) {
+        try {
+            String[] data = (new String(Files.readAllBytes(Paths.get(filePath)))).split("\\|");
+
+            // Handle playerHoles
+            String[] playerHolesString = data[2].replaceAll("\\[","")
+                                                .replaceAll("\\]","")
+                                                .replaceAll("\\s","")
+                                                .split(",");
+            int[] playerHolesInt = new int[playerHolesString.length];
+            for (int i = 0 ; i < playerHolesInt.length ; ++i) {
+                playerHolesInt[i] = Integer.parseInt(playerHolesString[i]);
+            }
+
+            // Handle opponentHoles
+            String[] opponentHolesString = data[3].replaceAll("\\[","")
+                                                .replaceAll("\\]","")
+                                                .replaceAll("\\s","")
+                                                .split(",");
+            int[] opponentHolesInt = new int[opponentHolesString.length];
+            for(int i = 0 ; i < opponentHolesString.length ; ++i) {
+                opponentHolesInt[i] = Integer.parseInt(opponentHolesString[i]);
+            }
+
+            // Launch game with the retrieved data
+            new Game(data[0],data[1],playerHolesInt,opponentHolesInt);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 
 }
