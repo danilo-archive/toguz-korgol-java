@@ -75,6 +75,7 @@ public class Board {
                 if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
                     System.out.println(lastHole.getHoleIndex() + " is marked as tuz and" + lastHole.getKoorgools().size() + " korgools are won by " + nextToPlay);
                     lastHole.markAsTuz();
+
                     nextToPlay.makeTuz();
                     for(int i = 0; i < lastHoleKorgools.size(); i++){
                         kazans[playersKazanIndex].addKorgool(new Korgool());
