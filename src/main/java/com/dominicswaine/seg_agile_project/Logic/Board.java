@@ -7,6 +7,9 @@ public class Board {
     private Kazan[] kazans = new Kazan[2];
     private Side nextToPlay;
 
+    /**
+     * Constructor for board object. Creates 18 holes and 2 kazans. Sets next turn to white side.
+     */
     public Board(){
         for(int holeIndex = 0; holeIndex<holes.length; holeIndex++)
             holes[holeIndex] = new Hole(holeIndex);
@@ -15,28 +18,56 @@ public class Board {
         nextToPlay = Side.WHITE;
     }
 
+    /**
+     * Return array of holes in game board
+     * @return holes array
+     */
     public Hole[] getHoles(){
         return holes;
     }
 
+    /**
+     * Return array of kazans in game board
+     * @return kazans array
+     */
     protected Kazan[] getKazans(){
         return kazans;
     }
 
+    /**
+     * Returns Kazan with given index
+     * @param index index of Kazan to be returned
+     * @return Kazan with the given index
+     */
     protected Kazan getKazanByIndex(int index){
         return getKazans()[index];
     }
 
+    /**
+     * Returns Hole with given index
+     * @param index index of Hole to be returned
+     * @return Hole with given index
+     */
     protected Hole getHoleByIndex(int index){
         return getHoles()[index];
     }
 
+    /**
+     * Returns side to play next
+     * @return Side to play next
+     */
     protected Side getNextToPlay(){
         return nextToPlay;
     }
 
+    /**
+     * Distribute each korgool for the selected hole.
+     * @param holeIndex
+     */
     public void redistribute(int holeIndex){
         System.out.println("Chosen hole is: " + holeIndex);
+
+
 
         if(holes[holeIndex].getOwner() == nextToPlay) {
             //TODO: Add a check to see if move being made is a tuz.
@@ -97,19 +128,36 @@ public class Board {
             System.out.println("Side Black has" + kazans[1].getKoorgools().size() + " korgools");
         }
         else{
+            //TODO: Show this as an alert dialogue.
             System.out.println("This hole does not belong to the player!" + " Pick another hole!");
         }
     }
 
-    public void randomMove(){
-        int holeIndex = (int)(Math.random() * ((17 - 9) + 1)) + 9;
-        ArrayList<Korgool> korgools = holes[holeIndex].getKoorgools();
-        while(korgools.size() == 0 || holes[holeIndex].getOwner() == Side.WHITE || holes[holeIndex].isTuz()){
-            holeIndex = (int)(Math.random() * ((17 - 9) + 1)) + 9;
-            korgools = holes[holeIndex].getKoorgools();
+    /**
+     * Returns an ArrayList of Holes owned by the given Side
+     * @param turnSide Side that holes are linked to
+     * @return an ArrayList of Holes owned by the given Side
+     */
+    private ArrayList<Hole> getOwnedHoles(Side turnSide){
+        ArrayList<Hole> holesOwned = new ArrayList<>();
+        for(int holeNo = 0; holeNo < holes.length; holeNo++){
+            if((getHoleByIndex(holeNo).getOwner() == turnSide)) {
+                holesOwned.add(getHoleByIndex(holeNo));
+            }
         }
-        System.out.println("Next Random move is Hole:" + (holeIndex));
-        redistribute(holeIndex);
+        return holesOwned;
+    }
+
+    public void randomMove(){
+        ArrayList<Hole> holesOwned = getOwnedHoles(nextToPlay);
+        int holeIndex = (int)(Math.random() * (((holesOwned.size()-1) - 0) + 1)) + 0;
+        ArrayList<Korgool> korgools = holesOwned.get(holeIndex).getKoorgools();
+        while(korgools.size() == 0){
+            holeIndex = (int)(Math.random() * (((holesOwned.size()-1) - 0) + 1)) + 0;
+            korgools = holesOwned.get(holeIndex).getKoorgools();
+        }
+        System.out.println("Next Random move is Hole:" + (holesOwned.get(holeIndex).getHoleIndex()));
+        redistribute(holesOwned.get(holeIndex).getHoleIndex());
     }
 
     public void challengeMove(){

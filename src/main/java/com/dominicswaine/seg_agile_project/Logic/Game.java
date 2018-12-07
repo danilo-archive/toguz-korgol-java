@@ -41,7 +41,7 @@ public class Game {
         }
 
         for(int i = 0; i < game_board.getKazans().length; i++){
-            //TODO: Indicate which kazan belongs to player.
+            //TODO: Indicate which kazan belongs to player. @Danilo
             Kazan logicKazan = game_board.getKazanByIndex(i);
             KazanUI guiKazan = gui.getKazans().get(i);
             logicKazan.setGui(guiKazan);
@@ -121,6 +121,7 @@ public class Game {
         int[] playerData = {15,1,2,3,4,5,6,7,8,9};
         int[] opponentData = {15,5,6,7,8,9,10,11,12,13};
         Game game1 = new Game("5","8",playerData,opponentData);
+        //TODO: Retrieve info from Custom game window.
         while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
             try {
@@ -131,9 +132,10 @@ public class Game {
             }
             //System.out.print("");
             if(nextToPlay == Side.BLACK){
-                game1.game_board.challengeMove();
+                game1.game_board.randomMove();
                 System.out.println("challenge move has been made!");
             }
         }
+        //TODO: End game screen after while loop ends.
     }
 }
