@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.Arrays;
 
 /**
  * Parser class mediates between files and backend functionality.
@@ -188,6 +189,27 @@ public class Parser {
 
         return doubleMap;
 
+    }
+
+
+    public static void saveCustomGame(String fileName ,String playerTuz, String opponentTuz,
+                                      int[] playerHoles, int[] opponentHoles) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(playerTuz);
+        sb.append("|");
+        sb.append(opponentTuz);
+        sb.append("|");
+        sb.append(Arrays.toString(playerHoles));
+        sb.append("|");
+        sb.append(Arrays.toString(opponentHoles));
+
+        try (FileWriter file = new FileWriter(fileName)) {
+            file.write(sb.toString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
