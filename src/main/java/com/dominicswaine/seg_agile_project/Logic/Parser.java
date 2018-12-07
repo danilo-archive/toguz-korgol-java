@@ -20,7 +20,7 @@ import java.util.Arrays;
  * Parser class mediates between files and backend functionality.
  * The custom games and even
  * @author Horia Pavel
- * @version 05-12-2018
+ * @version 07-12-2018
  */
 public class Parser {
 
@@ -31,7 +31,7 @@ public class Parser {
 
     /**
      * Constructor for the Parser class.
-     * @param board -- the current state of the board
+     * @param board Board -- the current state of the board
      */
     public Parser(Board board) {
         obj = new JSONObject();
@@ -113,7 +113,7 @@ public class Parser {
      * If the name of the file already exists, its contents will be updated by calling
      * this method.
      *
-     * @param filePath -- the file path | usually resides in the resources/game_files folder
+     * @param filePath String -- the file path | usually resides in the resources/game_files folder
      */
     public void writeToFile(String filePath) {
         try(FileWriter file = new FileWriter(filePath)) {
@@ -131,7 +131,7 @@ public class Parser {
      *
      * With the Map returned, the game board can be updated according to the data retrieved.
      *
-     * @param filePath -- the file path | where the data is read from
+     * @param filePath String -- the file path | where the data is read from
      * @return Map -- a map with content of a board to be created
      */
     public Map readFromFile(String filePath) {
