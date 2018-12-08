@@ -119,13 +119,13 @@ public class Board {
                     for(int i = 0; i < lastHoleKorgools.size(); i++) {
                         kazans[playersKazanIndex].addKorgool(new Korgool());
                     }
-                    System.out.println("Last Hole size is : " + lastHole.getKoorgools().size());
+                    //System.out.println("Last Hole size is : " + lastHole.getKoorgools().size());
                     lastHole.emptyHole();
                 }
             }
             nextToPlay = nextToPlay==Side.WHITE ? Side.BLACK : Side.WHITE;
-            System.out.println("Side White has" + kazans[0].getKoorgools().size() + " korgools");
-            System.out.println("Side Black has" + kazans[1].getKoorgools().size() + " korgools");
+            //System.out.println("Side White has" + kazans[0].getKoorgools().size() + " korgools");
+            //System.out.println("Side Black has" + kazans[1].getKoorgools().size() + " korgools");
         }
         else{
             //TODO: Show this as an alert dialogue.
@@ -140,44 +140,65 @@ public class Board {
      */
     private ArrayList<Hole> getOwnedHoles(Side turnSide){
         ArrayList<Hole> holesOwned = new ArrayList<>();
-        for(int holeNo = 0; holeNo < holes.length; holeNo++){
-            if((getHoleByIndex(holeNo).getOwner() == turnSide)) {
-                holesOwned.add(getHoleByIndex(holeNo));
+        for(Hole h : holes){
+            if(h.getOwner() == turnSide){
+                holesOwned.add(h);
             }
         }
         return holesOwned;
     }
 
-    public void randomMove(){
+    /**
+     * Returns legal moves for the player next to play
+     * @return ArrayList of Holes that can be redistributed and owned by the player next to play
+     */
+    private ArrayList<Hole> availableMoves(){
         ArrayList<Hole> holesOwned = getOwnedHoles(nextToPlay);
-        int holeIndex = (int)(Math.random() * (((holesOwned.size()-1) - 0) + 1)) + 0;
-        ArrayList<Korgool> korgools = holesOwned.get(holeIndex).getKoorgools();
-        while(korgools.size() == 0){
-            holeIndex = (int)(Math.random() * (((holesOwned.size()-1) - 0) + 1)) + 0;
-            korgools = holesOwned.get(holeIndex).getKoorgools();
+        for(Hole h : holesOwned){
+            if(h.getNumberOfKoorgools() == 0){
+                holesOwned.remove(h);
+            }
         }
-        System.out.println("Next Random move is Hole:" + (holesOwned.get(holeIndex).getHoleIndex()));
-        redistribute(holesOwned.get(holeIndex).getHoleIndex());
+        return holesOwned;
+    }
+
+    /**
+     * Picks a random hole belonging side to play next and redistributes that hole
+     */
+    public void randomMove(){
+        ArrayList<Hole> availableHoles = availableMoves();
+        int holeIndex = (int)(Math.random() * (((availableHoles.size()-1) - 0) + 1)) + 0;
+        ArrayList<Korgool> korgools = availableHoles.get(holeIndex).getKoorgools();
+        while(korgools.size() == 0){
+            holeIndex = (int)(Math.random() * (((availableHoles.size()-1) - 0) + 1)) + 0;
+            korgools = availableHoles.get(holeIndex).getKoorgools();
+        }
+        //System.out.println("Next Random move is Hole:" + (holesOwned.get(holeIndex).getHoleIndex()));
+        redistribute(availableHoles.get(holeIndex).getHoleIndex());
     }
 
     public void challengeMove(){
         int maxOutcome = -1;
         int returnIndex = -1;
-        for(int holeIndex = 0; holeIndex < 17; holeIndex++){
-            if(holes[holeIndex].getOwner() == Side.BLACK && !holes[holeIndex].isTuz()) {
-                Hole outcomeHole = holes[(holeIndex+ holes[holeIndex].getKoorgools().size() - 1) % 18];
-                if (outcomeHole.getOwner() == Side.WHITE) {
+        Hole lastHole;
+        Hole selectedHole;
+        ArrayList<Hole> availableHoles = availableMoves();
+        for(int i = 0; i < availableHoles.size(); i++){
+            selectedHole = availableHoles.get(i);
+            lastHole = holes[(selectedHole.getHoleIndex() + selectedHole.getNumberOfKoorgools() - 1) % 18];
+            if(lastHole.getOwner() != nextToPlay){
+                int numOfKorgools = lastHole.getNumberOfKoorgools() +1;
+                if(numOfKorgools == 3 && !nextToPlay.hasTuz()){
                     //TODO: Give priority to tuz making. Create an extra case for tuz.
                     //TODO: Make sure cases for holes containing 1 or 0 korgool.
-                    int numOfKorgools = outcomeHole.getKoorgools().size() + 1;
-                    if(numOfKorgools == 3 && !nextToPlay.hasTuz()){
-                        System.out.println("Next viable move is: make Tuz: " + (holeIndex) + " of opponent");
-                        redistribute(holeIndex);
-                    }
-                    if (numOfKorgools % 2 == 0 && numOfKorgools > maxOutcome) {
-                        maxOutcome = numOfKorgools;
-                        returnIndex = holeIndex;
-                    }
+                    System.out.println("Next viable move is to make Tuz of hole" + lastHole.getHoleIndex());
+                    redistribute(selectedHole.getHoleIndex());
+                    return;
+                }
+                //TODO: Checkpoint for Selectedholes with 0.
+                if(numOfKorgools % 2 == 0 && numOfKorgools > maxOutcome){
+                    maxOutcome = numOfKorgools;
+                    returnIndex = selectedHole.getHoleIndex();
                 }
             }
         }
@@ -190,6 +211,11 @@ public class Board {
         redistribute(returnIndex);
     }
 
+    /**
+     * Returns the index of the hole that is tuz for given side
+     * @param owner Side that picked tuz belongs to
+     * @return index of the hole that is tuz for given side
+     */
     public int getPlayerTuz(Side owner) {
         for(int i = 0 ; i <= 17 ; ++i) {
             if(holes[i].isTuz() && holes[i].getOwner() == owner) {

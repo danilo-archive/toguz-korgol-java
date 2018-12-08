@@ -118,9 +118,10 @@ public class Game {
 
     public static void main(String[] args){
         // Example data
-        int[] playerData = {15,1,2,3,4,5,6,7,8,9};
-        int[] opponentData = {15,5,6,7,8,9,10,11,12,13};
-        Game game1 = new Game("5","8",playerData,opponentData);
+        //int[] playerData = {15,1,2,3,4,5,6,7,8,9};
+        //int[] opponentData = {15,5,6,7,8,9,10,11,12,13};
+        //Game game1 = new Game("5","8",playerData,opponentData);
+        Game game1 = new Game();
         //TODO: Retrieve info from Custom game window.
         while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
@@ -132,7 +133,7 @@ public class Game {
             }
             //System.out.print("");
             if(nextToPlay == Side.BLACK){
-                game1.game_board.randomMove();
+                game1.game_board.challengeMove();
                 System.out.println("challenge move has been made!");
             }
         }

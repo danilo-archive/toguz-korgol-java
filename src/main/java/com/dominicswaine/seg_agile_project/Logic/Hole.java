@@ -24,7 +24,7 @@ public class Hole extends KorgoolContainer {
 
     /**
      * Connects the HoleUI to hole
-     * @param gui
+     * @param gui gui of Hole
      */
     public void setGui(HoleUI gui){
         this.gui = gui;
