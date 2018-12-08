@@ -134,29 +134,15 @@ public class Board {
     }
 
     /**
-     * Returns an ArrayList of Holes owned by the given Side
+     * Returns legal moves for the given Side
      * @param turnSide Side that holes are linked to
-     * @return an ArrayList of Holes owned by the given Side
+     * @return ArrayList of Holes that can be redistributed and owned by given Side
      */
-    private ArrayList<Hole> getOwnedHoles(Side turnSide){
+    private ArrayList<Hole> availableMoves(Side turnSide){
         ArrayList<Hole> holesOwned = new ArrayList<>();
         for(Hole h : holes){
-            if(h.getOwner() == turnSide){
+            if(h.getOwner() == turnSide && h.getNumberOfKoorgools() != 0){
                 holesOwned.add(h);
-            }
-        }
-        return holesOwned;
-    }
-
-    /**
-     * Returns legal moves for the player next to play
-     * @return ArrayList of Holes that can be redistributed and owned by the player next to play
-     */
-    private ArrayList<Hole> availableMoves(){
-        ArrayList<Hole> holesOwned = getOwnedHoles(nextToPlay);
-        for(Hole h : holesOwned){
-            if(h.getNumberOfKoorgools() == 0){
-                holesOwned.remove(h);
             }
         }
         return holesOwned;
@@ -166,7 +152,7 @@ public class Board {
      * Picks a random hole belonging side to play next and redistributes that hole
      */
     public void randomMove(){
-        ArrayList<Hole> availableHoles = availableMoves();
+        ArrayList<Hole> availableHoles = availableMoves(nextToPlay);
         int holeIndex = (int)(Math.random() * (((availableHoles.size()-1) - 0) + 1)) + 0;
         ArrayList<Korgool> korgools = availableHoles.get(holeIndex).getKoorgools();
         while(korgools.size() == 0){
@@ -177,12 +163,19 @@ public class Board {
         redistribute(availableHoles.get(holeIndex).getHoleIndex());
     }
 
+    /**
+     * Picks the hole that will be most beneficial to player
+     * Prioritizes making Tuz
+     * Next priority is getting maximum number of korgools to kazan
+     * When neither is found, makes a random move
+     * TODO: When neither is found, make it predict the best move of opponent and avoid that move.
+     */
     public void challengeMove(){
         int maxOutcome = -1;
         int returnIndex = -1;
         Hole lastHole;
         Hole selectedHole;
-        ArrayList<Hole> availableHoles = availableMoves();
+        ArrayList<Hole> availableHoles = availableMoves(nextToPlay);
         for(int i = 0; i < availableHoles.size(); i++){
             selectedHole = availableHoles.get(i);
             lastHole = holes[(selectedHole.getHoleIndex() + selectedHole.getNumberOfKoorgools() - 1) % 18];

@@ -32,6 +32,7 @@ public class Game {
             logicHole.setGui(guiHole);
 
             final int holeIndex = holeNo;
+            //TODO: Lock players listeners when its not his turn.
             guiHole.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -123,7 +124,7 @@ public class Game {
         //Game game1 = new Game("5","8",playerData,opponentData);
         Game game1 = new Game();
         //TODO: Retrieve info from Custom game window.
-        while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
+        while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
             try {
                 Thread.sleep(2000);
