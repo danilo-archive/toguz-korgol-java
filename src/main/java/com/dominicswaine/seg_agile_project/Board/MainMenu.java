@@ -5,7 +5,12 @@
 package com.dominicswaine.seg_agile_project.Board;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.io.File;
+import java.nio.file.NoSuchFileException;
+
+import com.dominicswaine.seg_agile_project.Logic.Parser;
 
 public class MainMenu {
 
@@ -114,7 +119,18 @@ public class MainMenu {
 
     public void loadGame() {
 
-        Parser.loadCustomGame(filepath);
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+
+        int returnValue = jfc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+            File selectedFile = jfc.getSelectedFile();
+            System.out.println(selectedFile.getAbsolutePath());
+            Parser.loadCustomGame(selectedFile.getAbsolutePath());
+
+
+        }
 
     }
 
