@@ -62,7 +62,7 @@ public class Game {
 
             else{
                 //System.out.println("Add " + (opponentHoles[h.getHoleIndex() - 9]) + "korgools to " + Side.BLACK + " HoleUI Number: " + h.getHoleIndex());
-                for (int korgoolNo = 0; korgoolNo < opponentHoles[h.getHoleIndex() - 9]; korgoolNo++) {
+                for (int korgoolNo = 0; korgoolNo < opponentHoles[h.getHoleIndex() - 8]; korgoolNo++) {
                     h.addKorgool(new Korgool());
                 }
             }
