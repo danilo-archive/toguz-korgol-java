@@ -197,7 +197,7 @@ public class Parser {
      * Save custom game method is used to save a custom game configuration into a file
      * from the Custom Game Panel. Once the player has constructed the game, pressing the
      * 'save' button will call this method and save the file into save_games directory.
-     * @param fileName String -- the name of the file saved in the save_games directory
+     * @param filePath String -- the name of the file saved in the save_games directory
      * @param playerTuz String -- the playerTuz value
      * @param opponentTuz String -- the opponentTuz value
      * @param playerHoles int[] -- the players hole values (i.e. how many korgools are in the players holes)
