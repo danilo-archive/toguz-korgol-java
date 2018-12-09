@@ -203,7 +203,7 @@ public class Parser {
      * @param playerHoles int[] -- the players hole values (i.e. how many korgools are in the players holes)
      * @param opponentHoles int[] -- the opponent hole values (i.e. how many korgools are in the opponent holes)
      */
-    public static void saveCustomGame(String fileName ,String playerTuz, String opponentTuz,
+    public static void saveCustomGame(String filePath ,String playerTuz, String opponentTuz,
                                       int[] playerHoles, int[] opponentHoles) {
 
         StringBuilder sb = new StringBuilder();
@@ -215,7 +215,7 @@ public class Parser {
         sb.append("|");
         sb.append(Arrays.toString(opponentHoles));
 
-        try (FileWriter file = new FileWriter("saved_games/" + fileName + ".sav")) {
+        try (FileWriter file = new FileWriter(filePath)) {
             file.write(sb.toString());
             file.flush();
         } catch (IOException e) {
