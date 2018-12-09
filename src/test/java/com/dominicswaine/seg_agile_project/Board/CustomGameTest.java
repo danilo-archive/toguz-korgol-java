@@ -7,7 +7,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class CustomGameTest {
-
+    /*
     @Test
     public void testIfTuzBecomes2() {
 
@@ -331,7 +331,7 @@ public class CustomGameTest {
         swinger.pause(400);
 
     }
-
+    */
 }
 
 
