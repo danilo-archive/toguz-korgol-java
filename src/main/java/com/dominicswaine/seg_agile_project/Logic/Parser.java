@@ -215,7 +215,7 @@ public class Parser {
         sb.append("|");
         sb.append(Arrays.toString(opponentHoles));
 
-        try (FileWriter file = new FileWriter(filePath)) {
+        try (FileWriter file = new FileWriter(filePath + ".sav")) {
             file.write(sb.toString());
             file.flush();
         } catch (IOException e) {
