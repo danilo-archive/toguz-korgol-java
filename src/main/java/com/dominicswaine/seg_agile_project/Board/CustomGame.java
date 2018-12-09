@@ -1,3 +1,7 @@
+//where in tests do you use the return type of change user?
+//refactor tests and test saving
+//check order of listeners
+
 package com.dominicswaine.seg_agile_project.Board;
 import java.util.HashMap;
 import java.awt.*;
@@ -14,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 public class CustomGame {
 
     private JFrame frame;
-    private JPanel  containerOfEverything, containerOfBackButton, containerOfTextAndDropdown,
+    private JPanel containerOfEverything, containerOfBackButton, containerOfTextAndDropdown,
             containerOfSelections, containerOfSpinners, containerOfCancelTuz, containerOfSaveAndStart;
     private JComboBox dropdown;
     private ButtonGroup buttonGroup;
@@ -86,6 +90,7 @@ public class CustomGame {
 
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+        backButton.addActionListener(e -> goBack());
         containerOfBackButton.add(backButton);
 
     }
@@ -239,6 +244,7 @@ public class CustomGame {
         JButton saveButton = new JButton("Save");
         saveButton.setName("Save");
         saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+        saveButton.addActionListener(e -> saveGame());
         JButton startButton = new JButton("Start");
         startButton.setName("Start");
         startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -263,6 +269,16 @@ public class CustomGame {
     }
 
     //Listeners
+
+    /**
+     * Navigates back to the main menu.
+     */
+    private void goBack() {
+
+        new MainMenu();
+        frame.dispose();
+
+    }
 
     /**
      * Called when the dropdown is used, changes the player selected
@@ -331,6 +347,20 @@ public class CustomGame {
 
     }
 
+    /**
+     * Save the custom game configuration so that it can be used again in another game
+     * at a later date.
+     */
+    private void saveGame() {
+
+        Parser.saveCustomGame(filePath, playerTuz, opponentTuz, playerValues, opponentValues);
+
+        pane.showMessageDialog(frame,
+                "Your game has been saved.",
+                "Saved Game",
+                JOptionPane.OK_OPTION);
+
+    }
 
     /**
      * Check that the total number of korgools is exactly
@@ -493,6 +523,12 @@ public class CustomGame {
 
     //Methods required in integration testing
 
+    /**
+     * Get the player or opponent's values - that is, their hole and kazan selections.
+     *
+     * @param isPlayer true gets player values, false gets opponent values
+     * @return either the player or opponent values as an int[]
+     */
     public int[] getValues(Boolean isPlayer) {
 
         if (isPlayer) {
@@ -504,6 +540,13 @@ public class CustomGame {
 
     }
 
+
+    /**
+     * Get the player or opponent's tuz selection.
+     *
+     * @param isPlayer true gets player tuz, false gets opponent tuz
+     * @return either the player or opponent tuz as a string
+     */
     public String getTuz(Boolean isPlayer) {
 
         if (isPlayer) {
@@ -515,6 +558,11 @@ public class CustomGame {
 
     }
 
+    /**
+     * Changes who is currently making the selections.
+     *
+     * @return who is currently making the selections
+     */
     public Boolean changeUser() {
 
         isPlayer = !isPlayer;
@@ -522,24 +570,44 @@ public class CustomGame {
 
     }
 
+    /**
+     * Gets the frame containing all components.
+     *
+     * @return the frame containing all components
+     */
     public JFrame getFrame() {
 
         return frame;
 
     }
 
+    /**
+     * Gets who is making the current selections.
+     *
+     * @return if it is the player or opponent making the selections. True if it is the player.
+     */
     public Boolean getIsPlayer() {
 
         return isPlayer;
 
     }
 
+    /**
+     * Gets the hashmap containing all the spinners.
+     *
+     * @return the hashmap containing all the spinners
+     */
     public HashMap<String, JSpinner> getMapOfSpinners() {
 
         return mapOfSpinners;
 
     }
 
+    /**
+     * Gets the custom game constructed.
+     *
+     * @return the custom game constructed
+     */
     public com.dominicswaine.seg_agile_project.Logic.Game getGame() {
 
         return game;
