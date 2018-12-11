@@ -38,13 +38,14 @@ public class Hole extends KorgoolContainer {
 
     public void emptyHole(){
         gui.removeKorgols(getNumberOfKoorgools());
+        System.out.println(getNumberOfKoorgools() + " number of korgools are being removed");
         korgools.clear();
     }
 
     protected void emptyBarOne(){
         gui.removeKorgols(getNumberOfKoorgools() - 1);
+        System.out.println("Empty Bar one returned this many remove methods" + (getNumberOfKoorgools() - 1));
         Korgool first = korgools.get(0);
-        emptyHole();
         addKorgool(first);
     }
 

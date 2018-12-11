@@ -111,7 +111,7 @@ public class CustomGame {
         JLabel instructions = new JLabel("<html><p style=\"text-align:justify\">To begin a custom game, first use the dropdown" +
                 " to select who the parameters will apply to; " +
                 "you, or your opponent. You are then able to  " +
-                "specify the amount of Korgools per Kazan and Hole, " +
+                "specify the amount of Korgools per KazanUI and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
                 "number of Korgools must be exactly 162, the two Tuzzes " +
                 "cannot be the same, and no Tuz can be 9.</p></html>");

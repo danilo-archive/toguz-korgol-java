@@ -2,6 +2,7 @@ package com.dominicswaine.seg_agile_project.Logic;
 
 import com.dominicswaine.seg_agile_project.Board.GameWindow;
 import com.dominicswaine.seg_agile_project.Board.HoleUI;
+import com.dominicswaine.seg_agile_project.Board.KazanUI;
 
 import java.awt.event.*;
 
@@ -27,6 +28,12 @@ public class Game {
                     game_board.redistribute(holeIndex);
                 }
             });
+        }
+
+        for(int i = 0; i < game_board.getKazans().length; i++){
+            Kazan logicKazan = game_board.getKazanByIndex(i);
+            KazanUI guiKazan = gui.getKazans().get(i);
+            logicKazan.setGui(guiKazan);
         }
     }
 
@@ -103,7 +110,23 @@ public class Game {
     }
 
     public static void main(String[] args){
-        new Game();
+        Game game1 = new Game();
+        //TODO: Make player chose between AI opponent or Easy opponent.
+        while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 || game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
+            Side nextToPlay = game1.game_board.getNextToPlay();
+            try {
+                Thread.sleep(2000);
+                System.out.print("I slept");
+            }
+            catch(InterruptedException ie){
+                System.out.println("Thinking...");
+            }
+            //System.out.print("");
+            if(nextToPlay == Side.BLACK){
+                game1.game_board.challengeMove();
+                System.out.println("Random move has been made");
+            }
+        }
 //        int playerdata[] = {35,6,6,7,8,3,15,8,9,1};
 //        int opponentdata[] = {25,8,4,1,0,0,2,12,5,4};
 //        new Game("2","5",playerdata,opponentdata);
