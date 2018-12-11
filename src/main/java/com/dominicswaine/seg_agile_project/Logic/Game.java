@@ -20,8 +20,6 @@ public class Game {
      * Connect each kazan to kazanUI
      */
     private void initialiseGame() {
-        //TODO: Add an option to GUI to choose side.
-        //TODO: Make player choose between AI and randomMove.
         player_side = Side.WHITE;
         game_board = new Board();
         gui = new GameWindow();
@@ -32,7 +30,6 @@ public class Game {
             logicHole.setGui(guiHole);
 
             final int holeIndex = holeNo;
-            //TODO: Lock players listeners when its not his turn.
             if (logicHole.getOwner() == Side.WHITE) {
                 guiHole.addMouseListener(new MouseAdapter() {
                     @Override
@@ -44,7 +41,6 @@ public class Game {
         }
 
         for(int i = 0; i < game_board.getKazans().length; i++){
-            //TODO: Indicate which kazan belongs to player. @Danilo
             Kazan logicKazan = game_board.getKazanByIndex(i);
             KazanUI guiKazan = gui.getKazans().get(i);
             logicKazan.setGui(guiKazan);
@@ -104,7 +100,6 @@ public class Game {
             }
         }
 
-        //TODO: We need to add a explanation to GUI. When on player side tuz 4 is chosen, opponents hole #4 becomes tuz for player. That's the logic of this code.
         // Sets tuz for each player.
         int playerTuzNo = Integer.parseInt(playerTuz);
         int opponentTuzNo = Integer.parseInt(opponentTuz);
@@ -120,12 +115,7 @@ public class Game {
     }
 
     public static void main(String[] args){
-        // Example data
-        //int[] playerData = {15,1,2,3,4,5,6,7,8,9};
-        //int[] opponentData = {15,5,6,7,8,9,10,11,12,13};
-        //Game game1 = new Game("5","8",playerData,opponentData);
         Game game1 = new Game();
-        //TODO: Retrieve info from Custom game window.
         while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
             try {
