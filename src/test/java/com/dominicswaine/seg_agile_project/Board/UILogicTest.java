@@ -2,7 +2,6 @@ package com.dominicswaine.seg_agile_project.Board;
 
 import org.junit.Test;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 import static org.junit.Assert.*;
@@ -11,72 +10,125 @@ import static org.junit.Assert.*;
 public class UILogicTest {
 
     @Test
-    public void rightNumberOfWhiteKorgoolAtStart(){
+    public void rightNumberOfWhiteKorgoolAtStart() {
         GameWindow gw = new GameWindow();
-        ArrayList<HoleUI> holes = gw.getHolesBottomRow();
+        ArrayList < HoleUI > holes = gw.getHolesBottomRow();
 
-       for(HoleUI h : holes){
-        int whiteKorgools = 0;
+        for (HoleUI h: holes) {
+            int whiteKorgools = 0;
 
-        for(KorgoolUI k : h.getKorgols()){
-            if(k.isWhite())
-                ++whiteKorgools;
+            for (KorgoolUI k: h.getKorgols()) {
+                if (k.isWhite())
+                    ++whiteKorgools;
+            }
+
+            int ind;
+
+            if (h.getLastKorgolInd() >= h.getMaxKorgolsPossible())
+                ind = h.getMaxKorgolsPossible() - 1;
+            else if (h.getLastKorgolInd() != -1)
+                ind = h.getLastKorgolInd();
+            else
+                ind = 0;
+            assertEquals(h.getMaxKorgolsPossible(), ind + whiteKorgools);
         }
-
-        int ind;
-
-        if(h.getLastKorgolInd() >= h.getMaxKorgolsPossible())
-            ind = h.getMaxKorgolsPossible()-1;
-        else if(h.getLastKorgolInd() != -1)
-            ind = h.getLastKorgolInd();
-        else
-            ind = 0;
-        assertEquals(h.getMaxKorgolsPossible(), ind+whiteKorgools);
-       }
     }
 
     @Test
-    public void rightNumberOfWhiteKorgoolWhenAdding(){
+    public void rightNumberOfWhiteKorgoolWhenAdding() {
         GameWindow gw = new GameWindow();
-        ArrayList<HoleUI> holes = gw.getHolesBottomRow();
+        ArrayList < HoleUI > holes = gw.getHolesBottomRow();
 
-        int[] korgoolsToAdd = {-2, -100, 300, 1 , 0 ,22, 100, -12,-4564}; //edge cases and some normal values
+        int[] korgoolsToAdd = {
+                -2,
+                -100,
+                300,
+                -1,
+                1,
+                0,
+                22,
+                100,
+                -12,
+                -4564
+        }; //edge cases and some normal values
 
 
-        for(int i : korgoolsToAdd){
-            for(HoleUI h : holes){
+        for (int i: korgoolsToAdd) {
+            for (HoleUI h: holes) {
+
+                int originalWhiteKorgools = 0;
+
+                for (KorgoolUI k: h.getKorgols()) {
+                    if (k.isWhite())
+                        originalWhiteKorgools++;
+                }
                 h.addKorgols(i);
+
                 int whiteKorgools = 0;
 
-                for(KorgoolUI k : h.getKorgols()){
-                    if(k.isWhite())
-                        ++whiteKorgools;
+                for (KorgoolUI k: h.getKorgols()) {
+                    if (k.isWhite())
+                        whiteKorgools++;
                 }
-                int visibleKorgools;
-
-                if(h.getLastKorgolInd() >= h.getMaxKorgolsPossible())
-                    visibleKorgools = h.getMaxKorgolsPossible();
-                else if(h.getLastKorgolInd() == -1 || h.getLastKorgolInd() == 0)
-                    visibleKorgools = 0;
-                else
-                    visibleKorgools = h.getLastKorgolInd()+1;
-
-                assertEquals(h.getMaxKorgolsPossible(), visibleKorgools+whiteKorgools);
-
-                h.removeKorgols(i);
-                System.out.println(i);
-
-                int ind = h.getLastKorgolInd();
-
-                if(ind == 0 || ind == -1)
-                    ind = 0;
-                assertEquals(0,ind);
+                if (i <= 0) {
+                    assertEquals(originalWhiteKorgools, whiteKorgools);
+                } else if (i + h.getMaxKorgolsPossible() - originalWhiteKorgools < h.getMaxKorgolsPossible()) {
+                    assertEquals(originalWhiteKorgools - i, whiteKorgools);
+                } else {
+                    assertEquals(0, whiteKorgools);
+                }
 
             }
+
         }
     }
 
+    @Test
+    public void rightNumberOfWhiteKorgoolWhenRemoving() {
+        GameWindow gw = new GameWindow();
+        ArrayList < HoleUI > holes = gw.getHolesBottomRow();
 
+        int[] korgoolsToRemove = {
+                -2,
+                -100,
+                300,
+                -1,
+                1,
+                0,
+                22,
+                100,
+                -12,
+                -4564
+        }; //edge cases and some normal values
+
+
+        for (int i: korgoolsToRemove) {
+            for (HoleUI h: holes) {
+
+                int originalWhiteKorgools = 0;
+
+                for (KorgoolUI k: h.getKorgols()) {
+                    if (k.isWhite())
+                        originalWhiteKorgools++;
+                }
+                h.removeKorgols(i);
+
+                int whiteKorgools = 0;
+
+                for (KorgoolUI k: h.getKorgols()) {
+                    if (k.isWhite())
+                        whiteKorgools++;
+                }
+                if (i <= 0) {
+                    assertEquals(originalWhiteKorgools, whiteKorgools);
+                } else if (i + originalWhiteKorgools >= h.getMaxKorgolsPossible()) {
+                    assertEquals(h.getMaxKorgolsPossible(), whiteKorgools);
+                }
+
+            }
+
+        }
+    }
 
 
 }
