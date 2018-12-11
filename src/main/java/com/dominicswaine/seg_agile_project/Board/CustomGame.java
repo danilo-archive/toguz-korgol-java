@@ -1,8 +1,16 @@
+//where in tests do you use the return type of change user?
+//refactor tests and test saving
+//check order of listeners
+
 package com.dominicswaine.seg_agile_project.Board;
+import java.io.File;
 import java.util.HashMap;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileSystemView;
+
+import com.dominicswaine.seg_agile_project.Logic.Parser;
 
 /**
  * This class enables players to set up a custom game and to save this as a configuration
@@ -86,6 +94,7 @@ public class CustomGame {
 
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+        backButton.addActionListener(e -> goBack());
         containerOfBackButton.add(backButton);
 
     }
@@ -177,7 +186,7 @@ public class CustomGame {
         JLabel label;
         JPanel panelContainingSpinner = new JPanel(new BorderLayout());
 
-        if (i == 0) { //For KazanUI, we want no tuz radio button
+        if (i == 0) { //For Kazan, we want no tuz radio button
 
             label = new JLabel("Kazan:");
             unit.add(Box.createHorizontalStrut(21), BorderLayout.EAST);
@@ -188,7 +197,7 @@ public class CustomGame {
 
             label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
-            tuzController.setName("" + i); //Setting an ID for each radio button - HoleUI 1 has ID 1, HoleUI 9 has ID 9, cancel has ID 0
+            tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
             unit.add(tuzController, BorderLayout.EAST);
@@ -200,7 +209,7 @@ public class CustomGame {
         SpinnerModel spinnerSettings = new SpinnerNumberModel(0, 0, 162, 1);
         JSpinner spinner = new JSpinner(spinnerSettings);
         spinner.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spinner.setName("" + i); //Setting an ID for each spinner, KazanUI has ID 0, HoleUI x has ID x
+        spinner.setName("" + i); //Setting an ID for each spinner, Kazan has ID 0, Hole x has ID x
         spinner.addChangeListener(e -> obtainValue(spinner.getName()));
         mapOfSpinners.put("" + i, spinner);
         panelContainingSpinner.add(spinner, BorderLayout.CENTER);
@@ -239,6 +248,7 @@ public class CustomGame {
         JButton saveButton = new JButton("Save");
         saveButton.setName("Save");
         saveButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+        saveButton.addActionListener(e -> saveGame());
         JButton startButton = new JButton("Start");
         startButton.setName("Start");
         startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -263,6 +273,16 @@ public class CustomGame {
     }
 
     //Listeners
+
+    /**
+     * Navigates back to the main menu.
+     */
+    private void goBack() {
+
+        new MainMenu();
+        frame.dispose();
+
+    }
 
     /**
      * Called when the dropdown is used, changes the player selected
@@ -317,7 +337,7 @@ public class CustomGame {
         if (isPlayer) {
 
             playerValues[Integer.parseInt(idOfSpinner)] = currentValue;
-            //In this array, index represents the ID of the spinner. KazanUI has ID/indx 0, HoleUI x has ID/indx x
+            //In this array, index represents the ID of the spinner. Kazan has ID/indx 0, Hole x has ID/indx x
 
         }
 
@@ -331,6 +351,31 @@ public class CustomGame {
 
     }
 
+    /**
+     * Save the custom game configuration so that it can be used again in another game
+     * at a later date.
+     */
+    private void saveGame() {
+
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+
+        int returnValue = jfc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+            File selectedFile = jfc.getSelectedFile();
+            System.out.println(selectedFile.getAbsolutePath());
+
+            Parser.saveCustomGame(selectedFile.getAbsolutePath(), playerTuz, opponentTuz, playerValues, opponentValues);
+
+            pane.showMessageDialog(frame,
+                    "Your game has been saved.",
+                    "Saved Game",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+    }
 
     /**
      * Check that the total number of korgools is exactly
@@ -493,6 +538,12 @@ public class CustomGame {
 
     //Methods required in integration testing
 
+    /**
+     * Get the player or opponent's values - that is, their hole and kazan selections.
+     *
+     * @param isPlayer true gets player values, false gets opponent values
+     * @return either the player or opponent values as an int[]
+     */
     public int[] getValues(Boolean isPlayer) {
 
         if (isPlayer) {
@@ -504,6 +555,13 @@ public class CustomGame {
 
     }
 
+
+    /**
+     * Get the player or opponent's tuz selection.
+     *
+     * @param isPlayer true gets player tuz, false gets opponent tuz
+     * @return either the player or opponent tuz as a string
+     */
     public String getTuz(Boolean isPlayer) {
 
         if (isPlayer) {
@@ -515,6 +573,11 @@ public class CustomGame {
 
     }
 
+    /**
+     * Changes who is currently making the selections.
+     *
+     * @return who is currently making the selections
+     */
     public Boolean changeUser() {
 
         isPlayer = !isPlayer;
@@ -522,24 +585,44 @@ public class CustomGame {
 
     }
 
+    /**
+     * Gets the frame containing all components.
+     *
+     * @return the frame containing all components
+     */
     public JFrame getFrame() {
 
         return frame;
 
     }
 
+    /**
+     * Gets who is making the current selections.
+     *
+     * @return if it is the player or opponent making the selections. True if it is the player.
+     */
     public Boolean getIsPlayer() {
 
         return isPlayer;
 
     }
 
+    /**
+     * Gets the hashmap containing all the spinners.
+     *
+     * @return the hashmap containing all the spinners
+     */
     public HashMap<String, JSpinner> getMapOfSpinners() {
 
         return mapOfSpinners;
 
     }
 
+    /**
+     * Gets the custom game constructed.
+     *
+     * @return the custom game constructed
+     */
     public com.dominicswaine.seg_agile_project.Logic.Game getGame() {
 
         return game;

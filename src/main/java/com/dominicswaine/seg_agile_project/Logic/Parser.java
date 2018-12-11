@@ -11,13 +11,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.Arrays;
 
 /**
  * Parser class mediates between files and backend functionality.
  * The custom games and even
- * @author Danilo Del Busso
- * @version 18-11-2018
+ * @author Horia Pavel
+ * @version 07-12-2018
  */
 public class Parser {
 
@@ -28,7 +31,7 @@ public class Parser {
 
     /**
      * Constructor for the Parser class.
-     * @param board -- the current state of the board
+     * @param board Board -- the current state of the board
      */
     public Parser(Board board) {
         obj = new JSONObject();
@@ -110,7 +113,7 @@ public class Parser {
      * If the name of the file already exists, its contents will be updated by calling
      * this method.
      *
-     * @param filePath -- the file path | usually resides in the resources/game_files folder
+     * @param filePath String -- the file path | usually resides in the resources/game_files folder
      */
     public void writeToFile(String filePath) {
         try(FileWriter file = new FileWriter(filePath)) {
@@ -128,7 +131,7 @@ public class Parser {
      *
      * With the Map returned, the game board can be updated according to the data retrieved.
      *
-     * @param filePath -- the file path | where the data is read from
+     * @param filePath String -- the file path | where the data is read from
      * @return Map -- a map with content of a board to be created
      */
     public Map readFromFile(String filePath) {
@@ -187,6 +190,74 @@ public class Parser {
         }
 
         return doubleMap;
+
+    }
+
+    /**
+     * Save custom game method is used to save a custom game configuration into a file
+     * from the Custom Game Panel. Once the player has constructed the game, pressing the
+     * 'save' button will call this method and save the file into save_games directory.
+     * @param filePath String -- the name of the file saved in the save_games directory
+     * @param playerTuz String -- the playerTuz value
+     * @param opponentTuz String -- the opponentTuz value
+     * @param playerHoles int[] -- the players hole values (i.e. how many korgools are in the players holes)
+     * @param opponentHoles int[] -- the opponent hole values (i.e. how many korgools are in the opponent holes)
+     */
+    public static void saveCustomGame(String filePath ,String playerTuz, String opponentTuz,
+                                      int[] playerHoles, int[] opponentHoles) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(playerTuz);
+        sb.append("|");
+        sb.append(opponentTuz);
+        sb.append("|");
+        sb.append(Arrays.toString(playerHoles));
+        sb.append("|");
+        sb.append(Arrays.toString(opponentHoles));
+
+        try (FileWriter file = new FileWriter(filePath + ".sav")) {
+            file.write(sb.toString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The load custom game method loads a previously selected file from the 'saved_games'
+     * directory and starts a game according to the configuration just read.
+     * @param filePath String -- the path of the saved game file.
+     */
+    public static void loadCustomGame(String filePath) {
+        try {
+            String[] data = (new String(Files.readAllBytes(Paths.get(filePath)))).split("\\|");
+
+            // Handle playerHoles
+            String[] playerHolesString = data[2].replaceAll("\\[","")
+                                                .replaceAll("\\]","")
+                                                .replaceAll("\\s","")
+                                                .split(",");
+            int[] playerHolesInt = new int[playerHolesString.length];
+            for (int i = 0 ; i < playerHolesInt.length ; ++i) {
+                playerHolesInt[i] = Integer.parseInt(playerHolesString[i]);
+            }
+
+            // Handle opponentHoles
+            String[] opponentHolesString = data[3].replaceAll("\\[","")
+                                                .replaceAll("\\]","")
+                                                .replaceAll("\\s","")
+                                                .split(",");
+            int[] opponentHolesInt = new int[opponentHolesString.length];
+            for(int i = 0 ; i < opponentHolesString.length ; ++i) {
+                opponentHolesInt[i] = Integer.parseInt(opponentHolesString[i]);
+            }
+
+            // Launch game with the retrieved data
+            new Game(data[0],data[1],playerHolesInt,opponentHolesInt);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 
