@@ -35,6 +35,7 @@ public class GameWindow {
         kazans = new ArrayList < > ();
 
         JFrame gameWindow = new JFrame("Toguz Korgool");
+        gameWindow.setResizable(false);
         gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Container pane = gameWindow.getContentPane();
@@ -44,11 +45,14 @@ public class GameWindow {
 
         pane.add(board, BorderLayout.WEST);
 
-        //todo: Scoreboard goes here
+        ScoreboardUI scoreboard = new ScoreboardUI(kazans, gameWindow);
+
+        pane.add(scoreboard, BorderLayout.EAST);
 
         gameWindow.pack();
         gameWindow.setSize(new Dimension(1280, 720));
         gameWindow.setVisible(true);
+        gameWindow.setLocationRelativeTo(null);
     }
 
 
@@ -71,14 +75,12 @@ public class GameWindow {
         for (int i = 0; i < HOLES_PER_PLAYER; ++i) {
             //populate top row with holes
             HoleUI h = new HoleUI(8 - i + 1);
-            //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesTopRow.add(h);
             topRow.add(h);
 
             //populate bottom row with holes
             h = new HoleUI(i + 1);
-            //h.addKorgols(STARTING_KORGOLS);
             h.adjustLooks();
             holesBottomRow.add(h);
             bottomRow.add(h);
@@ -87,13 +89,11 @@ public class GameWindow {
         //create kazans
         KazanUI k = new KazanUI();
         kazans.add(k);
-        //k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.EAST);
 
         k = new KazanUI();
         kazans.add(k);
-        //k.addKorgols(0);
         k.adjustLooks();
         kazanRow.add(k, BorderLayout.WEST);
 
