@@ -33,12 +33,14 @@ public class Game {
 
             final int holeIndex = holeNo;
             //TODO: Lock players listeners when its not his turn.
-            guiHole.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    game_board.redistribute(holeIndex);
-                }
-            });
+            if (logicHole.getOwner() == Side.WHITE) {
+                guiHole.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        game_board.redistribute(holeIndex);
+                    }
+                });
+            }
         }
 
         for(int i = 0; i < game_board.getKazans().length; i++){
@@ -135,7 +137,6 @@ public class Game {
             //System.out.print("");
             if(nextToPlay == Side.BLACK){
                 game1.game_board.challengeMove();
-                System.out.println("challenge move has been made!");
             }
         }
         //TODO: End game screen after while loop ends.

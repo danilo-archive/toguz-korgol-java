@@ -2,6 +2,8 @@ package com.dominicswaine.seg_agile_project.Logic;
 import com.dominicswaine.seg_agile_project.Board.HoleUI;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.*;
 
 /**
@@ -35,10 +37,11 @@ public class Hole extends KorgoolContainer {
      * Hole is marked red if originalOwner is player, else marked blue
      */
     public void markAsTuz(){
-        if(index < 9){ gui.displayTuz(Color.RED); }
+        if(index < 9){
+            gui.displayTuz(Color.RED);
+        }
         else{ gui.displayTuz(Color.BLUE); }
         isTuz = true;
-        System.out.println("Hole number" + index + "is marked as Tuz!");
     }
 
     /**
@@ -71,7 +74,6 @@ public class Hole extends KorgoolContainer {
      */
     public void emptyHole(){
         gui.removeKorgols(getNumberOfKoorgools());
-        System.out.println("emptyHole in Logic.Hole removed " + getNumberOfKoorgools() + " holes.");
         korgools.clear();
     }
 
@@ -80,7 +82,6 @@ public class Hole extends KorgoolContainer {
      */
     protected void emptyBarOne(){
         gui.removeKorgols(getNumberOfKoorgools() - 1);
-        System.out.println("emptyBarOne in Logic.Hole removed " + (getNumberOfKoorgools() -1) + " holes.");
         Korgool first = korgools.get(0);
         korgools.clear();
         addKorgool(first);
