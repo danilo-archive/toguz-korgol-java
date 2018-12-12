@@ -22,7 +22,7 @@ public class HoleUI extends KorgoolsContainerUI {
      * The hole is the main korgol container of the game
      * @param n the number of the hole
      */
-    HoleUI(int n) {
+    public HoleUI(int n) {
         setOpaque(false);
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/frames/frame" + (n) + ".png";
 
