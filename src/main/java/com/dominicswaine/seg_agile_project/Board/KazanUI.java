@@ -26,7 +26,7 @@ public class KazanUI extends KorgoolsContainerUI {
 
     @Override
     public int getMaxKorgolsPossible() {
-        return 95;
+        return 85;
     }
 
     @Override

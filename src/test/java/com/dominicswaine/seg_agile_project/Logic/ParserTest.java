@@ -8,11 +8,18 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 
+/**
+ * ParserTest class tests the main functionality of the Parser class.
+ * @author horia
+ */
 public class ParserTest {
 
+    /**
+     * Create a custom save game test.
+     */
     @Test
     public void testSaveCustomGame1(){
-        Parser.saveCustomGame("src/test/resources/test_files/sr.sav","4","2",
+        Parser.saveCustomGame("src/test/resources/test_files/sr","4","2",
                     new int[]{0,9,9,9,9,9,9,9,9,9},new int[]{0,9,9,9,9,9,9,9,9,9});
 
         try {
@@ -24,9 +31,12 @@ public class ParserTest {
         }
     }
 
+    /**
+     * Create a custom save game test.
+     */
     @Test
     public void testSaveCustomGame2(){
-        Parser.saveCustomGame("src/test/resources/test_files/sr2.sav","1","2",
+        Parser.saveCustomGame("src/test/resources/test_files/sr2","1","2",
                 new int[]{0,9,2,9,8,9,5,9,2,9},new int[]{0,18,9,4,0,9,9,6,9,9});
 
         try {
@@ -38,9 +48,12 @@ public class ParserTest {
         }
     }
 
+    /**
+     * Create a custom save game test.
+     */
     @Test
     public void testSaveCustomGame3(){
-        Parser.saveCustomGame("src/test/resources/test_files/sr3.sav","0","4",
+        Parser.saveCustomGame("src/test/resources/test_files/sr3","0","4",
                 new int[]{0,9,2,9,8,0,5,9,1,21},new int[]{0,18,9,4,0,9,8,7,12});
 
         try {

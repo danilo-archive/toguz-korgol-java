@@ -1,7 +1,10 @@
 package com.dominicswaine.seg_agile_project.Board;
 
+import com.dominicswaine.seg_agile_project.Logic.Parser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +25,7 @@ public class ScoreboardUI extends JLabel {
     private final JFrame frame;
     private JTextField whiteScore, blackScore;  //the scores of the players
     private ArrayList<KazanUI> kazans;
-    
+    private JButton saveButton;
 
     /**
      * Build a scoreboard panel and assign an array containing the two kazans
@@ -78,7 +81,7 @@ public class ScoreboardUI extends JLabel {
         JPanel jp = new JPanel();
         jp.setOpaque(false);
         jp.add(clock);
-        jp.setBorder(BorderFactory.createRaisedBevelBorder());
+        jp.setBorder(BorderFactory.createEmptyBorder());
 
         return jp;
     }
@@ -95,7 +98,6 @@ public class ScoreboardUI extends JLabel {
         scores.setLayout(new BorderLayout());
 
         whiteScore = new JTextField();
-
         blackScore = new JTextField();
 
         whiteScore.setEditable(false);
@@ -106,8 +108,8 @@ public class ScoreboardUI extends JLabel {
         whiteScore.setFont(font);
         blackScore.setFont(font);
 
-        whiteScore.setForeground(Color.WHITE);
-        blackScore.setForeground(Color.BLACK);
+        whiteScore.setForeground(Color.BLUE);
+        blackScore.setForeground(Color.RED);
 
 
         update();
@@ -127,18 +129,26 @@ public class ScoreboardUI extends JLabel {
         scores.add(jp, BorderLayout.CENTER);
         scores.add(getTimer(), BorderLayout.SOUTH);
 
-        JButton back = new JButton("BACK TO MAIN MENU");
+        JTextField buttons = new JTextField();
+        buttons.setLayout(new GridLayout(1,2));
+
+        JButton back = new JButton("Back");
+        saveButton = new JButton("Save");
+        //todo: make buttons taller
 
         back.addActionListener(e -> {
             new MainMenu();
             frame.dispose();
         });
 
-        add(back, BorderLayout.SOUTH);
+        buttons.add(saveButton);
+        buttons.add(back);
+        buttons.setVisible(true);
 
-        whiteScore.setBorder(BorderFactory.createRaisedBevelBorder());
-        blackScore.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(buttons, BorderLayout.SOUTH);
 
+        whiteScore.setBorder(BorderFactory.createEmptyBorder());
+        blackScore.setBorder(BorderFactory.createEmptyBorder());
 
         this.add(scores,CENTER);
 
@@ -148,8 +158,8 @@ public class ScoreboardUI extends JLabel {
      * Update the score of the game
      */
     public void update(){
-        whiteScore.setText(kazans.get(0).getLastKorgolInd()+1 + "");
-        blackScore.setText(kazans.get(1).getLastKorgolInd()+1 + "");
+        whiteScore.setText("  "+(kazans.get(0).getLastKorgolInd()+1) + "");
+        blackScore.setText((kazans.get(1).getLastKorgolInd()+1)+ "  ");
     }
 
     @Override
@@ -164,4 +174,7 @@ public class ScoreboardUI extends JLabel {
         g.drawImage(image, 0, 0, this);
     }
 
+    public JButton getSaveButton() {
+        return saveButton;
+    }
 }

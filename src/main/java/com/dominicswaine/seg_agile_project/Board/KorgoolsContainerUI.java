@@ -174,7 +174,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
             extraKorgolsCounter = new JTextArea("+" + (lastKorgolInd + 3 - getMaxKorgolsPossible()));
             extraKorgolsCounter.setEditable(false);
             extraKorgolsCounter.setOpaque(false);
-            extraKorgolsCounter.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+            extraKorgolsCounter.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         }
     }
 
