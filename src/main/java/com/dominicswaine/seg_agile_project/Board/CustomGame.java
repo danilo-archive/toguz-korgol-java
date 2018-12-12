@@ -209,6 +209,7 @@ public class CustomGame {
 
             label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
+            tuzController.setOpaque(false);
             tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
