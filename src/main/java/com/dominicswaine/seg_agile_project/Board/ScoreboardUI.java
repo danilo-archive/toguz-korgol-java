@@ -1,10 +1,7 @@
 package com.dominicswaine.seg_agile_project.Board;
 
-import com.dominicswaine.seg_agile_project.Logic.Parser;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -137,8 +134,7 @@ public class ScoreboardUI extends JLabel {
         //todo: make buttons taller
 
         back.addActionListener(e -> {
-            new MainMenu();
-            frame.dispose();
+           endGame();
         });
 
         buttons.add(back);
@@ -155,11 +151,31 @@ public class ScoreboardUI extends JLabel {
     }
 
     /**
-     * Update the score of the game
+     * Close board window and open main menu, ending the game
      */
-    public void update(){
-        whiteScore.setText("  "+(kazans.get(0).getLastKorgolInd()+1) + "");
-        blackScore.setText((kazans.get(1).getLastKorgolInd()+1)+ "  ");
+    private void endGame(){
+        new MainMenu();
+        frame.dispose();
+    }
+
+    /**
+     * Update the score of the game
+     * @return true if game has been closed
+     */
+    public boolean update() {
+        if (kazans.get(0).getLastKorgolInd() + 1 >= 82) {
+            JOptionPane.showMessageDialog(new JFrame(), "CONGRATULATIONS YOU WON!");
+            endGame();
+            return true;
+        }
+        else if(kazans.get(1).getLastKorgolInd() + 1 >= 82) {
+            JOptionPane.showMessageDialog(new JFrame(), "YOU LOST");
+            endGame();
+            return true;
+        }
+        whiteScore.setText("  " + (kazans.get(0).getLastKorgolInd() + 1) + "");
+        blackScore.setText((kazans.get(1).getLastKorgolInd() + 1) + "  ");
+        return false;
     }
 
     @Override
