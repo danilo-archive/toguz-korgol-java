@@ -1,8 +1,15 @@
-# Software Engineering Group Project - Agile Project
+# Software Engineering Group Project - Agile Project - Team Zebu
 Ayberk Demirkol, Danilo Del Busso, David Mahgerefteh, Dominic Swaine and Horia Tudor Pavel Simon
 
-## Project structure and Gradle
+#### Toguz Korgool
+The game is played on a board with two rows of nine holes. 
+There are two "kazan" between these rows, which are used to 
+collect captured stones of each user, separately. 
+At the beginning there are nine stones in each hole,
+ except the kazan, which are empty, so players need 
+ a total of 162 stones.
 
+#### Project structure and Gradle
  * [README.md](./README.md)
  * [build.gradle](./build.gradle)
  * [src](./src)
