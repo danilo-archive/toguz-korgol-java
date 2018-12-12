@@ -70,7 +70,7 @@ public class HoleUI extends KorgoolsContainerUI {
         super.paintComponent(g);
         Graphics2D tuzBorder = (Graphics2D) g;
         tuzBorder.setColor(tuzBorderColor); //set color to red with 100% transparency (last parameter)
-        tuzBorder.setStroke(new BasicStroke(4));
+        tuzBorder.setStroke(new BasicStroke(6));
         tuzBorder.drawRect(0, 0, getWidth(), getHeight());
     }
 

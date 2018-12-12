@@ -67,20 +67,20 @@ public class Hole extends KorgoolContainer {
         return !isTuz() ? super.original0wner : ((super.original0wner == Side.WHITE) ? Side.BLACK : Side.WHITE);
     }
 
-    @Override
     /**
      * Function to add korgools to hole
      */
+    @Override
     public void addKorgool(Korgool korgool){
         korgools.add(korgool);
         gui.addKorgol();
     }
 
-    @Override
     /**
      * Function to add one or more korgools to the Kazan
-     * @param korgools ArrayList of korgools to be added to the Kazan
+     * @param korgools_list ArrayList of korgools to be added to the Kazan
      */
+    @Override
     public void addKorgools(ArrayList<Korgool> korgools_list){
         korgools.addAll(korgools_list);
         gui.addKorgols(korgools_list.size());

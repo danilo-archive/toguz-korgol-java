@@ -1,5 +1,7 @@
 package com.dominicswaine.seg_agile_project.Board;
 
+import com.dominicswaine.seg_agile_project.Logic.Parser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class GameWindow {
     private ArrayList <HoleUI> holesTopRow;
     private ArrayList <HoleUI> holesBottomRow;
     private ArrayList <KazanUI> kazans;
+
+    private ScoreboardUI scoreboard;
 
 
 
@@ -45,7 +49,7 @@ public class GameWindow {
 
         pane.add(board, BorderLayout.WEST);
 
-        ScoreboardUI scoreboard = new ScoreboardUI(kazans, gameWindow);
+        scoreboard = new ScoreboardUI(kazans, gameWindow);
 
         pane.add(scoreboard, BorderLayout.EAST);
 
@@ -136,4 +140,8 @@ public class GameWindow {
      * @return the kazans
      */
     public ArrayList<KazanUI> getKazans(){ return kazans;}
+
+    public ScoreboardUI getScoreboard() {
+        return scoreboard;
+    }
 }
