@@ -7,8 +7,7 @@ import com.dominicswaine.seg_agile_project.Board.KazanUI;
 import java.awt.event.*;
 
 /**
- *
- * @Author Ayberk Demirkol, Dominic Swaine
+ * @author Ayberk Demirkol, Dominic Swaine
  */
 public class Game {
     private Side player_side;

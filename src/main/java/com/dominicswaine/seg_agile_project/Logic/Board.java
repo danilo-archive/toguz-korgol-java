@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+/**
+ * @author Ayberk Demirkol, Dominic Swaine
+ */
 public class Board {
     private Hole[] holes = new Hole[18];
     private Kazan[] kazans = new Kazan[2];
