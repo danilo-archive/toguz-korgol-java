@@ -129,21 +129,26 @@ public class ScoreboardUI extends JLabel {
         scores.add(jp, BorderLayout.CENTER);
         scores.add(getTimer(), BorderLayout.SOUTH);
 
-        JButton back = new JButton("BACK TO MAIN MENU");
-        saveButton = new JButton("SAVE GAME");
+        JTextField buttons = new JTextField();
+        buttons.setLayout(new GridLayout(1,2));
+
+        JButton back = new JButton("BACK");
+        saveButton = new JButton("SAVE");
 
         back.addActionListener(e -> {
             new MainMenu();
             frame.dispose();
         });
 
+        buttons.add(saveButton);
+        buttons.add(back);
+        buttons.setVisible(true);
 
-        add(back, BorderLayout.SOUTH);
-        add(saveButton, BorderLayout.WEST);
+
+        add(buttons, BorderLayout.SOUTH);
 
         whiteScore.setBorder(BorderFactory.createRaisedBevelBorder());
         blackScore.setBorder(BorderFactory.createRaisedBevelBorder());
-
 
         this.add(scores,CENTER);
 
