@@ -143,7 +143,7 @@ public class Board {
      * @param turnSide Side that holes are linked to
      * @return ArrayList of Holes that can be redistributed and owned by given Side
      */
-    private ArrayList<Hole> availableMoves(Side turnSide){
+    public ArrayList<Hole> availableMoves(Side turnSide){
         ArrayList<Hole> holesOwned = new ArrayList<>();
         for(Hole h : holes){
             if(h.getOwner() == turnSide && h.getNumberOfKoorgools() != 0){

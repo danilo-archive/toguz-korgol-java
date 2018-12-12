@@ -182,6 +182,7 @@ public class Game {
 
     public static void main(String[] args){
         Game game1 = new Game();
+        game1.getGameBoard().challengeMove();
         while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
             Side nextToPlay = game1.game_board.getNextToPlay();
             try {
@@ -196,5 +197,17 @@ public class Game {
             }
         }
         //TODO: End game screen after while loop ends.
+    }
+
+    public GameWindow getGui(){
+        return gui;
+    }
+
+    public Board getGameBoard() {
+        return game_board;
+    }
+
+    public Side getPlayerSide() {
+        return player_side;
     }
 }
