@@ -413,6 +413,7 @@ public class CustomGame {
         else { //All values are correct, a custom game can now be constructed
 
             game = new com.dominicswaine.seg_agile_project.Logic.Game(playerTuz, opponentTuz, playerValues, opponentValues);
+            frame.dispose();
 
         }
 
