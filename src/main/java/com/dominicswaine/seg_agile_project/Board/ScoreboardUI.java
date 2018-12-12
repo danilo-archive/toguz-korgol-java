@@ -81,7 +81,7 @@ public class ScoreboardUI extends JLabel {
         JPanel jp = new JPanel();
         jp.setOpaque(false);
         jp.add(clock);
-        jp.setBorder(BorderFactory.createRaisedBevelBorder());
+        jp.setBorder(BorderFactory.createEmptyBorder());
 
         return jp;
     }
@@ -108,8 +108,8 @@ public class ScoreboardUI extends JLabel {
         whiteScore.setFont(font);
         blackScore.setFont(font);
 
-        whiteScore.setForeground(Color.WHITE);
-        blackScore.setForeground(Color.BLACK);
+        whiteScore.setForeground(Color.BLUE);
+        blackScore.setForeground(Color.RED);
 
 
         update();
@@ -132,8 +132,9 @@ public class ScoreboardUI extends JLabel {
         JTextField buttons = new JTextField();
         buttons.setLayout(new GridLayout(1,2));
 
-        JButton back = new JButton("BACK");
-        saveButton = new JButton("SAVE");
+        JButton back = new JButton("Back");
+        saveButton = new JButton("Save");
+        //todo: make buttons taller
 
         back.addActionListener(e -> {
             new MainMenu();
@@ -144,11 +145,10 @@ public class ScoreboardUI extends JLabel {
         buttons.add(back);
         buttons.setVisible(true);
 
-
         add(buttons, BorderLayout.SOUTH);
 
-        whiteScore.setBorder(BorderFactory.createRaisedBevelBorder());
-        blackScore.setBorder(BorderFactory.createRaisedBevelBorder());
+        whiteScore.setBorder(BorderFactory.createEmptyBorder());
+        blackScore.setBorder(BorderFactory.createEmptyBorder());
 
         this.add(scores,CENTER);
 
@@ -158,8 +158,8 @@ public class ScoreboardUI extends JLabel {
      * Update the score of the game
      */
     public void update(){
-        whiteScore.setText(kazans.get(0).getLastKorgolInd()+1 + "");
-        blackScore.setText(kazans.get(1).getLastKorgolInd()+1 + "");
+        whiteScore.setText("  "+(kazans.get(0).getLastKorgolInd()+1) + "");
+        blackScore.setText((kazans.get(1).getLastKorgolInd()+1)+ "  ");
     }
 
     @Override
