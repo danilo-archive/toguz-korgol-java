@@ -1,7 +1,3 @@
-//where in tests do you use the return type of change user?
-//refactor tests and test saving
-//check order of listeners
-
 package com.dominicswaine.seg_agile_project.Board;
 import java.io.File;
 import java.util.HashMap;
@@ -9,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
-
 import com.dominicswaine.seg_agile_project.Logic.Parser;
 
 /**
@@ -17,7 +12,7 @@ import com.dominicswaine.seg_agile_project.Logic.Parser;
  * to play at a later date.
  *
  * @author David Mahgerefteh
- * @version 29/11/2018
+ * @version 11/12/2018
  */
 public class CustomGame {
 
@@ -35,6 +30,9 @@ public class CustomGame {
     private JOptionPane pane;
     private com.dominicswaine.seg_agile_project.Logic.Game game;
 
+    /**
+     * Construct the custom game window.
+     */
     public CustomGame() {
 
         //Initialise the frame
@@ -42,6 +40,7 @@ public class CustomGame {
         frame  = new JFrame();
         frame.setSize(new Dimension(475, 700));
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Initialise necessary variables
@@ -66,6 +65,7 @@ public class CustomGame {
         containerOfEverything.add(containerOfCancelTuz);
         containerOfEverything.add(containerOfSaveAndStart);
         frame.add(containerOfEverything);
+        frame.setTitle("Toguz Korgool - Custom Game");
         frame.setVisible(true);
 
     }
@@ -114,15 +114,16 @@ public class CustomGame {
                 "specify the amount of Korgools per Kazan and Hole, " +
                 "and also whether a hole is a Tuz. Note that the total " +
                 "number of Korgools must be exactly 162, the two Tuzzes " +
-                "cannot be the same, and no Tuz can be 9.</p></html>");
+                "cannot be the same, and no Tuz can be 9. " +
+                "Press Save to be able to play this custom game at a later date. Press Start to begin the custom game.</p></html>");
 
         instructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
         instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         containerOfTextAndDropdown.add(title);
         containerOfTextAndDropdown.setBorder(new EmptyBorder(0,20, 0, 20 ));
-        containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
+        containerOfTextAndDropdown.add(Box.createVerticalStrut(17));
         containerOfTextAndDropdown.add(instructions);
-        containerOfTextAndDropdown.add(Box.createVerticalStrut(20));
+        containerOfTextAndDropdown.add(Box.createVerticalStrut(25));
         dropdown = new JComboBox();
         dropdown.setName("dropdown");
         dropdown.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -357,21 +358,36 @@ public class CustomGame {
      */
     private void saveGame() {
 
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+        int sumOfPlayerAndOpponentValues = sumOfPlayerAndOpponentValues();
 
-        int returnValue = jfc.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-
-            File selectedFile = jfc.getSelectedFile();
-            System.out.println(selectedFile.getAbsolutePath());
-
-            Parser.saveCustomGame(selectedFile.getAbsolutePath(), playerTuz, opponentTuz, playerValues, opponentValues);
+        if (sumOfPlayerAndOpponentValues != 162) {
 
             pane.showMessageDialog(frame,
-                    "Your game has been saved.",
-                    "Saved Game",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "Total number of Korgools must be exactly 162, please change your values.",
+                    "Warning",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        else {
+
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+
+            int returnValue = jfc.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+                File selectedFile = jfc.getSelectedFile();
+                System.out.println(selectedFile.getAbsolutePath());
+
+                Parser.saveCustomGame(selectedFile.getAbsolutePath(), playerTuz, opponentTuz, playerValues, opponentValues);
+
+                pane.showMessageDialog(frame,
+                        "Your game has been saved.",
+                        "Saved Game",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            }
 
         }
 
@@ -525,14 +541,6 @@ public class CustomGame {
         }
 
         return sumOfPlayerValues + sumOfOpponentValues;
-
-    }
-
-    //Create an instance of this class
-
-    public static void main(String[] args) {
-
-        new CustomGame();
 
     }
 
