@@ -1,5 +1,10 @@
 package com.dominicswaine.seg_agile_project.Logic;
 
+import com.dominicswaine.seg_agile_project.Board.HoleUI;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class Board {
@@ -65,9 +70,6 @@ public class Board {
      * @param holeIndex
      */
     public void redistribute(int holeIndex){
-        System.out.println("Chosen hole is: " + holeIndex);
-
-
 
         if(holes[holeIndex].getOwner() == nextToPlay) {
             //TODO: Add a check to see if move being made is a tuz.
@@ -76,12 +78,10 @@ public class Board {
             Hole lastHole;
             //@Check if there are no korgools in the hole.
             if(korgoolsToMove.size() == 0){
-                System.out.println("You cannot make this move! Chosen hole has only 0 korgools!");
                 return;
             }
             //@Check if there are 1 korgool in the hole.
             else if(korgoolsToMove.size() == 1){
-                //System.out.println(holeIndex + " numbered hole has only 1 korgools.");
                 lastHole = holes[(holeIndex + 1) % 18];
                 //System.out.println("Transferring 1 korgools to hole number" + lastHole.getHoleIndex());
                 lastHole.addKorgool(holeChosen.getKoorgools().get(0));
@@ -91,10 +91,8 @@ public class Board {
                 lastHole = holes[(holeIndex + korgoolsToMove.size() - 1) % 18];
                 //Distributes each korgools
                 for(int distributeIndex = 1; distributeIndex < korgoolsToMove.size(); distributeIndex++){
-                    //System.out.println("1 korgool from hole: " + holeChosen.getHoleIndex() + " is moved to" + holes[(holeIndex + distributeIndex) % 18].getHoleIndex());
                     holes[(holeIndex + distributeIndex) % 18].addKorgool(korgoolsToMove.get(distributeIndex));
                 }
-                //System.out.println("We try deleting after the loop");
                 Korgool first = korgoolsToMove.get(0);
                 holeChosen.emptyHole();
                 holeChosen.addKorgool(first);
@@ -104,10 +102,22 @@ public class Board {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 ArrayList<Korgool> lastHoleKorgools = lastHole.getKoorgools();
                 if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
-                    System.out.println(lastHole.getHoleIndex() + " is marked as tuz and" + lastHole.getKoorgools().size() + " korgools are won by " + nextToPlay);
                     lastHole.markAsTuz();
 
                     nextToPlay.makeTuz();
+                    if(nextToPlay == Side.BLACK){
+                        MouseListener mouseListener = lastHole.getGui().getMouseListeners()[0];
+                        lastHole.getGui().removeMouseListener(mouseListener);
+                    }
+                    else{
+                        HoleUI activateHole = lastHole.getGui();
+                        activateHole.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                redistribute(lastHole.getHoleIndex());
+                            }
+                        });
+                    }
                     for(int i = 0; i < lastHoleKorgools.size(); i++){
                         kazans[playersKazanIndex].addKorgool(new Korgool());
                     }
@@ -115,21 +125,13 @@ public class Board {
                     lastHole.emptyHole();
                 }
                 else if(lastHoleKorgools.size() % 2 == 0){
-                    System.out.println(lastHole.getKoorgools().size() + " korgools are won by " + nextToPlay);
                     for(int i = 0; i < lastHoleKorgools.size(); i++) {
                         kazans[playersKazanIndex].addKorgool(new Korgool());
                     }
-                    //System.out.println("Last Hole size is : " + lastHole.getKoorgools().size());
                     lastHole.emptyHole();
                 }
             }
             nextToPlay = nextToPlay==Side.WHITE ? Side.BLACK : Side.WHITE;
-            //System.out.println("Side White has" + kazans[0].getKoorgools().size() + " korgools");
-            //System.out.println("Side Black has" + kazans[1].getKoorgools().size() + " korgools");
-        }
-        else{
-            //TODO: Show this as an alert dialogue.
-            System.out.println("This hole does not belong to the player!" + " Pick another hole!");
         }
     }
 
@@ -200,7 +202,6 @@ public class Board {
             randomMove();
             return;
         }
-        System.out.println("Next viable move is: Hole " + (returnIndex) + " of opponent");
         redistribute(returnIndex);
     }
 
