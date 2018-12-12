@@ -6,7 +6,7 @@ import java.lang.*;
 import java.util.ArrayList;
 
 /**
- * @Author Ayberk Demirkol, Dominic Swaine
+ * @author Ayberk Demirkol, Dominic Swaine
  */
 public class Hole extends KorgoolContainer {
     private boolean isTuz;  //Field for marking tuz
