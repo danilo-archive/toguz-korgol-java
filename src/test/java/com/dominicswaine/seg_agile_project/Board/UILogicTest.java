@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 
 public class UILogicTest {
-/*
+
     @Test
     public void rightNumberOfWhiteKorgoolAtStart() {
         GameWindow gw = new GameWindow();
@@ -129,6 +129,19 @@ public class UILogicTest {
 
         }
     }
-*/
+
+    @Test
+    public void testIfRightNumberOfKorgoolsInKazanClosesGame(){
+        GameWindow gw1 = new GameWindow();
+        gw1.getKazans().get(0).addKorgols(82);
+        boolean bool1 = gw1.getScoreboard().update();
+        assertTrue(bool1);
+
+        GameWindow gw2 = new GameWindow();
+        gw2.getKazans().get(1).addKorgols(82);
+        boolean bool2 = gw2.getScoreboard().update();
+        assertTrue(bool2);
+    }
+
 
 }
