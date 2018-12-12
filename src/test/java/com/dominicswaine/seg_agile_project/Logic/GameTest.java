@@ -27,8 +27,6 @@ public class GameTest {
         Game game1 = new Game("0","0",playerData,opponentData);
         assertEquals(10,game1.getGameBoard().getKazanByIndex(0).getNumberOfKoorgools());
         assertEquals(20,game1.getGameBoard().getKazanByIndex(1).getNumberOfKoorgools());
-        assertFalse(game1.getPlayerSide().hasTuz());
-        assertFalse(Side.BLACK.hasTuz());
         for(int i = 0; i < 18; i++){
             assertEquals(i+1,game1.getGameBoard().getHoleByIndex(i).getNumberOfKoorgools());
         }
