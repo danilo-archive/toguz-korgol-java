@@ -130,4 +130,16 @@ public class Game {
         }
         //TODO: End game screen after while loop ends.
     }
+
+    public GameWindow getGui(){
+        return gui;
+    }
+
+    public Board getGameBoard() {
+        return game_board;
+    }
+
+    public Side getPlayerSide() {
+        return player_side;
+    }
 }
