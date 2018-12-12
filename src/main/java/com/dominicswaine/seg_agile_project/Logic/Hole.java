@@ -52,7 +52,15 @@ public class Hole extends KorgoolContainer {
 
     /**
      * Returns the originalOwner of hole
-     * @return originalOwner
+     * @return originalOwner - the side of the original owner of the hole
+     */
+    public Side getOriginalOwner() {
+        return super.original0wner;
+    }
+
+    /**
+     * Returns the owner of the hole
+     * @return the side of the owner of the whole
      */
     public Side getOwner() {
         return !isTuz() ? super.original0wner : ((super.original0wner == Side.WHITE) ? Side.BLACK : Side.WHITE);
