@@ -3,8 +3,12 @@ package com.dominicswaine.seg_agile_project.Logic;
 import com.dominicswaine.seg_agile_project.Board.GameWindow;
 import com.dominicswaine.seg_agile_project.Board.HoleUI;
 import com.dominicswaine.seg_agile_project.Board.KazanUI;
+import com.dominicswaine.seg_agile_project.Board.ScoreboardUI;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.event.*;
+import java.io.File;
 
 /**
  *
@@ -23,6 +27,8 @@ public class Game {
         player_side = Side.WHITE;
         game_board = new Board();
         gui = new GameWindow();
+        gui.getScoreboard().getSaveButton().addActionListener(e-> saveCurrentState());
+
 
         for (int holeNo = 0; holeNo < game_board.getHoles().length; holeNo++) {
             Hole logicHole = game_board.getHoleByIndex(holeNo);
@@ -44,6 +50,67 @@ public class Game {
             Kazan logicKazan = game_board.getKazanByIndex(i);
             KazanUI guiKazan = gui.getKazans().get(i);
             logicKazan.setGui(guiKazan);
+        }
+    }
+
+    private void saveCurrentState() {
+        Hole[] holes = game_board.getHoles();
+        Kazan[] kazans = game_board.getKazans();
+
+        int[] playerHoles = new int[10];
+        int[] opponentHoles = new int[10];
+
+        // Handling Player Tuz
+        String playerTuz = "";
+        boolean changedPT = false;
+        for(int i = 0 ; i < 9 ; ++i) {
+            if (holes[i].isTuz()) {
+                changedPT = true;
+                playerTuz = Integer.toString(i+1);
+            }
+        }
+        if(!changedPT) {
+            playerTuz = "0";
+        }
+
+        // Handling Opponent Tuz
+        String opponentTuz = "";
+        boolean changedOT = false;
+        for(int i = 9 ; i < 17 ; ++i) {
+            if (holes[i].isTuz()) {
+                changedOT = true;
+                opponentTuz = Integer.toString(i-8);
+            }
+        }
+        if(!changedOT) {
+            opponentTuz = "0";
+        }
+
+        // Handling player and opponent holes
+
+        playerHoles[0] = kazans[0].getNumberOfKoorgools();
+        opponentHoles[0] = kazans[1].getNumberOfKoorgools();
+        for (int i = 1 ; i < 10 ; ++i) {
+            playerHoles[i] = holes[i-1].getNumberOfKoorgools();
+            opponentHoles[i] = holes[i+8].getNumberOfKoorgools();
+        }
+
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+
+        int returnValue = jfc.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+            File selectedFile = jfc.getSelectedFile();
+            System.out.println(selectedFile.getAbsolutePath());
+
+            Parser.saveCustomGame(selectedFile.getAbsolutePath(), playerTuz, opponentTuz, playerHoles, opponentHoles);
+
+            JOptionPane.showMessageDialog(null,
+                    "Your game has been saved.",
+                    "Saved Game",
+                    JOptionPane.INFORMATION_MESSAGE);
+
         }
     }
 

@@ -1,7 +1,10 @@
 package com.dominicswaine.seg_agile_project.Board;
 
+import com.dominicswaine.seg_agile_project.Logic.Parser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +25,7 @@ public class ScoreboardUI extends JLabel {
     private final JFrame frame;
     private JTextField whiteScore, blackScore;  //the scores of the players
     private ArrayList<KazanUI> kazans;
-    
+    private JButton saveButton;
 
     /**
      * Build a scoreboard panel and assign an array containing the two kazans
@@ -95,7 +98,6 @@ public class ScoreboardUI extends JLabel {
         scores.setLayout(new BorderLayout());
 
         whiteScore = new JTextField();
-
         blackScore = new JTextField();
 
         whiteScore.setEditable(false);
@@ -128,13 +130,16 @@ public class ScoreboardUI extends JLabel {
         scores.add(getTimer(), BorderLayout.SOUTH);
 
         JButton back = new JButton("BACK TO MAIN MENU");
+        saveButton = new JButton("SAVE GAME");
 
         back.addActionListener(e -> {
             new MainMenu();
             frame.dispose();
         });
 
+
         add(back, BorderLayout.SOUTH);
+        add(saveButton, BorderLayout.WEST);
 
         whiteScore.setBorder(BorderFactory.createRaisedBevelBorder());
         blackScore.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -164,4 +169,7 @@ public class ScoreboardUI extends JLabel {
         g.drawImage(image, 0, 0, this);
     }
 
+    public JButton getSaveButton() {
+        return saveButton;
+    }
 }
