@@ -141,8 +141,8 @@ public class ScoreboardUI extends JLabel {
             frame.dispose();
         });
 
-        buttons.add(saveButton);
         buttons.add(back);
+        buttons.add(saveButton);
         buttons.setVisible(true);
 
         add(buttons, BorderLayout.SOUTH);
