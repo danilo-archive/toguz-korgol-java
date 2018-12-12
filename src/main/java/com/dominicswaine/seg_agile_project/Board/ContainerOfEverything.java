@@ -8,21 +8,20 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * A board is the panel that contains the game board and draws
- * the background image.
+ * A panel with a background image
  * @author Danilo Del Busso
- * @version 30-11-2018
+ * @version 12-12-2018
  */
-public class BoardUI extends JPanel {
+public class ContainerOfEverything extends JPanel {
 
     private BufferedImage image; //the background image being displayeds
     private int w, h;
 
     /**
-     * Create the board by giving it the path of the background image
+     * Create the panel by giving it the path of the background image
      * @param p the path of the background image
      */
-    public BoardUI(String p) {
+    public ContainerOfEverything(String p) {
         setLayout(new BorderLayout());
 
         try {

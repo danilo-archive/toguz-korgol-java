@@ -1,7 +1,10 @@
 package com.dominicswaine.seg_agile_project.Board;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
@@ -75,15 +78,21 @@ public class CustomGame {
      */
     private void makePanels() {
 
-        containerOfEverything = new JPanel();
+        containerOfEverything = new ContainerOfEverything(System.getProperty("user.dir") + "/src/main/resources/wood_grain_custom_game.jpg");
         containerOfEverything.setLayout(new BoxLayout(containerOfEverything, BoxLayout.Y_AXIS));
         containerOfBackButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        containerOfBackButton.setOpaque(false);
         containerOfTextAndDropdown = new JPanel();
         containerOfTextAndDropdown.setLayout(new BoxLayout(containerOfTextAndDropdown, BoxLayout.Y_AXIS));
+        containerOfTextAndDropdown.setOpaque(false);
         containerOfSelections = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 0));
+        containerOfSelections.setOpaque(false);
         containerOfSpinners = new JPanel(new GridLayout(0,2));
+        containerOfSpinners.setOpaque(false);
         containerOfCancelTuz = new JPanel(new FlowLayout());
+        containerOfCancelTuz.setOpaque(false);
         containerOfSaveAndStart = new JPanel(new FlowLayout());
+        containerOfSaveAndStart.setOpaque(false);
 
     }
 
@@ -184,8 +193,10 @@ public class CustomGame {
     private JPanel makeUnit(int i) {
 
         JPanel unit = new JPanel(new BorderLayout());
+        unit.setOpaque(false);
         JLabel label;
         JPanel panelContainingSpinner = new JPanel(new BorderLayout());
+        panelContainingSpinner.setOpaque(false);
 
         if (i == 0) { //For Kazan, we want no tuz radio button
 
@@ -198,6 +209,7 @@ public class CustomGame {
 
             label = new JLabel("Hole " + i + ":");
             JRadioButton tuzController = new JRadioButton();
+            tuzController.setOpaque(false);
             tuzController.setName("" + i); //Setting an ID for each radio button - Hole 1 has ID 1, Hole 9 has ID 9, cancel has ID 0
             tuzController.addActionListener((e -> checkRadioButtons(tuzController.getName())));
             buttonGroup.add(tuzController);
@@ -230,6 +242,7 @@ public class CustomGame {
     private void populateContainerOfCancelTuz() {
 
         tuzCanceller = new JRadioButton();
+        tuzCanceller.setOpaque(false);
         buttonGroup.add(tuzCanceller);
         tuzCanceller.setName("0");
         tuzCanceller.addActionListener((e -> checkRadioButtons(tuzCanceller.getName())));

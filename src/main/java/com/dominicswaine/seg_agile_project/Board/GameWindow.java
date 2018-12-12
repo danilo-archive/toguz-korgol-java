@@ -9,15 +9,12 @@ import java.util.ArrayList;
 /**
  *  This object creates the window where board and scoreboard are
  *  shown.
- *  It is the window in which players can interact and play the game
+ *  It is the window in which players can interact and play the game.
  *
  * @author Danilo Del Busso
- * @version 30-11-2018
+ * @version 12-12-2018
  */
 public class GameWindow {
-
-    private static final int HOLES_PER_PLAYER = 9;
-    private static final int STARTING_KORGOLS = 9;
 
     private ArrayList <HoleUI> holesTopRow;
     private ArrayList <HoleUI> holesBottomRow;
@@ -25,12 +22,10 @@ public class GameWindow {
 
     private ScoreboardUI scoreboard;
 
-
-
-    public static void main(String[] args) {
-        new GameWindow();
-    } //todo : remove this
-
+    /**
+     * A window containing the game board and the scoreboard.
+     * All holes and kazans are empty
+     */
     public GameWindow() {
 
         //initialising data structures
@@ -45,7 +40,7 @@ public class GameWindow {
         Container pane = gameWindow.getContentPane();
         pane.setLayout(new BorderLayout());
 
-        BoardUI board = createNewBoard();
+        ContainerOfEverything board = createNewBoard();
 
         pane.add(board, BorderLayout.WEST);
 
@@ -54,9 +49,10 @@ public class GameWindow {
         pane.add(scoreboard, BorderLayout.EAST);
 
         gameWindow.pack();
-        gameWindow.setSize(new Dimension(1280, 720));
+        gameWindow.setSize(new Dimension(1275, 720));
         gameWindow.setVisible(true);
         gameWindow.setLocationRelativeTo(null);
+
     }
 
 
@@ -64,19 +60,19 @@ public class GameWindow {
      * Create and draw starting board with 9 korgols per hole and empty kazans
      * @return the board panel
      */
-    private BoardUI createNewBoard() {
+    private ContainerOfEverything createNewBoard() {
 
         String backgroundPath = System.getProperty("user.dir") + "/src/main/resources/woodbg.jpg";
 
-        BoardUI board = new BoardUI(backgroundPath);
-        JPanel topRow = new JPanel(new GridLayout(0, HOLES_PER_PLAYER));
-        JPanel bottomRow = new JPanel(new GridLayout(0, HOLES_PER_PLAYER));
+        ContainerOfEverything board = new ContainerOfEverything(backgroundPath);
+        JPanel topRow = new JPanel(new GridLayout(0, 9));
+        JPanel bottomRow = new JPanel(new GridLayout(0, 9));
         JPanel kazanRow = new JPanel(new BorderLayout());
 
 
 
         //create holes
-        for (int i = 0; i < HOLES_PER_PLAYER; ++i) {
+        for (int i = 0; i < 9; ++i) {
             //populate top row with holes
             HoleUI h = new HoleUI(8 - i + 1);
             h.adjustLooks();

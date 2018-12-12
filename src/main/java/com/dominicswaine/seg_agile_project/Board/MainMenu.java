@@ -1,9 +1,13 @@
 package com.dominicswaine.seg_agile_project.Board;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
 import com.dominicswaine.seg_agile_project.Logic.Parser;
 
 /**
@@ -52,12 +56,15 @@ public class MainMenu {
      */
     private void makePanels() {
 
-        containerOfEverything = new JPanel();
+        containerOfEverything = new ContainerOfEverything(System.getProperty("user.dir") + "/src/main/resources/wood_grain_main_menu.jpg");
         containerOfEverything.setLayout(new BoxLayout(containerOfEverything, BoxLayout.Y_AXIS));
         containerOfText = new JPanel();
         containerOfText.setLayout(new BoxLayout(containerOfText, BoxLayout.Y_AXIS));
         containerOfButtons = new JPanel();
         containerOfButtons.setLayout(new BoxLayout(containerOfButtons, BoxLayout.Y_AXIS));
+        containerOfButtons.setOpaque(false);
+        containerOfText.setOpaque(false);
+        containerOfEverything.setOpaque(false);
 
     }
 
