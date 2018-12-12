@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'com.dominicswaine.seg_agile_project.Logic.Game'
+mainClassName = 'com.dominicswaine.seg_agile_project.Board.MainMenu'
 
 repositories {
     mavenCentral()
