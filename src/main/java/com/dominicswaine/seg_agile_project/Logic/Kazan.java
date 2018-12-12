@@ -52,9 +52,9 @@ public class Kazan extends KorgoolContainer {
      * Function to add one or more korgools to the Kazan
      * @param korgools ArrayList of korgools to be added to the Kazan
      */
-    public void addKorgools(ArrayList<Korgool> korgools){
-        korgools.addAll(korgools);
-        gui.addKorgols(korgools.size());
+    public void addKorgools(ArrayList<Korgool> korgools_list){
+        korgools.addAll(korgools_list);
+        gui.addKorgols(korgools_list.size());
     }
 
     /**
