@@ -93,7 +93,7 @@ public class ScoreboardUI extends JLabel {
         JLabel scores = new JLabel();
         scores.setOpaque(false);
         scores.setLayout(new BorderLayout());
-
+        //the scores of the players
         whiteScore = new JTextField();
         blackScore = new JTextField();
 
@@ -126,6 +126,7 @@ public class ScoreboardUI extends JLabel {
         scores.add(jp, BorderLayout.CENTER);
         scores.add(getTimer(), BorderLayout.SOUTH);
 
+        //save and back button at the bottom,the save button listener is handled in backend
         JTextField buttons = new JTextField();
         buttons.setLayout(new GridLayout(1,2));
 
@@ -133,9 +134,7 @@ public class ScoreboardUI extends JLabel {
         saveButton = new JButton("Save");
         //todo: make buttons taller
 
-        back.addActionListener(e -> {
-           endGame();
-        });
+        back.addActionListener(e -> endGame());
 
         buttons.add(back);
         buttons.add(saveButton);
@@ -175,6 +174,10 @@ public class ScoreboardUI extends JLabel {
             showEndGamePopup("                          YOU LOST");
             return true;
         }
+        else if(kazans.get(0).getLastKorgolInd() + 1 == 81 && kazans.get(1).getLastKorgolInd() + 1 ==81){
+            showEndGamePopup("                         IT'S A TIE!");
+            return true;
+        }
 
         return false;
     }
@@ -184,7 +187,7 @@ public class ScoreboardUI extends JLabel {
      * @param s the message shown on the popup frame
      */
     private void showEndGamePopup(String s) {
-        JFrame popup = new JFrame();
+        JFrame popup = new JFrame("THANK YOU FOR PLAYING!");
         popup.setVisible(true);
         popup.setLayout(new BorderLayout());
 

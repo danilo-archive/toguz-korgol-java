@@ -8,13 +8,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * This class test the scoreboard class in the UI
- *
  * @author Danilo Del Busso
- * @version 11/12/2018
+ * @version 12-12-2018
  */
 @RunWith(Parameterized.class)
 public class ScoreboardTest {
@@ -35,6 +33,10 @@ public class ScoreboardTest {
         this.outputRemoving = outputRemoving;
     }
 
+    /**
+     * Test if adding korgools to a kazan is properly
+     * shown to screen when the scoreboard is updated
+     */
     @Test
     public void testIfAddingKorgoolsToKazanUpdatesScoreboard(){
         GameWindow gw1 = new GameWindow();
@@ -49,6 +51,11 @@ public class ScoreboardTest {
         assertEquals(outputAdding, Integer.parseInt(gw1.getScoreboard().getWhiteScore().getText().replaceAll("\\s+","")));
     }
 
+    /**
+     * Test if adding and then removign the same number of
+     * korgools from a kazan is properly shown to screen when
+     * the scoreboard is updated
+     */
     @Test
     public void testIfAddingAndRemovingKorgoolsToKazanUpdatesScoreboard(){
         GameWindow gw1 = new GameWindow();
@@ -59,12 +66,16 @@ public class ScoreboardTest {
         assertEquals(0, content);
 
         GameWindow gw2 = new GameWindow();
-        gw1.getKazans().get(0).addKorgols(input);
+        gw1.getKazans().get(1).addKorgols(input);
         gw2.getKazans().get(1).removeKorgols(input);
         gw2.getScoreboard().update();
-        assertEquals(0 , Integer.parseInt(gw1.getScoreboard().getWhiteScore().getText().replaceAll("\\s+","")));
+        assertEquals(0 , Integer.parseInt(gw1.getScoreboard().getBlackScore().getText().replaceAll("\\s+","")));
     }
 
+    /**
+     * Test if removing korgools from a kazan with 82 korgools
+     * is properly shown to screen when the scoreboard is updated
+     */
     @Test
     public void testIfRemovingKorgoolsToKazanUpdatesScoreboard(){
         GameWindow gw1 = new GameWindow();
@@ -75,13 +86,11 @@ public class ScoreboardTest {
         assertEquals(outputRemoving, content);
 
         GameWindow gw2 = new GameWindow();
-        gw1.getKazans().get(0).addKorgols(82);
+        gw2.getKazans().get(1).addKorgols(82);
         gw2.getKazans().get(1).removeKorgols(input);
         gw2.getScoreboard().update();
-        assertEquals(outputRemoving , Integer.parseInt(gw1.getScoreboard().getWhiteScore().getText().replaceAll("\\s+","")));
+        content = Integer.parseInt(gw2.getScoreboard().getBlackScore().getText().replaceAll("\\s+",""));
+        assertEquals(outputRemoving, content);
     }
-
-
-
 
 }
