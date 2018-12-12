@@ -242,6 +242,7 @@ public class CustomGame {
     private void populateContainerOfCancelTuz() {
 
         tuzCanceller = new JRadioButton();
+        tuzCanceller.setOpaque(false);
         buttonGroup.add(tuzCanceller);
         tuzCanceller.setName("0");
         tuzCanceller.addActionListener((e -> checkRadioButtons(tuzCanceller.getName())));
