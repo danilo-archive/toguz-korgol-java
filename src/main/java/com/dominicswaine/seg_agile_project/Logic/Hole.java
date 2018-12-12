@@ -3,6 +3,7 @@ import com.dominicswaine.seg_agile_project.Board.HoleUI;
 
 import java.awt.*;
 import java.lang.*;
+import java.util.ArrayList;
 
 /**
  * @Author Ayberk Demirkol, Dominic Swaine
@@ -73,6 +74,16 @@ public class Hole extends KorgoolContainer {
     public void addKorgool(Korgool korgool){
         korgools.add(korgool);
         gui.addKorgol();
+    }
+
+    @Override
+    /**
+     * Function to add one or more korgools to the Kazan
+     * @param korgools ArrayList of korgools to be added to the Kazan
+     */
+    public void addKorgools(ArrayList<Korgool> korgools_list){
+        korgools.addAll(korgools_list);
+        gui.addKorgols(korgools_list.size());
     }
 
     /**
