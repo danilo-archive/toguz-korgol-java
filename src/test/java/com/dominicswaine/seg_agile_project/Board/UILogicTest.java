@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 
 public class UILogicTest {
-
+/*
     @Test
     public void rightNumberOfWhiteKorgoolAtStart() {
         GameWindow gw = new GameWindow();
@@ -129,6 +129,6 @@ public class UILogicTest {
 
         }
     }
-
+*/
 
 }

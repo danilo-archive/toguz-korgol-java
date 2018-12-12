@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class HolesKorgoolIndexingTest {
+
     ArrayList<HoleUI> holes = new GameWindow().getHolesBottomRow();
 
 
@@ -34,6 +35,7 @@ public class HolesKorgoolIndexingTest {
         holes.get(0).addKorgols(input);
         assertEquals(output, holes.get(0).getLastKorgolInd());
     }
+
 
 
 }
