@@ -35,12 +35,70 @@ public class Game {
             logicHole.setGui(guiHole);
 
             final int holeIndex = holeNo;
+            // Statement below adds mouselisteners to each hole. When a mouse is pressed on top of a hole, it redistributes that hole.
+            // When mouse is released, after 1 sec AI makes the move.
+            // @checks if player earns a tuz after the move, it they do; a new mouse pressed and released is added to Tuz Hole. If the player doesnt earn a tuz,
+            // game continues normally. After every move, scoreboard is updated.
             if (logicHole.getOwner() == Side.WHITE) {
                 guiHole.addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(MouseEvent e) {
-                        game_board.redistribute(holeIndex);
+                    public void mousePressed(MouseEvent e) {
+                        if(game_board.getNextToPlay() == Side.WHITE) {
+                            if (game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game_board.getKazanByIndex(1).getKoorgools().size() <= 81) {
+                                if(!Side.WHITE.hasTuz()) {
+                                    game_board.redistribute(holeIndex);
+                                    gui.getScoreboard().update();
+                                    if(Side.WHITE.hasTuz()){
+                                        int tuzHoleIndex = game_board.getPlayerTuz(Side.WHITE);
+                                        Hole tuzHole = game_board.getHoleByIndex(tuzHoleIndex);
+                                        HoleUI tuzHoleUI = tuzHole.getGui();
+                                        tuzHoleUI.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mousePressed(MouseEvent e) {
+                                                if(game_board.getNextToPlay() == Side.WHITE && game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game_board.getKazanByIndex(1).getKoorgools().size() <= 81) {
+
+                                                    game_board.redistribute(tuzHoleIndex);
+                                                    gui.getScoreboard().update();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                if(game_board.getNextToPlay() == Side.BLACK && game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game_board.getKazanByIndex(1).getKoorgools().size() <= 81) {
+                                                    try{
+                                                        Thread.sleep(1000);
+                                                    }
+                                                    catch(InterruptedException exception){
+                                                        System.out.println("main thread interrupted");
+                                                    }
+                                                    game_board.challengeMove();
+                                                    gui.getScoreboard().update();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                else{
+                                    game_board.redistribute(holeIndex);
+                                    gui.getScoreboard().update();
+                                }
+                            }
+                        }
                     }
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        if(game_board.getNextToPlay() == Side.BLACK && game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game_board.getKazanByIndex(1).getKoorgools().size() <= 81) {
+                            try{
+                                Thread.sleep(1000);
+                            }
+                            catch(InterruptedException exception){
+                                System.out.println("main thread interrupted");
+                            }
+                            game_board.challengeMove();
+                            gui.getScoreboard().update();
+                        }
+                    }
+
                 });
             }
         }
@@ -178,25 +236,6 @@ public class Game {
             game_board.getHoleByIndex(opponentTuzNo-1).markAsTuz();
             Side.BLACK.makeTuz();
         }
-    }
-
-    public static void main(String[] args){
-        Game game1 = new Game();
-        game1.getGameBoard().challengeMove();
-        while(game1.game_board.getKazanByIndex(0).getKoorgools().size() <= 81 && game1.game_board.getKazanByIndex(1).getKoorgools().size() <= 81){
-            Side nextToPlay = game1.game_board.getNextToPlay();
-            try {
-                Thread.sleep(2000);
-            }
-            catch(InterruptedException ie){
-                System.out.println("Interrupted exception...");
-            }
-            //System.out.print("");
-            if(nextToPlay == Side.BLACK){
-                game1.game_board.challengeMove();
-            }
-        }
-        //TODO: End game screen after while loop ends.
     }
 
     public GameWindow getGui(){
