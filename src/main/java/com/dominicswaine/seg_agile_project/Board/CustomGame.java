@@ -386,7 +386,7 @@ public class CustomGame {
 
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
 
-            int returnValue = jfc.showOpenDialog(null);
+            int returnValue = jfc.showSaveDialog(null);
 
             if (returnValue == JFileChooser.APPROVE_OPTION) {
 
