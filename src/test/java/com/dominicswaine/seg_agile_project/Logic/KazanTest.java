@@ -5,10 +5,16 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import com.dominicswaine.seg_agile_project.Board.KazanUI;
 
+/**
+ * @author Ayberk Demirkol, Dominic Swaine
+ */
 public class KazanTest {
 
     public KazanTest(){}
 
+    /**
+     * Test to check whether Korgools are successfully added to the Kazan
+     */
     @Test
     public void checkAddKorgool(){
         Kazan kazan = new Kazan(1);
@@ -16,11 +22,14 @@ public class KazanTest {
         final int numberToAdd = 82;
         for(int i = 1; i<=numberToAdd; i++){
             kazan.addKorgool(new Korgool());
-            assertEquals(i, kazan.getNumberOfKoorgools());
+            assertEquals(i, kazan.getKoorgools().size());
         }
         assertEquals(numberToAdd, kazan.getNumberOfKoorgools());
     }
 
+    /**
+     * Test to check whether an ArrayList of Korgools can be successfully added to the Kazan
+     */
     @Test
     public void checkAddKorgools(){
         Kazan kazan = new Kazan(1);
@@ -29,9 +38,12 @@ public class KazanTest {
         ArrayList<Korgool> listOfKorgools = new ArrayList<>();
         for(int i = 0; i<numberToAdd; i++) listOfKorgools.add(new Korgool());
         kazan.addKorgools(listOfKorgools);
-        assertEquals(numberToAdd, kazan.getNumberOfKoorgools());
+        assertEquals(numberToAdd, kazan.getKoorgools().size());
     }
 
+    /**
+     * Test to check whether getNumberOfKorgools(...) returns the number of Korgools contained by a Kazan
+     */
     @Test
     public void checkGetNumberOfKoorgools(){
         Kazan kazan = new Kazan(1);
@@ -43,6 +55,9 @@ public class KazanTest {
         assertEquals(numberToAdd, kazan.getKoorgools().size());
     }
 
+    /**
+     * Test to check whether each Kazan is assigned to the correct player
+     */
     @Test
     public void checkPlayerSideAssignment(){
         Kazan kazan_zero = new Kazan(0);
