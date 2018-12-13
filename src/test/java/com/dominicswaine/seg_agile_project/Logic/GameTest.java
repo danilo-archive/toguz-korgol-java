@@ -2,12 +2,18 @@ package com.dominicswaine.seg_agile_project.Logic;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
+/**
+ * @author Ayberk Demirkol, Dominic Swaine
+ */
 public class GameTest {
 
     public GameTest(){}
 
+    /**
+     * Test to check the correct number of Holes and Kazans are created and that each
+     * Hole is populated with 9 Kazans when a default game is generated
+     */
     @Test
     public void checkDefaultGame(){
         Game game1 = new Game();
@@ -20,6 +26,9 @@ public class GameTest {
         }
     }
 
+    /**
+     * Test to check a custom game, in which no Hole is a Tuz, is correctly created
+     */
     @Test
     public void checkCustomGameNoTuzes(){
         int[] opponentData = {20,10,11,12,13,14,15,16,17,18};
@@ -32,6 +41,9 @@ public class GameTest {
         }
     }
 
+    /**
+     * Test to check custom games are correctly generated where each player has a Tuz Hole 
+     */
     @Test
     public void checkCustomGameWithTuzes(){
         int[] opponentData = {20,10,11,12,13,14,15,16, 17,18};
@@ -45,6 +57,9 @@ public class GameTest {
         assertEquals(Side.BLACK,game1.getGameBoard().getHoleByIndex(6).getOwner());
     }
 
+    /**
+     * Test to check the number of Kazans displayed match the data held by the logic package 
+     */
     @Test
     public void checkUIMatchesLogicObjects(){
         Game game = new Game();
@@ -58,8 +73,5 @@ public class GameTest {
             assertEquals(game.getGui().getKazans().get(i),game.getGameBoard().getKazanByIndex(i).getGui());
         }
     }
-
-
-
-
+    
 }
