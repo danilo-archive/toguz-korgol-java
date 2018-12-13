@@ -104,7 +104,7 @@ public class Board {
             if(lastHole.getOwner() != nextToPlay) {
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 ArrayList<Korgool> lastHoleKorgools = lastHole.getKoorgools();
-                if((lastHole.getHoleIndex() != 9 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
+                if((lastHole.getHoleIndex() != 8 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
                     lastHole.markAsTuz();
 
                     nextToPlay.makeTuz();
