@@ -11,7 +11,9 @@ import java.awt.event.*;
 import java.io.File;
 
 /**
+ * Constructs a default or custom game
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 public class Game {
     private Side player_side;
@@ -109,7 +111,10 @@ public class Game {
             logicKazan.setGui(guiKazan);
         }
     }
-
+    
+    /**
+     * Function to save current gameplay state
+     */
     private void saveCurrentState() {
         Hole[] holes = game_board.getHoles();
         Kazan[] kazans = game_board.getKazans();
@@ -237,15 +242,27 @@ public class Game {
             Side.BLACK.makeTuz();
         }
     }
-
+    
+    /**
+     * Function to return the corresponding GUI component
+     * return the corresponding GUI component
+     */
     public GameWindow getGui(){
         return gui;
     }
-
+    
+    /**
+     * Function to return the Game Board
+     * return the Game Board
+     */
     public Board getGameBoard() {
         return game_board;
     }
-
+    
+    /**
+     * Function to return the side of the player
+     * return the side of the player
+     */
     public Side getPlayerSide() {
         return player_side;
     }

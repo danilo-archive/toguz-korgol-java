@@ -4,7 +4,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Game class tests
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 12/12/2018
  */
 public class GameTest {
 

@@ -23,12 +23,19 @@ public class KazanUI extends KorgoolsContainerUI {
         setLayout(new GridLayout(5, 16));
     }
 
-
+    /**
+     * Function to return the maximum number of Korgools which can be contained within a Kazan
+     * return the maximum number of Korgools which can be contained within a Kazan
+     */
     @Override
     public int getMaxKorgolsPossible() {
         return 85;
     }
-
+    
+    /**
+     * Return a Dimension object of the preferred window size
+     * @return a Dimension object of the preferred window size
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(540, 240);

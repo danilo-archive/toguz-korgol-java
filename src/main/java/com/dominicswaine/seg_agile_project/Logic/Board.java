@@ -8,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
+ * The Game Board
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 public class Board {
     private Hole[] holes = new Hole[18];

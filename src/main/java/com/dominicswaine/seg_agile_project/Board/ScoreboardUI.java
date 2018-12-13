@@ -214,13 +214,19 @@ public class ScoreboardUI extends JLabel {
         text.setVisible(true);
         popup.setVisible(true);
     }
-
+    
+    /**
+     * Return a Dimension object of the preferred window size
+     * @return a Dimension object of the preferred window size
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(190,720);
     }
 
-
+    /**
+     * Paint window components
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

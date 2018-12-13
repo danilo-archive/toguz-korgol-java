@@ -4,10 +4,15 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Board class tests
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 12/12/2018
  */
 public class BoardTest {
-
+    
+    /**
+     * Construct a BoardTest object
+     */
     public BoardTest(){}
 
     /**

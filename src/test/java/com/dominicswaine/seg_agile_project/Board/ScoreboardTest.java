@@ -17,7 +17,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class ScoreboardTest {
 
-
+    /**
+     * Function to return a Collection of scores
+     * return an Collection of scores
+     */
     @Parameterized.Parameters
     public static Collection<Object[]> data(){
         return Arrays.asList(new Object[][]{
@@ -27,6 +30,9 @@ public class ScoreboardTest {
 
     private int input, outputAdding, outputRemoving;
 
+    /**
+     * Construct as ScoreboardTest object
+     */
     public ScoreboardTest(int input, int outputAdding, int outputRemoving){
         this.input = input;
         this.outputAdding = outputAdding;
