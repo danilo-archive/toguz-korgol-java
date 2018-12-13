@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * @version 12-12-2018
  */
 public class UILogicTest {
-
+  
     /**
      * Test if the gamewindow has the right number
      * of korgools when started
@@ -150,7 +150,6 @@ public class UILogicTest {
         }
     }
 
-
     /**
      * Test if adding the correct amount of korgools (82) to a kazan
      * will win the game
@@ -202,8 +201,7 @@ public class UILogicTest {
         assertTrue(!bool5);
 
     }
-
-
+  
     /**
      * Test if adding the correct amount of korgools to a kazan
      * won't win the game
@@ -223,7 +221,4 @@ public class UILogicTest {
         }
 
     }
-
-
-
 }

@@ -77,7 +77,7 @@ public class MainMenu {
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel instructions = new JLabel("<html><p>Welcome to Toguz Korgool, by David Mahgerefteh" +
+        JLabel instructions = new JLabel("<html><p>Welcome to Toguz Korgool, by David Mahgerefteh," +
                 " Ayberk Demirkol, Danilo Del Busso, Horia Pavel and Dominic Swaine. " +
                 "To begin a game, press Start Game. To begin a custom game, press Custom Game.  " +
                 "To load a custom game configuration you have created in the past, press Load Game " +
@@ -182,7 +182,22 @@ public class MainMenu {
 
             File selectedFile = jfc.getSelectedFile();
             System.out.println(selectedFile.getAbsolutePath());
-            Parser.loadCustomGame(selectedFile.getAbsolutePath());
+            try {
+
+                Parser.loadCustomGame(selectedFile.getAbsolutePath());
+                frame.dispose();
+
+            }
+
+            catch (Exception e) {
+
+                e.printStackTrace();
+
+                JOptionPane.showMessageDialog(null,
+                        "Invalid file selected.",
+                        "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
         }
 
