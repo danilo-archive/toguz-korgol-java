@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ContainerOfEverything extends JPanel {
 
     private BufferedImage image; //the background image being displayeds
-    private int w, h;
+    private int w, h;  // width, height of the JPanel
 
     /**
      * Create the panel by giving it the path of the background image
@@ -35,17 +35,23 @@ public class ContainerOfEverything extends JPanel {
         }
 
     }
-
+    
+    /**
+     * Return a Dimension object of the preferred window size
+     * @return a Dimension object of the preferred window size
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(w, h);
     }
-
+    
+    /**
+     * Paint window components
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
     }
-
 
 }
