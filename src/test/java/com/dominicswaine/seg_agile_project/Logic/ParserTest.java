@@ -10,7 +10,8 @@ import static org.junit.Assert.*;
 
 /**
  * ParserTest class tests the main functionality of the Parser class.
- * @author horia
+ * @author Horia Tudor Pavel Simon
+ * @version 11/12/2018
  */
 public class ParserTest {
 
