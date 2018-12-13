@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import com.dominicswaine.seg_agile_project.Board.KazanUI;
 
 /**
+ * Kazan class tests
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 11/12/2018
  */
 public class KazanTest {
 
