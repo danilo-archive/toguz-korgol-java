@@ -112,15 +112,6 @@ public class Board {
                         MouseListener mouseListener = lastHole.getGui().getMouseListeners()[0];
                         lastHole.getGui().removeMouseListener(mouseListener);
                     }
-                    else{
-                        HoleUI activateHole = lastHole.getGui();
-                        activateHole.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                redistribute(lastHole.getHoleIndex());
-                            }
-                        });
-                    }
                     for(int i = 0; i < lastHoleKorgools.size(); i++){
                         kazans[playersKazanIndex].addKorgool(new Korgool());
                     }
@@ -201,7 +192,6 @@ public class Board {
             }
         }
         if(returnIndex <= -1){
-            System.out.println("No Available Moves Left. Random move will be made.");
             randomMove();
             return;
         }
