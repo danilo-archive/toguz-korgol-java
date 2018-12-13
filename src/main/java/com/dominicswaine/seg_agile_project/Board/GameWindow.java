@@ -21,6 +21,7 @@ public class GameWindow {
     private ArrayList <KazanUI> kazans;
 
     private ScoreboardUI scoreboard;
+    private JFrame gameWindow;
 
     /**
      * A window containing the game board and the scoreboard.
@@ -33,7 +34,7 @@ public class GameWindow {
         holesBottomRow = new ArrayList < > ();
         kazans = new ArrayList < > ();
 
-        JFrame gameWindow = new JFrame("Toguz Korgool");
+        gameWindow = new JFrame("Toguz Korgool");
         gameWindow.setResizable(false);
         gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,5 +140,13 @@ public class GameWindow {
 
     public ScoreboardUI getScoreboard() {
         return scoreboard;
+    }
+
+    /**
+     * Return the frame containing the game window
+     * @return the frame containing the game window
+     */
+    public JFrame getGameWindow() {
+        return gameWindow;
     }
 }

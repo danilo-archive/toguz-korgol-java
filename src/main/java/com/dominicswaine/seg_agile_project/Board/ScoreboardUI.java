@@ -1,10 +1,7 @@
 package com.dominicswaine.seg_agile_project.Board;
 
-import com.dominicswaine.seg_agile_project.Logic.Parser;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,7 +93,7 @@ public class ScoreboardUI extends JLabel {
         JLabel scores = new JLabel();
         scores.setOpaque(false);
         scores.setLayout(new BorderLayout());
-
+        //the scores of the players
         whiteScore = new JTextField();
         blackScore = new JTextField();
 
@@ -129,6 +126,7 @@ public class ScoreboardUI extends JLabel {
         scores.add(jp, BorderLayout.CENTER);
         scores.add(getTimer(), BorderLayout.SOUTH);
 
+        //save and back button at the bottom,the save button listener is handled in backend
         JTextField buttons = new JTextField();
         buttons.setLayout(new GridLayout(1,2));
 
@@ -136,10 +134,7 @@ public class ScoreboardUI extends JLabel {
         saveButton = new JButton("Save");
         //todo: make buttons taller
 
-        back.addActionListener(e -> {
-            new MainMenu();
-            frame.dispose();
-        });
+        back.addActionListener(e -> endGame());
 
         buttons.add(back);
         buttons.add(saveButton);
@@ -155,11 +150,69 @@ public class ScoreboardUI extends JLabel {
     }
 
     /**
-     * Update the score of the game
+     * Close board window and open main menu, ending the game
      */
-    public void update(){
-        whiteScore.setText("  "+(kazans.get(0).getLastKorgolInd()+1) + "");
-        blackScore.setText((kazans.get(1).getLastKorgolInd()+1)+ "  ");
+    private void endGame(){
+        new MainMenu();
+        frame.dispose();
+    }
+
+    /**
+     * Update the score of the game
+     * @return true if game has been closed
+     */
+    public boolean update() {
+
+        whiteScore.setText("  " + (kazans.get(0).getLastKorgolInd() + 1) + "");
+        blackScore.setText((kazans.get(1).getLastKorgolInd() + 1) + "  ");
+
+        if (kazans.get(0).getLastKorgolInd() + 1 >= 82) {
+            showEndGamePopup("        CONGRATULATIONS, YOU WON!");
+            return true;
+        }
+        else if(kazans.get(1).getLastKorgolInd() + 1 >= 82) {
+            showEndGamePopup("                          YOU LOST");
+            return true;
+        }
+        else if(kazans.get(0).getLastKorgolInd() + 1 == 81 && kazans.get(1).getLastKorgolInd() + 1 ==81){
+            showEndGamePopup("                         IT'S A TIE!");
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Display a popup frame with the given message and close game on button click
+     * @param s the message shown on the popup frame
+     */
+    private void showEndGamePopup(String s) {
+        JFrame popup = new JFrame("THANK YOU FOR PLAYING!");
+        popup.setVisible(true);
+        popup.setLayout(new BorderLayout());
+
+        JButton ok = new JButton("OK");
+        ok.addActionListener(e -> {
+                                    endGame();
+                                    popup.dispose();
+        });
+
+        JTextField text = new JTextField(s);
+        text.setFont(new Font("Tahoma", Font.BOLD, 20));
+        text.setEditable(false);
+        text.setOpaque(true);
+        text.setBorder(BorderFactory.createEmptyBorder());
+
+        popup.add(ok, BorderLayout.SOUTH);
+        popup.add(text, BorderLayout.NORTH);
+        popup.pack();
+        popup.setSize(new Dimension(500, 100));
+        popup.setVisible(true);
+        popup.setLocationRelativeTo(null);
+
+        ok.setVisible(true);
+        text.setVisible(true);
+        popup.setVisible(true);
     }
 
     @Override
@@ -174,7 +227,35 @@ public class ScoreboardUI extends JLabel {
         g.drawImage(image, 0, 0, this);
     }
 
+    /**
+     * Return the save button
+     * @return the save button
+     */
     public JButton getSaveButton() {
         return saveButton;
+    }
+
+    /**
+     * Return the Arraylist containing the kazans
+     * @return the Arraylist containing the kazans
+     */
+    public ArrayList<KazanUI> getKazans() {
+        return kazans;
+    }
+
+    /**
+     * Return the whitescore textfield
+     * @return the whitescore textfield
+     */
+    public JTextField getWhiteScore() {
+        return whiteScore;
+    }
+
+    /**
+     * Return the blackscore textfield
+     * @return the blackscore textfield
+     */
+    public JTextField getBlackScore() {
+        return blackScore;
     }
 }
