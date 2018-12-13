@@ -3,16 +3,26 @@ package com.dominicswaine.seg_agile_project.Logic;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Ayberk Demirkol, Dominic Swaine
+ */
 public class BoardTest {
 
     public BoardTest(){}
 
+    /**
+     * Test to check the the white-side play goes first
+     */
     @Test
     public void checkWhiteFirstToPlay(){
         Board board = new Board();
         assertEquals(Side.WHITE, board.getNextToPlay());
     }
 
+    /**
+     * Test to check the correct number of Holes and Kazans are created
+     * and that each hole is assigned to the correct player
+     */
     @Test
     public void checkSetUp(){
         Board board = new Board();
@@ -28,6 +38,9 @@ public class BoardTest {
         }
     }
 
+    /**
+     * Test to check whether availableMoves(...) returns the correct list of legal moves for a given player side
+     */
     @Test
     public void checkAvailableMoves(){
         Game defaultGame = new Game();
@@ -43,6 +56,9 @@ public class BoardTest {
         assertEquals(4,customGameWithTuz.getGameBoard().availableMoves(Side.BLACK).size());
     }
 
+    /**
+     * Test to check whether redistribute(...) correctly distributes the Koorgols contained by a Hole when it is selected
+     */
     @Test
     public void checkRedistribute(){
         Game defaultGame = new Game();
@@ -54,6 +70,9 @@ public class BoardTest {
         assertEquals(0,defaultGame.getGameBoard().getHoleByIndex(12).getNumberOfKoorgools());
     }
 
+    /**
+     * Test to check whether challengeMove(...) returns the most beneficial onward move
+     */
     @Test
     public void checkChallengeMove(){
         Game defaultGame = new Game();
@@ -65,6 +84,9 @@ public class BoardTest {
         assertEquals(0,defaultGame.getGameBoard().getHoleByIndex(9).getNumberOfKoorgools());
     }
 
+    /**
+     * Test to check whether getPlayerTuz(...) returns the index of the Tuz hole for a given player side
+     */
     @Test
     public void checkGetPlayerTuz(){
         int[] player = {10,5,5,5,5,5,5,5,5,5};
