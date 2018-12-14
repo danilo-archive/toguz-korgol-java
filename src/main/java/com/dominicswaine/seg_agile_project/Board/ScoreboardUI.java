@@ -108,6 +108,7 @@ public class ScoreboardUI extends JLabel {
         whiteScore.setForeground(Color.BLUE);
         blackScore.setForeground(Color.RED);
 
+
         update();
 
         whiteScore.setVisible(true);
@@ -156,40 +157,62 @@ public class ScoreboardUI extends JLabel {
     }
 
     /**
-     * Update the score of the game and deal with the current
-     * scenario.
+     * Update the score of the game
+     * @return true if game has been closed
      */
-    public void update() {
+    public boolean update() {
 
         whiteScore.setText("  " + (kazans.get(0).getLastKorgolInd() + 1) + "");
         blackScore.setText((kazans.get(1).getLastKorgolInd() + 1) + "  ");
 
         if (kazans.get(0).getLastKorgolInd() + 1 >= 82) {
-            showEndGamePopup("You won!");
-            endGame();
+            showEndGamePopup("        CONGRATULATIONS, YOU WON!");
+            return true;
         }
         else if(kazans.get(1).getLastKorgolInd() + 1 >= 82) {
-            showEndGamePopup("You lost!");
-            endGame();
+            showEndGamePopup("                          YOU LOST");
+            return true;
         }
         else if(kazans.get(0).getLastKorgolInd() + 1 == 81 && kazans.get(1).getLastKorgolInd() + 1 ==81){
-            showEndGamePopup("It's a tie!");
-            endGame();
+            showEndGamePopup("                         IT'S A TIE!");
+            return true;
         }
 
+        return false;
     }
-
 
     /**
      * Display a popup frame with the given message and close game on button click
      * @param s the message shown on the popup frame
      */
     private void showEndGamePopup(String s) {
+        JFrame popup = new JFrame("THANK YOU FOR PLAYING!");
+        popup.setVisible(true);
+        popup.setLayout(new BorderLayout());
 
-        JOptionPane.showMessageDialog(frame, s, "End of Game", JOptionPane.INFORMATION_MESSAGE);
+        JButton ok = new JButton("OK");
+        ok.addActionListener(e -> {
+                                    endGame();
+                                    popup.dispose();
+        });
 
+        JTextField text = new JTextField(s);
+        text.setFont(new Font("Tahoma", Font.BOLD, 20));
+        text.setEditable(false);
+        text.setOpaque(true);
+        text.setBorder(BorderFactory.createEmptyBorder());
+
+        popup.add(ok, BorderLayout.SOUTH);
+        popup.add(text, BorderLayout.NORTH);
+        popup.pack();
+        popup.setSize(new Dimension(500, 100));
+        popup.setVisible(true);
+        popup.setLocationRelativeTo(null);
+
+        ok.setVisible(true);
+        text.setVisible(true);
+        popup.setVisible(true);
     }
-
     
     /**
      * Return a Dimension object of the preferred window size
