@@ -108,7 +108,6 @@ public class ScoreboardUI extends JLabel {
         whiteScore.setForeground(Color.BLUE);
         blackScore.setForeground(Color.RED);
 
-
         update();
 
         whiteScore.setVisible(true);
@@ -132,7 +131,6 @@ public class ScoreboardUI extends JLabel {
 
         JButton back = new JButton("Back");
         saveButton = new JButton("Save");
-        //todo: make buttons taller
 
         back.addActionListener(e -> endGame());
 
@@ -158,62 +156,40 @@ public class ScoreboardUI extends JLabel {
     }
 
     /**
-     * Update the score of the game
-     * @return true if game has been closed
+     * Update the score of the game and deal with the current
+     * scenario.
      */
-    public boolean update() {
+    public void update() {
 
         whiteScore.setText("  " + (kazans.get(0).getLastKorgolInd() + 1) + "");
         blackScore.setText((kazans.get(1).getLastKorgolInd() + 1) + "  ");
 
         if (kazans.get(0).getLastKorgolInd() + 1 >= 82) {
-            showEndGamePopup("        CONGRATULATIONS, YOU WON!");
-            return true;
+            showEndGamePopup("You won!");
+            endGame();
         }
         else if(kazans.get(1).getLastKorgolInd() + 1 >= 82) {
-            showEndGamePopup("                          YOU LOST");
-            return true;
+            showEndGamePopup("You lost!");
+            endGame();
         }
         else if(kazans.get(0).getLastKorgolInd() + 1 == 81 && kazans.get(1).getLastKorgolInd() + 1 ==81){
-            showEndGamePopup("                         IT'S A TIE!");
-            return true;
+            showEndGamePopup("It's a tie!");
+            endGame();
         }
 
-        return false;
     }
+
 
     /**
      * Display a popup frame with the given message and close game on button click
      * @param s the message shown on the popup frame
      */
     private void showEndGamePopup(String s) {
-        JFrame popup = new JFrame("THANK YOU FOR PLAYING!");
-        popup.setVisible(true);
-        popup.setLayout(new BorderLayout());
 
-        JButton ok = new JButton("OK");
-        ok.addActionListener(e -> {
-                                    endGame();
-                                    popup.dispose();
-        });
+        JOptionPane.showMessageDialog(frame, s, "End of Game", JOptionPane.INFORMATION_MESSAGE);
 
-        JTextField text = new JTextField(s);
-        text.setFont(new Font("Tahoma", Font.BOLD, 20));
-        text.setEditable(false);
-        text.setOpaque(true);
-        text.setBorder(BorderFactory.createEmptyBorder());
-
-        popup.add(ok, BorderLayout.SOUTH);
-        popup.add(text, BorderLayout.NORTH);
-        popup.pack();
-        popup.setSize(new Dimension(500, 100));
-        popup.setVisible(true);
-        popup.setLocationRelativeTo(null);
-
-        ok.setVisible(true);
-        text.setVisible(true);
-        popup.setVisible(true);
     }
+
     
     /**
      * Return a Dimension object of the preferred window size
