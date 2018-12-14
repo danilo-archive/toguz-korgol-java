@@ -50,7 +50,7 @@ public class CustomGame {
 
         buttonGroup = new ButtonGroup();
         isPlayer = true;
-        mapOfSpinners = new HashMap<>();
+        mapOfSpinners = new HashMap<String, JSpinner>();
         playerValues = new int[10];
         opponentValues = new int[10];
         playerTuz = "0";
