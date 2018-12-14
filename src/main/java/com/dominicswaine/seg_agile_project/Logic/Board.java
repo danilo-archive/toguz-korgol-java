@@ -101,23 +101,26 @@ public class Board {
                 holeChosen.addKorgool(first);
             }
             //@Check if we add to kazan or make tuz.
+
             if(lastHole.getOwner() != nextToPlay) {
+                Side checkTuzSide = (nextToPlay == Side.WHITE) ? Side.BLACK : Side.WHITE;
+                int otherTuzIndex = getPlayerTuz(checkTuzSide);
                 int playersKazanIndex = (nextToPlay == Side.WHITE) ? 0 : 1;
                 ArrayList<Korgool> lastHoleKorgools = lastHole.getKoorgools();
-                if((lastHole.getHoleIndex() != 8 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()){
-                    lastHole.markAsTuz();
+                    if ((((otherTuzIndex - 9) != lastHole.getHoleIndex() && (otherTuzIndex + 9) != lastHole.getHoleIndex()) || otherTuzIndex == -1) && (lastHole.getHoleIndex() != 8 && lastHole.getHoleIndex() != 17) && lastHoleKorgools.size() == 3 && !lastHole.isTuz() && !nextToPlay.hasTuz()) {
+                        lastHole.markAsTuz();
 
-                    nextToPlay.makeTuz();
-                    if(nextToPlay == Side.BLACK){
-                        MouseListener mouseListener = lastHole.getGui().getMouseListeners()[0];
-                        lastHole.getGui().removeMouseListener(mouseListener);
+                        nextToPlay.makeTuz();
+                        if (nextToPlay == Side.BLACK) {
+                            MouseListener mouseListener = lastHole.getGui().getMouseListeners()[0];
+                            lastHole.getGui().removeMouseListener(mouseListener);
+                        }
+                        for (int i = 0; i < lastHoleKorgools.size(); i++) {
+                            kazans[playersKazanIndex].addKorgool(new Korgool());
+                        }
+                        kazans[playersKazanIndex].addKorgools(lastHole.getKoorgools());
+                        lastHole.emptyHole();
                     }
-                    for(int i = 0; i < lastHoleKorgools.size(); i++){
-                        kazans[playersKazanIndex].addKorgool(new Korgool());
-                    }
-                    kazans[playersKazanIndex].addKorgools(lastHole.getKoorgools());
-                    lastHole.emptyHole();
-                }
                 else if(lastHoleKorgools.size() % 2 == 0){
                     for(int i = 0; i < lastHoleKorgools.size(); i++) {
                         kazans[playersKazanIndex].addKorgool(new Korgool());
@@ -176,6 +179,11 @@ public class Board {
             if(lastHole.getOwner() != nextToPlay){
                 int numOfKorgools = lastHole.getNumberOfKoorgools() +1;
                 if(numOfKorgools == 3 && !nextToPlay.hasTuz()){
+                    int otherTuzIndex = getPlayerTuz(Side.WHITE);
+                    if(otherTuzIndex == -1 || ((otherTuzIndex + 9) != lastHole.getHoleIndex())) {
+                        redistribute(selectedHole.getHoleIndex());
+                        return;
+                    }
                     redistribute(selectedHole.getHoleIndex());
                     return;
                 }
