@@ -128,7 +128,7 @@ public class Game {
         for(int i = 0 ; i < 9 ; ++i) {
             if (holes[i].isTuz()) {
                 changedPT = true;
-                playerTuz = Integer.toString(i+1);
+                playerTuz = Integer.toString(i-8);
             }
         }
         if(!changedPT) {
@@ -141,7 +141,7 @@ public class Game {
         for(int i = 9 ; i < 17 ; ++i) {
             if (holes[i].isTuz()) {
                 changedOT = true;
-                opponentTuz = Integer.toString(i-8);
+                opponentTuz = Integer.toString(i+1);
             }
         }
         if(!changedOT) {
@@ -241,6 +241,8 @@ public class Game {
             game_board.getHoleByIndex(opponentTuzNo-1).markAsTuz();
             Side.BLACK.makeTuz();
         }
+
+        gui.getScoreboard().update();
     }
     
     /**
