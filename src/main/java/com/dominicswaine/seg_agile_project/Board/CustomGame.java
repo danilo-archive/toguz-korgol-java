@@ -50,7 +50,7 @@ public class CustomGame {
 
         buttonGroup = new ButtonGroup();
         isPlayer = true;
-        mapOfSpinners = new HashMap<>();
+        mapOfSpinners = new HashMap<String, JSpinner>();
         playerValues = new int[10];
         opponentValues = new int[10];
         playerTuz = "0";
@@ -386,7 +386,7 @@ public class CustomGame {
 
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
 
-            int returnValue = jfc.showOpenDialog(null);
+            int returnValue = jfc.showSaveDialog(null);
 
             if (returnValue == JFileChooser.APPROVE_OPTION) {
 

@@ -64,7 +64,10 @@ public class HoleUI extends KorgoolsContainerUI {
 
         return false;
     }
-
+    
+    /**
+     * Paint window components
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,18 +77,28 @@ public class HoleUI extends KorgoolsContainerUI {
         tuzBorder.drawRect(0, 0, getWidth(), getHeight());
     }
 
-
+    /**
+     * Function to return the maximum number of Korgools which can be contained within a Hole
+     * return the maximum number of Korgools which can be contained within a Hole
+     */
     @Override
     public int getMaxKorgolsPossible() {
         return 21;
     }
 
-
+    /**
+     * Return a Dimension object of the preferred window size
+     * @return a Dimension object of the preferred window size
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(120, 240);
     }
-
+    
+    /**
+     * Function to return the index of the Hole
+     * @return the index of the Hole
+     */
     public int getN(){return n;}
 
 }

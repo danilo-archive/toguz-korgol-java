@@ -8,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
+ * The Game Board
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 public class Board {
     private Hole[] holes = new Hole[18];
@@ -75,7 +77,6 @@ public class Board {
     public void redistribute(int holeIndex){
 
         if(holes[holeIndex].getOwner() == nextToPlay) {
-            //TODO: Add a check to see if move being made is a tuz.
             ArrayList<Korgool> korgoolsToMove = holes[holeIndex].getKoorgools();
             Hole holeChosen = holes[holeIndex];
             Hole lastHole;
@@ -86,7 +87,6 @@ public class Board {
             //@Check if there are 1 korgool in the hole.
             else if(korgoolsToMove.size() == 1){
                 lastHole = holes[(holeIndex + 1) % 18];
-                //System.out.println("Transferring 1 korgools to hole number" + lastHole.getHoleIndex());
                 lastHole.addKorgool(holeChosen.getKoorgools().get(0));
                 holeChosen.emptyHole();
             }
@@ -158,7 +158,6 @@ public class Board {
             holeIndex = (int)(Math.random() * (((availableHoles.size()-1) - 0) + 1)) + 0;
             korgools = availableHoles.get(holeIndex).getKoorgools();
         }
-        //System.out.println("Next Random move is Hole:" + (holesOwned.get(holeIndex).getHoleIndex()));
         redistribute(availableHoles.get(holeIndex).getHoleIndex());
     }
 
@@ -185,6 +184,8 @@ public class Board {
                         redistribute(selectedHole.getHoleIndex());
                         return;
                     }
+                    redistribute(selectedHole.getHoleIndex());
+                    return;
                 }
                 if(numOfKorgools % 2 == 0 && numOfKorgools > maxOutcome){
                     maxOutcome = numOfKorgools;

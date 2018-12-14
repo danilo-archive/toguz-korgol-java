@@ -2,7 +2,9 @@ package com.dominicswaine.seg_agile_project.Logic;
 import java.util.ArrayList;
 
 /**
+ * Abstract method which holds Game Board Korgool objects
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 abstract public class KorgoolContainer {
     /**

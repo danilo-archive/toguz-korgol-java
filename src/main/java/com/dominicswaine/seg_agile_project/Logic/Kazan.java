@@ -3,7 +3,9 @@ import com.dominicswaine.seg_agile_project.Board.KazanUI;
 import java.util.ArrayList;
 
 /**
+ * A Game Board Kazan
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 public class Kazan extends KorgoolContainer {
     /**

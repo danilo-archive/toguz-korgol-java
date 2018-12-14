@@ -292,6 +292,7 @@ public class CustomGameTest {
     @Test
     public void testTotalKorgoolsLessThan162() {
 
+        swinger.pause(800);
         HashMap<String, JSpinner> mapOfSpinners = customGame.getMapOfSpinners();
         JSpinner spinner = mapOfSpinners.get("0");
         swinger.clickOn(spinner);
@@ -313,6 +314,7 @@ public class CustomGameTest {
     @Test
     public void testTotalKorgoolsGreaterThan162() {
 
+        swinger.pause(800);
         HashMap<String, JSpinner> mapOfSpinners = customGame.getMapOfSpinners();
         JSpinner spinner = mapOfSpinners.get("0");
         swinger.clickOn(spinner);
@@ -334,6 +336,7 @@ public class CustomGameTest {
     @Test
     public void testTotalKorgoolsEqualTo162() {
 
+        swinger.pause(800);
         HashMap<String, JSpinner> mapOfSpinners = customGame.getMapOfSpinners();
         JSpinner spinner = mapOfSpinners.get("0");
         swinger.clickOn(spinner);

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import com.dominicswaine.seg_agile_project.Board.HoleUI;
 
 /**
+ * Hole class tests
  * @author Dominic Swaine
+ * @version 11/12/2018
  */
 public class HoleTest {
 

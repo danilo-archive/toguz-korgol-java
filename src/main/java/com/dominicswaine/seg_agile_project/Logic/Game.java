@@ -11,7 +11,9 @@ import java.awt.event.*;
 import java.io.File;
 
 /**
+ * Constructs a default or custom game
  * @author Ayberk Demirkol, Dominic Swaine
+ * @version 13/12/2018
  */
 public class Game {
     private Side player_side;
@@ -109,7 +111,10 @@ public class Game {
             logicKazan.setGui(guiKazan);
         }
     }
-
+    
+    /**
+     * Function to save current gameplay state
+     */
     private void saveCurrentState() {
         Hole[] holes = game_board.getHoles();
         Kazan[] kazans = game_board.getKazans();
@@ -123,7 +128,7 @@ public class Game {
         for(int i = 0 ; i < 9 ; ++i) {
             if (holes[i].isTuz()) {
                 changedPT = true;
-                playerTuz = Integer.toString(i+1);
+                playerTuz = Integer.toString(i-8);
             }
         }
         if(!changedPT) {
@@ -136,7 +141,7 @@ public class Game {
         for(int i = 9 ; i < 17 ; ++i) {
             if (holes[i].isTuz()) {
                 changedOT = true;
-                opponentTuz = Integer.toString(i-8);
+                opponentTuz = Integer.toString(i+1);
             }
         }
         if(!changedOT) {
@@ -154,7 +159,7 @@ public class Game {
 
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
 
-        int returnValue = jfc.showOpenDialog(null);
+        int returnValue = jfc.showSaveDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
 
@@ -236,16 +241,30 @@ public class Game {
             game_board.getHoleByIndex(opponentTuzNo-1).markAsTuz();
             Side.BLACK.makeTuz();
         }
-    }
 
+        gui.getScoreboard().update();
+    }
+    
+    /**
+     * Function to return the corresponding GUI component
+     * return the corresponding GUI component
+     */
     public GameWindow getGui(){
         return gui;
     }
-
+    
+    /**
+     * Function to return the Game Board
+     * return the Game Board
+     */
     public Board getGameBoard() {
         return game_board;
     }
-
+    
+    /**
+     * Function to return the side of the player
+     * return the side of the player
+     */
     public Side getPlayerSide() {
         return player_side;
     }

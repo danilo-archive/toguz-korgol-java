@@ -132,7 +132,6 @@ public class ScoreboardUI extends JLabel {
 
         JButton back = new JButton("Back");
         saveButton = new JButton("Save");
-        //todo: make buttons taller
 
         back.addActionListener(e -> endGame());
 
@@ -189,11 +188,12 @@ public class ScoreboardUI extends JLabel {
     private void showEndGamePopup(String s) {
         JFrame popup = new JFrame("THANK YOU FOR PLAYING!");
         popup.setVisible(true);
+        frame.dispose();
         popup.setLayout(new BorderLayout());
 
         JButton ok = new JButton("OK");
         ok.addActionListener(e -> {
-                                    endGame();
+                                    new MainMenu();
                                     popup.dispose();
         });
 
@@ -214,13 +214,19 @@ public class ScoreboardUI extends JLabel {
         text.setVisible(true);
         popup.setVisible(true);
     }
-
+    
+    /**
+     * Return a Dimension object of the preferred window size
+     * @return a Dimension object of the preferred window size
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(190,720);
     }
 
-
+    /**
+     * Paint window components
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
