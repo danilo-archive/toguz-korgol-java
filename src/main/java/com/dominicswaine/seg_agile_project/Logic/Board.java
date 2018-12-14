@@ -77,7 +77,6 @@ public class Board {
     public void redistribute(int holeIndex){
 
         if(holes[holeIndex].getOwner() == nextToPlay) {
-            //TODO: Add a check to see if move being made is a tuz.
             ArrayList<Korgool> korgoolsToMove = holes[holeIndex].getKoorgools();
             Hole holeChosen = holes[holeIndex];
             Hole lastHole;
@@ -88,7 +87,6 @@ public class Board {
             //@Check if there are 1 korgool in the hole.
             else if(korgoolsToMove.size() == 1){
                 lastHole = holes[(holeIndex + 1) % 18];
-                //System.out.println("Transferring 1 korgools to hole number" + lastHole.getHoleIndex());
                 lastHole.addKorgool(holeChosen.getKoorgools().get(0));
                 holeChosen.emptyHole();
             }
@@ -157,7 +155,6 @@ public class Board {
             holeIndex = (int)(Math.random() * (((availableHoles.size()-1) - 0) + 1)) + 0;
             korgools = availableHoles.get(holeIndex).getKoorgools();
         }
-        //System.out.println("Next Random move is Hole:" + (holesOwned.get(holeIndex).getHoleIndex()));
         redistribute(availableHoles.get(holeIndex).getHoleIndex());
     }
 
@@ -166,7 +163,6 @@ public class Board {
      * Prioritizes making Tuz
      * Next priority is getting maximum number of korgools to kazan
      * When neither is found, makes a random move
-     * TODO: When neither is found, make it predict the best move of opponent and avoid that move.
      */
     public void challengeMove(){
         int maxOutcome = -1;
@@ -180,13 +176,9 @@ public class Board {
             if(lastHole.getOwner() != nextToPlay){
                 int numOfKorgools = lastHole.getNumberOfKoorgools() +1;
                 if(numOfKorgools == 3 && !nextToPlay.hasTuz()){
-                    //TODO: Give priority to tuz making. Create an extra case for tuz.
-                    //TODO: Make sure cases for holes containing 1 or 0 korgool.
-                    System.out.println("Next viable move is to make Tuz of hole" + lastHole.getHoleIndex());
                     redistribute(selectedHole.getHoleIndex());
                     return;
                 }
-                //TODO: Checkpoint for Selectedholes with 0.
                 if(numOfKorgools % 2 == 0 && numOfKorgools > maxOutcome){
                     maxOutcome = numOfKorgools;
                     returnIndex = selectedHole.getHoleIndex();

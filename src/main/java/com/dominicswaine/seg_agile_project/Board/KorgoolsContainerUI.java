@@ -158,7 +158,7 @@ public abstract class KorgoolsContainerUI extends JLabel {
         if (lastKorgolInd >= 0) {
                     korgols.get(lastKorgolInd).dontRender();
                     --lastKorgolInd;
-        } else System.out.println("Can't remove any more korgols!");
+        } else System.out.println("Can't remove any more korgools!");
 
         this.repaint();
     }
