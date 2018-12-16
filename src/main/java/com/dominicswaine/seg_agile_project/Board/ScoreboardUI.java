@@ -130,7 +130,7 @@ public class ScoreboardUI extends JLabel {
         JTextField buttons = new JTextField();
         buttons.setLayout(new GridLayout(1,2));
 
-        JButton back = new JButton("Back");
+        JButton back = new JButton("Home");
         saveButton = new JButton("Save");
 
         back.addActionListener(e -> endGame());
